@@ -2,15 +2,40 @@ import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { useState } from 'react'
+import { useIntl } from 'react-intl'
 
 const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
 
 export default function ListLayout({ posts, title }) {
   const [searchValue, setSearchValue] = useState('')
+  const intl = useIntl()
   const filteredBlogPosts = posts.filter((frontMatter) => {
     const searchContent = frontMatter.title + frontMatter.summary + frontMatter.tags.join(' ')
     return searchContent.toLowerCase().includes(searchValue.toLowerCase())
   })
+
+  const descriptors = {
+    searchArticle: {
+      id: 'searchArticle',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+    searchNoResult: {
+      id: 'searchNoResult',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+    noArticle: {
+      id: 'noArticle',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+  }
+
+  let usedNoData = descriptors.noArticle
+  if (searchValue !== '') {
+    usedNoData = descriptors.searchNoResult
+  }
 
   return (
     <>
@@ -21,10 +46,10 @@ export default function ListLayout({ posts, title }) {
           </h1>
           <div className="relative max-w-lg">
             <input
-              aria-label="Search articles"
+              aria-label={intl.formatMessage(descriptors.searchArticle)}
               type="text"
               onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search articles"
+              placeholder={intl.formatMessage(descriptors.searchArticle)}
               className="block w-full px-4 py-2 text-gray-900 bg-white border border-gray-300 rounded-md dark:border-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-100"
             />
             <svg
@@ -44,7 +69,7 @@ export default function ListLayout({ posts, title }) {
           </div>
         </div>
         <ul>
-          {!filteredBlogPosts.length && 'No posts found.'}
+          {!filteredBlogPosts.length && <p className="mt-2">{intl.formatMessage(usedNoData)}</p>}
           {filteredBlogPosts.map((frontMatter) => {
             const { slug, date, title, summary, tags } = frontMatter
             return (
@@ -54,14 +79,14 @@ export default function ListLayout({ posts, title }) {
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>
-                        {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                        {new Date(date).toLocaleDateString(intl.locale, postDateTemplate)}
                       </time>
                     </dd>
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
                     <div>
                       <h3 className="text-2xl font-bold leading-8 tracking-tight">
-                        <Link href={`/blog/${slug}`} className="text-gray-900 dark:text-gray-100">
+                        <Link href={`/posts/${slug}`} className="text-gray-900 dark:text-gray-100">
                           {title}
                         </Link>
                       </h3>

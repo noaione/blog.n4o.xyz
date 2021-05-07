@@ -4,16 +4,53 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { getAllFilesFrontMatter } from '@/lib/mdx'
 
+import { useIntl } from 'react-intl'
+
 const MAX_DISPLAY = 5
 const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
 
-export async function getStaticProps() {
-  const posts = await getAllFilesFrontMatter('blog')
+export async function getStaticProps({ locale }) {
+  const posts = await getAllFilesFrontMatter('blog', locale)
 
   return { props: { posts } }
 }
 
 export default function Home({ posts }) {
+  const intl = useIntl()
+
+  const descriptors = {
+    latest: {
+      id: 'latest',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+    readMore: {
+      id: 'readMore',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+    allPosts: {
+      id: 'allPosts',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+    siteDesc: {
+      id: 'siteDesc',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+    searchArticle: {
+      id: 'searchArticle',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+    noArticle: {
+      id: 'noArticle',
+      description: undefined,
+      defaultMessage: undefined,
+    },
+  }
+
   return (
     <>
       <PageSeo
@@ -24,14 +61,14 @@ export default function Home({ posts }) {
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            Latest
+            {intl.formatMessage(descriptors.latest)}
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {siteMetadata.description}
+            {intl.formatMessage(descriptors.siteDesc)}
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-          {!posts.length && 'No posts found.'}
+          {!posts.length && <p className="mt-2">{intl.formatMessage(descriptors.noArticle)}</p>}
           {posts.slice(0, MAX_DISPLAY).map((frontMatter) => {
             const { slug, date, title, summary, tags } = frontMatter
             return (
@@ -42,7 +79,7 @@ export default function Home({ posts }) {
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                         <time dateTime={date}>
-                          {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                          {new Date(date).toLocaleDateString(intl.locale, postDateTemplate)}
                         </time>
                       </dd>
                     </dl>
@@ -51,7 +88,7 @@ export default function Home({ posts }) {
                         <div>
                           <h2 className="text-2xl font-bold leading-8 tracking-tight">
                             <Link
-                              href={`/blog/${slug}`}
+                              href={`/posts/${slug}`}
                               className="text-gray-900 dark:text-gray-100"
                             >
                               {title}
@@ -69,11 +106,11 @@ export default function Home({ posts }) {
                       </div>
                       <div className="text-base font-medium leading-6">
                         <Link
-                          href={`/blog/${slug}`}
+                          href={`/posts/${slug}`}
                           className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
-                          aria-label={`Read "${title}"`}
+                          aria-label={`${intl.locale === 'en' ? 'Read' : 'Baca'} "${title}"`}
                         >
-                          Read more &rarr;
+                          {intl.formatMessage(descriptors.readMore)} &rarr;
                         </Link>
                       </div>
                     </div>
@@ -87,11 +124,11 @@ export default function Home({ posts }) {
       {posts.length > MAX_DISPLAY && (
         <div className="flex justify-end text-base font-medium leading-6">
           <Link
-            href="/blog"
+            href="/posts"
             className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
-            aria-label="all posts"
+            aria-label={intl.formatMessage(descriptors.readMore).toLowerCase()}
           >
-            All Posts &rarr;
+            {intl.formatMessage(descriptors.allPosts)} &rarr;
           </Link>
         </div>
       )}

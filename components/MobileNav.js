@@ -2,8 +2,11 @@ import { useState } from 'react'
 import Link from './Link'
 import headerNavLinks from '@/data/headerNavLinks'
 
+import { useIntl } from 'react-intl'
+
 const MobileNav = () => {
   const [navShow, setNavShow] = useState(false)
+  const intl = useIntl()
 
   const onToggleNav = () => {
     setNavShow((status) => {
@@ -21,7 +24,7 @@ const MobileNav = () => {
     <div className="sm:hidden">
       <button
         type="button"
-        className="w-8 h-8 ml-1 mr-1 rounded"
+        className="w-8 h-8 ml-1 mr-1 rounded focus:outline-none"
         aria-label="Toggle Menu"
         onClick={onToggleNav}
       >
@@ -58,6 +61,15 @@ const MobileNav = () => {
           onClick={onToggleNav}
         ></button>
         <nav className="fixed h-full mt-8">
+          <div className="px-12 py-4">
+            <Link
+              href="/"
+              className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+              onClick={onToggleNav}
+            >
+              {intl.formatMessage({ id: 'home' })}
+            </Link>
+          </div>
           {headerNavLinks.map((link) => (
             <div key={link.title} className="px-12 py-4">
               <Link
@@ -65,7 +77,7 @@ const MobileNav = () => {
                 className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
                 onClick={onToggleNav}
               >
-                {link.title}
+                {intl.formatMessage({ id: link.title.toLowerCase(), defaultMessage: link.title })}
               </Link>
             </div>
           ))}

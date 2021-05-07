@@ -1,0 +1,20 @@
+{
+  "home": "Utama",
+  "posts": "Postingan",
+  "tags": "Tagar",
+  "projects": "Proyek",
+  "about": "Tentang",
+  "latest": "Terbaru",
+  "readMore": "Lebih lanjut",
+  "allPosts": "Semua Postingan",
+  "goBack": "Kembali",
+  "readingTime": "{minutes} min read",
+  "previousArticle": "Artikel Sebelumnya",
+  "nextArticle": "Artikel Selanjutnya",
+  "tagLine": "Seseorang yang terjun ke Neraka VTuber",
+  "searchArticle": "Cari artikel",
+  "noArticle": "Tidak ada artikel ¯\\_(ツ)_/¯",
+  "searchNoResult": "Tidak dapat menemukan artikel.",
+  "authors": "Penulis",
+  "siteDesc": "Sebuah blog random untuk nulis artikel atau postingan yang tak mau"
+}

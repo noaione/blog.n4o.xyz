@@ -1,0 +1,20 @@
+{
+  "home": "Home",
+  "posts": "Posts",
+  "tags": "Tags",
+  "projects": "Projects",
+  "about": "About",
+  "latest": "Latest",
+  "readMore": "Read More",
+  "allPosts": "All Posts",
+  "goBack": "Back to the blog",
+  "readingTime": "{minutes} min read",
+  "previousArticle": "Previous Article",
+  "nextArticle": "Next Article",
+  "tagLine": "Someone that stuck on VTubers Hell for a while",
+  "searchArticle": "Search articles",
+  "searchNoResult": "No posts found.",
+  "noArticle": "No article ¯\\_(ツ)_/¯",
+  "authors": "Authors",
+  "siteDesc": "A random blog where I'll write stuff that I want to"
+}

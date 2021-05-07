@@ -3,21 +3,26 @@ import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'
 import { PageSeo } from '@/components/SEO'
 
-export async function getStaticProps() {
-  const posts = await getAllFilesFrontMatter('blog')
+import { defineMessage, useIntl } from 'react-intl'
+
+export async function getStaticProps({ locale }) {
+  const posts = await getAllFilesFrontMatter('blog', locale)
 
   return { props: { posts } }
 }
 
 export default function Blog({ posts }) {
+  const intl = useIntl()
+
+  const messages = { id: 'posts', description: undefined, defaultMessage: undefined }
   return (
     <>
       <PageSeo
         title={`Blog - ${siteMetadata.author}`}
         description={siteMetadata.description}
-        url={`${siteMetadata.siteUrl}/blog`}
+        url={`${siteMetadata.siteUrl}/posts`}
       />
-      <ListLayout posts={posts} title="All Posts" />
+      <ListLayout posts={posts} title={intl.formatMessage(messages)} />
     </>
   )
 }

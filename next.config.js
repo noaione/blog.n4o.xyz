@@ -8,6 +8,11 @@ module.exports = withBundleAnalyzer({
   future: {
     webpack5: true,
   },
+  i18n: {
+    locales: ['id', 'en'],
+    defaultLocale: 'id',
+    localeDetection: false,
+  },
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,

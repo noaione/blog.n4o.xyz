@@ -14,14 +14,21 @@ export async function getStaticPaths() {
       params: {
         slug: formatSlug(p),
       },
+      locale: 'en',
     })),
     fallback: false,
   }
 }
 
-export async function getStaticProps({ params }) {
-  const allPosts = await getAllFilesFrontMatter('blog')
+export async function getStaticProps({ params, locale }) {
+  console.info(locale, params)
+  const allPosts = await getAllFilesFrontMatter('blog', locale)
   const postIndex = allPosts.findIndex((post) => post.slug === params.slug)
+  if (postIndex < 0) {
+    return {
+      notFound: true,
+    }
+  }
   const prev = allPosts[postIndex + 1] || null
   const next = allPosts[postIndex - 1] || null
   const post = await getFileBySlug('blog', params.slug)
