@@ -1,6 +1,5 @@
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
 
 .remark-code-title {
   @apply px-5 py-3 font-mono text-sm font-bold text-gray-200 bg-gray-700 rounded-t;
@@ -17,3 +16,55 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Metadata */
+.file-meta {
+  padding: 0.75rem;
+  border-radius: 0 0 0.3rem 0.3rem;
+  font: 12px -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji;
+  border-width: 1px;
+}
+
+.file-meta {
+  color: #666;
+  background-color: #f7f7f7;
+  border-color: #ccc !important;
+}
+
+[class='dark'] .file-meta {
+  color: #f7f7f7;
+  background-color: #3e3e3e !important;
+  border-color: #4e4e4e #4e4e4e #5e5e5e !important;
+}
+
+.file-meta a {
+  font-weight: 600;
+  text-decoration: none;
+  border: 0;
+}
+
+.file-meta a {
+  color: #666;
+}
+
+[class='dark'] .file-meta-dark a {
+  color: #fff;
+}
+
+.ghcode-embed-contents {
+  border-color: #ccc !important;
+}
+
+[class='dark'] .ghcode-embed-contents {
+  border-color: #4e4e4e #4e4e4e #5e5e5e !important;
+}
+
+/* hide content for small device */
+@media (max-width: 575.98px) {
+  .hide-in-phone {
+    display: none;
+  }
+}
+
+@tailwind utilities;
