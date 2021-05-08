@@ -6,7 +6,7 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   future: {
-    webpack5: true,
+    webpack5: false,
   },
   i18n: {
     locales: ['id', 'en'],
@@ -26,6 +26,12 @@ module.exports = withBundleAnalyzer({
         },
       ],
     })
+
+    if (!isServer) {
+      config.node = {
+        fs: 'empty',
+      }
+    }
 
     config.module.rules.push({
       test: /\.svg$/,
