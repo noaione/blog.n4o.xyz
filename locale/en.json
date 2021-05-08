@@ -6,6 +6,7 @@
   "about": "About",
   "latest": "Latest",
   "readMore": "Read More",
+  "learnMore": "Learn more",
   "allPosts": "All Posts",
   "goBack": "Back to the blog",
   "readingTime": "{minutes} min read",
@@ -15,6 +16,9 @@
   "searchArticle": "Search articles",
   "searchNoResult": "No posts found.",
   "noArticle": "No article ¯\\_(ツ)_/¯",
+  "noTags": "No tags found.",
   "authors": "Authors",
-  "siteDesc": "A random blog where I'll write stuff that I want to"
+  "siteDesc": "A random blog where I'll write stuff that I want to",
+  "404_1": "Sorry we couldn't find this page.",
+  "404_2": "But dont worry, you can find plenty of other things on our homepage."
 }

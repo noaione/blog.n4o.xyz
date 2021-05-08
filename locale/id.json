@@ -6,6 +6,7 @@
   "about": "Tentang",
   "latest": "Terbaru",
   "readMore": "Lebih lanjut",
+  "learnMore": "Pelajari lebih lanjut",
   "allPosts": "Semua Postingan",
   "goBack": "Kembali",
   "readingTime": "{minutes} min read",
@@ -15,6 +16,9 @@
   "searchArticle": "Cari artikel",
   "noArticle": "Tidak ada artikel ¯\\_(ツ)_/¯",
   "searchNoResult": "Tidak dapat menemukan artikel.",
+  "noTags": "Tidak ada tagar.",
   "authors": "Penulis",
-  "siteDesc": "Sebuah blog random untuk nulis artikel atau postingan yang tak mau"
+  "siteDesc": "Sebuah blog random untuk nulis artikel atau postingan yang tak mau",
+  "404_1": "Maaf, laman tidak dapat ditemukan.",
+  "404_2": "Tapi jangan khawatir, masih banyak hal lain yang ada di laman utama blog ini"
 }

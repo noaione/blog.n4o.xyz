@@ -5,20 +5,22 @@ import Tag from '@/components/Tag'
 import Link from '@/components/Link'
 import { PageSeo } from '@/components/SEO'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
 
-export async function getStaticProps() {
-  const tags = await getAllTags('blog')
+export async function getStaticProps({ locale }) {
+  const tags = await getAllTags('blog', locale)
 
   return { props: { tags } }
 }
 
 export default function Tags({ tags }) {
   const sortedTags = Object.keys(tags).sort((a, b) => tags[b] - tags[a])
+  const intl = useIntl()
+
   return (
     <>
       <PageSeo
-        title={`Tags - ${siteMetadata.author}`}
+        title={intl.formatMessage({ id: 'tags' })}
         description="Things I blog about"
         url={`${siteMetadata.siteUrl}/tags`}
       />
@@ -29,7 +31,7 @@ export default function Tags({ tags }) {
           </h1>
         </div>
         <div className="flex flex-wrap max-w-lg">
-          {Object.keys(tags).length === 0 && 'No tags found.'}
+          {Object.keys(tags).length === 0 && intl.formatMessage({ id: 'noTags' })}
           {sortedTags.map((t) => {
             return (
               <div key={t} className="mt-2 mb-2 mr-5">

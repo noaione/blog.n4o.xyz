@@ -15,15 +15,17 @@ export default function Footer() {
           <SocialIcon kind="twitter" href={siteMetadata.twitter} size="6" />
         </div>
         <div className="flex mb-2 space-x-2 text-sm text-gray-500 dark:text-gray-400">
-          <div>{siteMetadata.author}</div>
-          <div>{` • `}</div>
           <div>{`© ${new Date().getFullYear()}`}</div>
           <div>{` • `}</div>
-          <Link href="/">{siteMetadata.title}</Link>
+          <div>{siteMetadata.author}</div>
         </div>
         <div className="mb-8 text-sm text-gray-500 dark:text-gray-400">
-          <Link href="https://github.com/timlrx/tailwind-nextjs-starter-blog">
-            Tailwind Nextjs Theme
+          <span className="mr-1">Designed with</span>
+          <Link
+            href="https://github.com/timlrx/tailwind-nextjs-starter-blog"
+            className="hover:opacity-80 duration-100"
+          >
+            a modified Tailwind NextJS Starter Blog
           </Link>
         </div>
       </div>

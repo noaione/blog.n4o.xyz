@@ -54,7 +54,7 @@ export default function Home({ posts }) {
   return (
     <>
       <PageSeo
-        title={siteMetadata.title}
+        title={intl.formatMessage({ id: 'home' })}
         description={siteMetadata.description}
         url={siteMetadata.siteUrl}
       />

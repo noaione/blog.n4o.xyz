@@ -8,20 +8,26 @@ import generateRss from '@/lib/generate-rss'
 
 export async function getStaticPaths() {
   const posts = await getFiles('blog')
+  const pathsEn = posts.map((p) => ({
+    params: {
+      slug: formatSlug(p),
+    },
+    locale: 'en',
+  }))
+  const pathsId = posts.map((p) => ({
+    params: {
+      slug: formatSlug(p),
+    },
+    locale: 'id',
+  }))
 
   return {
-    paths: posts.map((p) => ({
-      params: {
-        slug: formatSlug(p),
-      },
-      locale: 'en',
-    })),
+    paths: [...pathsEn, ...pathsId],
     fallback: false,
   }
 }
 
 export async function getStaticProps({ params, locale }) {
-  console.info(locale, params)
   const allPosts = await getAllFilesFrontMatter('blog', locale)
   const postIndex = allPosts.findIndex((post) => post.slug === params.slug)
   if (postIndex < 0) {

@@ -5,13 +5,26 @@ import Link from '@/components/Link'
 import Card from '@/components/Card'
 import { PageSeo } from '@/components/SEO'
 
-import { FormattedMessage } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl'
+
+function selectDescription(description, locale) {
+  if (typeof description === 'string') {
+    return description
+  }
+  const allKeys = Object.keys(description)
+  if (!allKeys.includes(locale)) {
+    return description[allKeys[0]]
+  }
+  return description[locale]
+}
 
 export default function Projects() {
+  const intl = useIntl()
+
   return (
     <>
       <PageSeo
-        title={`Projects - ${siteMetadata.author}`}
+        title={intl.formatMessage({ id: 'projects' })}
         description={siteMetadata.description}
         url={`${siteMetadata.siteUrl}/projects`}
       />
@@ -27,7 +40,7 @@ export default function Projects() {
               <Card
                 key={d.title}
                 title={d.title}
-                description={d.description}
+                description={selectDescription(d.description, intl.locale)}
                 imgSrc={d.imgSrc}
                 href={d.href}
               />

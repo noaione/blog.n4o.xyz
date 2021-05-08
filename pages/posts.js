@@ -18,7 +18,7 @@ export default function Blog({ posts }) {
   return (
     <>
       <PageSeo
-        title={`Blog - ${siteMetadata.author}`}
+        title={intl.formatMessage({ id: 'posts' })}
         description={siteMetadata.description}
         url={`${siteMetadata.siteUrl}/posts`}
       />

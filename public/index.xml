@@ -7,77 +7,17 @@
       <language>id</language>
       <managingEditor>hi@n4o.xyz (N4O)</managingEditor>
       <webMaster>hi@n4o.xyz (N4O)</webMaster>
-      <lastBuildDate>Tue, 12 Jan 2021 00:00:00 GMT</lastBuildDate>
+      <lastBuildDate>Sat, 08 May 2021 00:00:00 GMT</lastBuildDate>
       <atom:link href="https://blog.n4o.xyz//index.xml" rel="self" type="application/rss+xml"/>
       
   <item>
-    <guid>https://blog.n4o.xyz//posts/introducing-tailwind-nextjs-starter-blog</guid>
-    <title>Introducing Tailwind Nexjs Starter Blog</title>
-    <link>https://blog.n4o.xyz//posts/introducing-tailwind-nextjs-starter-blog</link>
-    <description>Looking for a performant, out of the box template, with all the best in web technology to support your blogging needs? Checkout the Tailwind Nextjs Starter Blog template.</description>
-    <pubDate>Tue, 12 Jan 2021 00:00:00 GMT</pubDate>
+    <guid>https://blog.n4o.xyz//posts/shortcode-test</guid>
+    <title>Percobaan Shortcode</title>
+    <link>https://blog.n4o.xyz//posts/shortcode-test</link>
+    <description>A shortcode collection test an shit for giggles</description>
+    <pubDate>Sat, 08 May 2021 00:00:00 GMT</pubDate>
     <author>hi@n4o.xyz (N4O)</author>
-    <category>next-js</category><category>tailwind</category><category>guide</category>
-  </item>
-
-  <item>
-    <guid>https://blog.n4o.xyz//posts/guide-to-using-images-in-nextjs</guid>
-    <title>Images in Next.js</title>
-    <link>https://blog.n4o.xyz//posts/guide-to-using-images-in-nextjs</link>
-    <description>In this article we introduce adding images in the tailwind starter blog and the benefits and limitations of the next/image component.</description>
-    <pubDate>Wed, 11 Nov 2020 00:00:00 GMT</pubDate>
-    <author>hi@n4o.xyz (N4O)</author>
-    <category>next js</category><category>guide</category>
-  </item>
-
-  <item>
-    <guid>https://blog.n4o.xyz//posts/deriving-ols-estimator</guid>
-    <title>Deriving the OLS Estimator</title>
-    <link>https://blog.n4o.xyz//posts/deriving-ols-estimator</link>
-    <description>How to derive the OLS Estimator with matrix notation and a tour of math typesetting using markdown with the help of KaTeX.</description>
-    <pubDate>Sat, 16 Nov 2019 00:00:00 GMT</pubDate>
-    <author>hi@n4o.xyz (N4O)</author>
-    <category>next js</category><category>math</category><category>ols</category>
-  </item>
-
-  <item>
-    <guid>https://blog.n4o.xyz//posts/github-markdown-guide</guid>
-    <title>Markdown Guide</title>
-    <link>https://blog.n4o.xyz//posts/github-markdown-guide</link>
-    <description>Markdown cheatsheet for all your blogging needs - headers, lists, images, tables and more! An illustrated guide based on Github Flavored Markdown.</description>
-    <pubDate>Fri, 11 Oct 2019 00:00:00 GMT</pubDate>
-    <author>hi@n4o.xyz (N4O)</author>
-    <category>github</category><category>guide</category>
-  </item>
-
-  <item>
-    <guid>https://blog.n4o.xyz//posts/the-time-machine</guid>
-    <title>The Time Machine</title>
-    <link>https://blog.n4o.xyz//posts/the-time-machine</link>
-    <description>The Time Traveller (for so it will be convenient to speak of him) was expounding a recondite matter to us. His pale grey eyes shone and twinkled, and his usually pale face was flushed and animated...</description>
-    <pubDate>Wed, 15 Aug 2018 00:00:00 GMT</pubDate>
-    <author>hi@n4o.xyz (N4O)</author>
-    <category>writings</category><category>book</category><category>reflection</category>
-  </item>
-
-  <item>
-    <guid>https://blog.n4o.xyz//posts/pictures-of-canada</guid>
-    <title>O Canada</title>
-    <link>https://blog.n4o.xyz//posts/pictures-of-canada</link>
-    <description>The scenic lands of Canada featuring maple leaves, snow-capped mountains, turquoise lakes and Toronto. Take in the sights in this photo gallery exhibition and see how easy it is to replicate with some MDX magic and tailwind classes.</description>
-    <pubDate>Sat, 15 Jul 2017 00:00:00 GMT</pubDate>
-    <author>hi@n4o.xyz (N4O)</author>
-    <category>holiday</category><category>canada</category><category>images</category>
-  </item>
-
-  <item>
-    <guid>https://blog.n4o.xyz//posts/code-sample</guid>
-    <title>Sample .md file</title>
-    <link>https://blog.n4o.xyz//posts/code-sample</link>
-    <description>Example of a markdown file with code blocks and syntax highlighting</description>
-    <pubDate>Tue, 08 Mar 2016 00:00:00 GMT</pubDate>
-    <author>hi@n4o.xyz (N4O)</author>
-    <category>markdown</category><category>code</category><category>features</category>
+    <category>next js</category><category>sample</category>
   </item>
 
     </channel>

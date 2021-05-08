@@ -10,7 +10,7 @@ export default function About() {
   return (
     <>
       <PageSeo
-        title={`About - ${siteMetadata.author}`}
+        title={`${intl.formatMessage({ id: 'about' })} - ${siteMetadata.author}`}
         description={`About me - ${siteMetadata.author}`}
         url={`${siteMetadata.siteUrl}/about`}
       />
