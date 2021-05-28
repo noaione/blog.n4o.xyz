@@ -1,11 +1,36 @@
 import siteMetadata from '@/data/siteMetadata'
+import aboutData from '@/data/aboutData'
 import SocialIcon from '@/components/social-icons'
 import { PageSeo } from '@/components/SEO'
 
 import { useIntl } from 'react-intl'
 
+import remark from 'remark'
+import gemoji from 'remark-gemoji'
+import markdown from 'remark-parse'
+import html from 'remark-html'
+
+function parseMarkdownSimple(inputText) {
+  const result = remark().use(gemoji).use(markdown).use(html).processSync(inputText)
+  return result.toString()
+}
+
+function buildAboutPage(selectedIntl) {
+  if (Array.isArray(aboutData)) {
+    aboutData
+  }
+
+  const allKeys = Object.keys(aboutData)
+  if (!allKeys.includes(selectedIntl)) {
+    return aboutData[allKeys[0]]
+  }
+  return aboutData[selectedIntl]
+}
+
 export default function About() {
   const intl = useIntl()
+
+  const sectionsAbout = buildAboutPage(intl.locale)
 
   return (
     <>
@@ -39,21 +64,11 @@ export default function About() {
             </div>
           </div>
           <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
-            <p>
-              Tails Azimuth is a professor of atmospheric sciences at the Stanford AI Lab. His
-              research interests includes complexity modelling of tailwinds, headwinds and
-              crosswinds.
-            </p>
-            <p>
-              He leads the clean energy group which develops 3D air pollution-climate models, writes
-              differential equation solvers, and manufactures titanium plated air ballons. In his
-              free time he bakes raspberry pi.
-            </p>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique
-              placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem
-              nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
-            </p>
+            {sectionsAbout.map((section, ev) => {
+              const parsedHTML = parseMarkdownSimple(section)
+              console.info(parsedHTML)
+              return <p key={`sec-${ev}`} dangerouslySetInnerHTML={{ __html: parsedHTML }} />
+            })}
           </div>
         </div>
       </div>
