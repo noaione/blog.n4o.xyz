@@ -3,6 +3,7 @@ import headerNavLinks from '@/data/headerNavLinks'
 import Link from './Link'
 import SectionContainer from './SectionContainer'
 import Footer from './Footer'
+import LangSwitch from './LangSwitch'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 
@@ -39,6 +40,7 @@ const LayoutWrapper = ({ children }) => {
                 </Link>
               ))}
             </div>
+            <LangSwitch />
             <ThemeSwitch />
             <MobileNav />
           </div>
