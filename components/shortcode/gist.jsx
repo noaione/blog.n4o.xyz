@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import React from 'react'
-import ReactGist from 'react-gist'
 
 function getRandomInt(min, max) {
   min = Math.ceil(min)
@@ -77,7 +76,7 @@ class EmbeddedGist extends React.Component {
                 }
 
                 [class=dark] .gist .gist-data {
-                  background-color: #272822 !important;
+                  background-color: #262626 !important;
                   border-color: #4e4e4e !important;
                 }
 
