@@ -66,7 +66,6 @@ export default function About() {
           <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
             {sectionsAbout.map((section, ev) => {
               const parsedHTML = parseMarkdownSimple(section)
-              console.info(parsedHTML)
               return <p key={`sec-${ev}`} dangerouslySetInnerHTML={{ __html: parsedHTML }} />
             })}
           </div>

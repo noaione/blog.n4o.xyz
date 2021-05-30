@@ -36,8 +36,6 @@ const LangSwitch = () => {
   const router = useRouter()
   const defaultLang = intl.defaultLocale
 
-  console.info(router.route, router.locale, router.locales, defaultLang)
-
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), [])
 
