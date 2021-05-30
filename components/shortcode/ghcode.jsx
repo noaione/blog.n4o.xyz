@@ -6,6 +6,7 @@ import remark from 'remark'
 import markdown from 'remark-parse'
 import html from 'remark-html'
 import highlight from 'remark-highlight.js'
+import LineNumbers from '@/lib/hljs-numbers'
 
 async function getCode(user, repo, branch, path) {
   const rawFile = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${path}`
@@ -63,7 +64,27 @@ class GHCodeEmbed extends React.Component {
 
     const rendered = await renderCodeContents(wrapped)
 
-    this.setState({ finalUrl: fileUrl, rendered })
+    const HLJSNum = new LineNumbers(document)
+    this.setState({ finalUrl: fileUrl, rendered }, () => {
+      HLJSNum.documentReady({
+        startFrom: startLine > 0 ? Number.parseInt(startLine) : 1,
+        singleLine: true,
+      })
+    })
+
+    document.addEventListener('copy', (ev) => {
+      let selection = window.getSelection()
+      if (HLJSNum.isHljsLnCodeDescendant(selection.anchorNode)) {
+        let selText
+        if (window.navigator.userAgent.indexOf('Edge') !== -1) {
+          selText = HLJSNum.edgeGetSelectedCodeLines(selection)
+        } else {
+          selText = selection.toString()
+        }
+        ev.clipboardData.setData('text/plain', selText)
+        ev.preventDefault()
+      }
+    })
   }
 
   render() {
@@ -92,7 +113,41 @@ class GHCodeEmbed extends React.Component {
             .ghcode-embed-contents > pre {
               width: 100% !important;
               margin: 0.25rem !important;
-              border-radius: 0.375rem 0.375rem 0 0 !important
+              border-radius: 0.375rem 0.375rem 0 0 !important;
+              padding-left: 0.25rem !important;
+              padding-right: 0.25rem !important;
+            }
+
+            .hljs-ln {
+              margin: 0 !important
+            }
+
+            .hljs-ln > tbody > tr {
+              border-bottom: 0 !important
+            }
+
+            .hljs-ln-numbers {
+              text-align: right;
+              color: #ccc;
+              vertical-align: top;
+              padding-right: 0.75rem !important;
+
+              -webkit-touch-callout: none;
+              -webkit-user-select: none;
+              -khtml-user-select: none;
+              -moz-user-select: none;
+              -ms-user-select: none;
+              user-select: none;
+            }
+
+            .hljs-ln-code {
+              padding-left: 0.5rem !important;
+            }
+
+            .hljs-ln td {
+              padding-bottom: 0.1rem !important;
+              padding-top: 0.1rem !important;
+              font-size: 12.5px;
             }
           `}
           </style>
