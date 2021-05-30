@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "@mapbox/rehype-prism": "^0.5.0",
-    "@mdx-js/loader": "^1.6.22",
-    "@mdx-js/react": "^1.6.22",
+    "@mdx-js/loader": "^2.0.0-next.9",
+    "@mdx-js/react": "^2.0.0-next.9",
     "@next/mdx": "10.2.0",
     "@tailwindcss/forms": "^0.3.2",
-    "@tailwindcss/typography": "^0.4.0",
+    "@tailwindcss/typography": "^0.4.1",
     "autoprefixer": "^10.2.5",
     "gray-matter": "^4.0.2",
     "image-size": "0.9.7",
@@ -41,8 +41,10 @@
     "remark-highlight.js": "^6.0.0",
     "remark-html": "^13.0.1",
     "remark-math": "3.0.1",
+    "remark-mdx": "^2.0.0-next.9",
     "remark-slug": "6.0.0",
-    "tailwindcss": "^2.1.1"
+    "tailwindcss": "^2.1.2",
+    "trim": "^1.0.1"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "10.2.0",
@@ -63,7 +65,7 @@
     "prettier": "2.2.1",
     "rehype": "11.0.0",
     "remark-frontmatter": "3.0.0",
-    "remark-parse": "9.0.0",
+    "remark-parse": "^9.0.0",
     "remark-stringify": "9.0.0",
     "unified": "9.2.1"
   },
