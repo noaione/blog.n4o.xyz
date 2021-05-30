@@ -26,6 +26,7 @@
     "next-themes": "^0.0.14",
     "postcss": "^8.2.8",
     "preact": "^10.5.13",
+    "prop-types": "^15.7.2",
     "react": "17.0.2",
     "react-admonitions": "^2.1.0",
     "react-dom": "17.0.2",
@@ -64,8 +65,7 @@
     "remark-frontmatter": "3.0.0",
     "remark-parse": "9.0.0",
     "remark-stringify": "9.0.0",
-    "unified": "9.2.1",
-    "unist-util-visit": "2.0.3"
+    "unified": "9.2.1"
   },
   "lint-staged": {
     "*.+(js|jsx|ts|tsx)": [
