@@ -6,7 +6,7 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   future: {
-    webpack5: false,
+    webpack5: true,
   },
   i18n: {
     locales: ['id', 'en'],
@@ -28,9 +28,7 @@ module.exports = withBundleAnalyzer({
     })
 
     if (!isServer) {
-      config.node = {
-        fs: 'empty',
-      }
+      config.resolve.fallback.fs = false
     }
 
     config.module.rules.push({
