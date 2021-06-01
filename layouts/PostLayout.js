@@ -91,12 +91,6 @@ class SpotifyNow extends React.Component {
 export default function PostLayout({ children, frontMatter, next, prev }) {
   const { slug, fileName, date, title, tags, readingTime } = frontMatter
   const intl = useIntl()
-  // const { data, error } = useSWR(['/api/now?mock=1', (url) => fetcher(url)])
-  const data = { url: '/', playing: false }
-  const error = false
-  useEffect(() => {
-    console.info('Refreshing....')
-  }, [])
 
   const descriptors = {
     authors: {

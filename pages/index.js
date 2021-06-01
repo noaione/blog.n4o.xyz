@@ -56,7 +56,6 @@ class SpotifyNow extends React.Component {
     }
     const mainData = data.data || {}
     const { playing } = data
-    console.info(mainData, data, data.data)
 
     return (
       <div>
