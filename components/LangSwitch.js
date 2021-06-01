@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const LanguageKey = (props) => {
-  const ref = useRef(null)
+  const router = useRouter()
 
   let styling = 'p-2 rounded-lg'
   let selLink = props.route
@@ -18,18 +18,24 @@ const LanguageKey = (props) => {
     styling += ' bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 transition'
   }
   const localeName = new Intl.DisplayNames([props.locale, 'en'], { type: 'language' })
+  let extraUrl = ''
+  if (props.defaultLocale !== props.locale) {
+    extraUrl = '/' + props.locale
+  }
   return (
     <li className={styling}>
       {selLink === '#' ? (
         <span className="select-none font-semibold">{localeName.of(props.locale)}</span>
       ) : (
         <Link
-          href={{ pathname: selLink, query: props.query || {} }}
+          href={router.asPath}
           locale={props.locale}
-          className="font-semibold"
+          className="font-semibold block w-full"
           passHref
         >
-          <a className="font-semibold block w-full">{localeName.of(props.locale)}</a>
+          <a className="font-semibold block w-full" href={`${extraUrl}${router.asPath}`}>
+            {localeName.of(props.locale)}
+          </a>
         </Link>
       )}
     </li>
@@ -72,8 +78,8 @@ const LangSwitch = () => {
               index={idx}
               locale={locale}
               currentLocale={router.locale}
-              route={router.route}
-              query={router.query}
+              defaultLocale={router.defaultLocale}
+              route={router.asPath}
             />
           )
         })}
