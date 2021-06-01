@@ -40,7 +40,7 @@ export default function Tags({ tags }) {
                   href={`/tags/${kebabCase(t)}`}
                   className="-ml-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-300"
                 >
-                  {` (${tags[t]})`}
+                  {` (${tags[t]['count']})`}
                 </Link>
               </div>
             )

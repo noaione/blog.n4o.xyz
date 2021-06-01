@@ -19,7 +19,7 @@ function summaryFormatter(textData) {
   return result.toString()
 }
 
-export default function ListLayout({ posts, title }) {
+export default function ListLayout({ posts, title, isPosts }) {
   const [searchValue, setSearchValue] = useState('')
   const intl = useIntl()
   const filteredBlogPosts = posts.filter((frontMatter) => {
@@ -43,6 +43,11 @@ export default function ListLayout({ posts, title }) {
       description: undefined,
       defaultMessage: undefined,
     },
+    tags: {
+      id: 'tags',
+      description: undefined,
+      defaultMessage: undefined,
+    },
   }
 
   let usedNoData = descriptors.noArticle
@@ -54,8 +59,17 @@ export default function ListLayout({ posts, title }) {
     <>
       <div className="divide-y">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
-            {title}
+          {!isPosts && (
+            <p className="text-lg uppercase leading-3 tracking-wider text-gray-600 dark:text-gray-400 font-bold">
+              {intl.formatMessage(descriptors.tags)}
+            </p>
+          )}
+          <h1
+            className={`text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 ${
+              isPosts ? '' : 'lowercase'
+            }`}
+          >
+            {isPosts ? title : `#${title}`}
           </h1>
           <div className="relative max-w-lg">
             <input
@@ -99,7 +113,10 @@ export default function ListLayout({ posts, title }) {
                   <div className="space-y-3 xl:col-span-3">
                     <div>
                       <h3 className="text-2xl font-bold leading-8 tracking-tight">
-                        <Link href={`/posts/${slug}`} className="text-gray-900 dark:text-gray-100">
+                        <Link
+                          href={`/posts/${slug}`}
+                          className="text-gray-900 dark:text-gray-100 hover:underline"
+                        >
                           {title}
                         </Link>
                       </h3>

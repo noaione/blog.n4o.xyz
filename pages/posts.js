@@ -22,7 +22,7 @@ export default function Blog({ posts }) {
         description={siteMetadata.description}
         url={`${siteMetadata.siteUrl}/posts`}
       />
-      <ListLayout posts={posts} title={intl.formatMessage(messages)} />
+      <ListLayout posts={posts} title={intl.formatMessage(messages)} isPosts />
     </>
   )
 }

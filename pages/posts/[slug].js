@@ -6,6 +6,9 @@ import MDXComponents from '@/components/MDXComponents'
 import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+
 export async function getStaticPaths({ locales, defaultLocale }) {
   const posts = await getFiles('blog', '*', locales, defaultLocale)
   const allPaths = posts.map((p) => ({
@@ -33,18 +36,50 @@ export async function getStaticProps({ params, locale, locales, defaultLocale })
   const next = allPosts[postIndex - 1] || null
   const post = await getFileBySlug('blog', allPosts[postIndex], locales, defaultLocale)
 
+  const useLocale = locale === defaultLocale ? '' : locale
+
   // rss
-  const rss = generateRss(allPosts)
-  fs.writeFileSync('./public/index.xml', rss)
+  const rss = generateRss(allPosts, `${useLocale}/index.xml`, locale)
+  await fs.promises.mkdir(`./public/${useLocale}`, { recursive: true })
+  await fs.promises.writeFile(`./public/${useLocale}${useLocale && '/'}index.xml`, rss)
 
   return { props: { post, prev, next } }
 }
 
 export default function Blog({ post, prev, next }) {
+  const [reportedView, setReported] = useState(false)
+  const router = useRouter()
   const { mdxSource, frontMatter } = post
   const content = hydrate(mdxSource, {
     components: MDXComponents,
   })
+  let fullSlug = router.asPath
+  if (typeof router.locale === 'string' && router.locale !== router.defaultLocale) {
+    fullSlug = `/${router.locale}${fullSlug}`
+  }
+  fullSlug += '/'
+
+  useEffect(() => {
+    if (reportedView) {
+      return
+    }
+    async function postHits() {
+      const resp = await fetch('/api/1up', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ slug: fullSlug }),
+      })
+    }
+    postHits()
+      .then(() => {
+        setReported(true)
+      })
+      .catch(() => {
+        setReported(true)
+      })
+  }, [reportedView])
 
   return (
     <>

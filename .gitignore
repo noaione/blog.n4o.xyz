@@ -32,3 +32,8 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+public/*.xml
+*.env
+*.env.local
+*.env.production

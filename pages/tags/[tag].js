@@ -14,10 +14,11 @@ export async function getStaticPaths({ locales, defaultLocale }) {
   const tags = await getAllTags('blog', undefined, locales, defaultLocale)
 
   return {
-    paths: Object.keys(tags).map((tag) => ({
+    paths: Object.entries(tags).map(([tag, n]) => ({
       params: {
-        tag,
+        tag: tag,
       },
+      locale: n.locale,
     })),
     fallback: false,
   }
@@ -30,7 +31,7 @@ export async function getStaticProps({ params, locale, locales, defaultLocale })
   )
 
   // rss
-  const rss = generateRss(filteredPosts, `tags/${params.tag}/index.xml`)
+  const rss = generateRss(filteredPosts, `tags/${params.tag}/index.xml`, locale)
   const rssPath = path.join(root, 'public', 'tags', params.tag)
   fs.mkdirSync(rssPath, { recursive: true })
   fs.writeFileSync(path.join(rssPath, 'index.xml'), rss)
@@ -44,8 +45,8 @@ export default function Tag({ posts, tag }) {
   return (
     <>
       <PageSeo
-        title={`${tag} - ${siteMetadata.title}`}
-        description={`${tag} tags - ${siteMetadata.title}`}
+        title={`#${tag} - Tags`}
+        description={`#${tag} tags - ${siteMetadata.title}`}
         url={`${siteMetadata.siteUrl}/tags/${tag}`}
       />
       <ListLayout posts={posts} title={title} />

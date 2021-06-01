@@ -1,9 +1,11 @@
 import '@/css/tailwind.css'
 
+import ProgressBar from '@badrap/bar-of-progress'
 import { MDXProvider } from '@mdx-js/react'
 import { ThemeProvider } from 'next-themes'
 import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
+import Router from 'next/router'
 import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 
@@ -19,8 +21,18 @@ const languages = {
   en: LocaleEn,
 }
 
-export default function App({ Component, pageProps }) {
-  const router = useRouter()
+const progress = new ProgressBar({
+  size: 2,
+  color: '#F08257',
+  className: 'z-50',
+  delay: 100,
+})
+
+Router.events.on('routeChangeStart', progress.start)
+Router.events.on('routeChangeComplete', progress.finish)
+Router.events.on('routeChangeError', progress.finish)
+
+export default function App({ Component, pageProps, router }) {
   const { locale, defaultLocale } = router
   const messages = languages[locale]
 

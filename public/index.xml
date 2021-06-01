@@ -7,15 +7,29 @@
       <language>id</language>
       <managingEditor>hi@n4o.xyz (N4O)</managingEditor>
       <webMaster>hi@n4o.xyz (N4O)</webMaster>
-      <lastBuildDate>Sat, 08 May 2021 00:00:00 GMT</lastBuildDate>
-      <atom:link href="https://blog.n4o.xyz//index.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Sat, 29 May 2021 00:00:00 GMT</lastBuildDate>
+      <atom:link href="https://blog.n4o.xyz///index.xml" rel="self" type="application/rss+xml"/>
       
+  <item>
+    <guid>https://blog.n4o.xyz//posts/path-test</guid>
+    <title>Tes</title>
+    <link>https://blog.n4o.xyz//posts/path-test</link>
+    <description>
+Sebuah test untuk hal indah :)
+
+Line baru
+</description>
+    <pubDate>Sat, 29 May 2021 00:00:00 GMT</pubDate>
+    <author>hi@n4o.xyz (N4O)</author>
+    <category>features</category>
+  </item>
+
   <item>
     <guid>https://blog.n4o.xyz//posts/shortcode-test</guid>
     <title>Percobaan Shortcode</title>
     <link>https://blog.n4o.xyz//posts/shortcode-test</link>
     <description>A shortcode collection test an shit for giggles</description>
-    <pubDate>Sat, 08 May 2021 00:00:00 GMT</pubDate>
+    <pubDate>Tue, 06 Apr 2021 00:00:00 GMT</pubDate>
     <author>hi@n4o.xyz (N4O)</author>
     <category>next js</category><category>sample</category>
   </item>
