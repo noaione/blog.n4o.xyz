@@ -7,8 +7,8 @@ import { PageSeo } from '@/components/SEO'
 
 import { FormattedMessage, useIntl } from 'react-intl'
 
-export async function getStaticProps({ locale }) {
-  const tags = await getAllTags('blog', locale)
+export async function getStaticProps({ locale, locales, defaultLocale }) {
+  const tags = await getAllTags('blog', locale, locales, defaultLocale)
 
   return { props: { tags } }
 }

@@ -10,8 +10,8 @@ import generateRss from '@/lib/generate-rss'
 
 const root = process.cwd()
 
-export async function getStaticPaths() {
-  const tags = await getAllTags('blog')
+export async function getStaticPaths({ locales, defaultLocale }) {
+  const tags = await getAllTags('blog', undefined, locales, defaultLocale)
 
   return {
     paths: Object.keys(tags).map((tag) => ({
@@ -23,8 +23,8 @@ export async function getStaticPaths() {
   }
 }
 
-export async function getStaticProps({ params, locale }) {
-  const allPosts = await getAllFilesFrontMatter('blog', locale)
+export async function getStaticProps({ params, locale, locales, defaultLocale }) {
+  const allPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
   const filteredPosts = allPosts.filter(
     (post) => post.draft !== true && post.tags.map((t) => kebabCase(t)).includes(params.tag)
   )

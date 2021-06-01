@@ -6,29 +6,23 @@ import MDXComponents from '@/components/MDXComponents'
 import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 
-export async function getStaticPaths() {
-  const posts = await getFiles('blog')
-  const pathsEn = posts.map((p) => ({
+export async function getStaticPaths({ locales, defaultLocale }) {
+  const posts = await getFiles('blog', '*', locales, defaultLocale)
+  const allPaths = posts.map((p) => ({
     params: {
-      slug: formatSlug(p),
+      slug: formatSlug(p.slug),
     },
-    locale: 'en',
-  }))
-  const pathsId = posts.map((p) => ({
-    params: {
-      slug: formatSlug(p),
-    },
-    locale: 'id',
+    locale: p.locale,
   }))
 
   return {
-    paths: [...pathsEn, ...pathsId],
+    paths: allPaths,
     fallback: false,
   }
 }
 
-export async function getStaticProps({ params, locale }) {
-  const allPosts = await getAllFilesFrontMatter('blog', locale)
+export async function getStaticProps({ params, locale, locales, defaultLocale }) {
+  const allPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
   const postIndex = allPosts.findIndex((post) => post.slug === params.slug)
   if (postIndex < 0) {
     return {
@@ -37,7 +31,7 @@ export async function getStaticProps({ params, locale }) {
   }
   const prev = allPosts[postIndex + 1] || null
   const next = allPosts[postIndex - 1] || null
-  const post = await getFileBySlug('blog', params.slug)
+  const post = await getFileBySlug('blog', allPosts[postIndex], locales, defaultLocale)
 
   // rss
   const rss = generateRss(allPosts)

@@ -5,8 +5,8 @@ import { PageSeo } from '@/components/SEO'
 
 import { defineMessage, useIntl } from 'react-intl'
 
-export async function getStaticProps({ locale }) {
-  const posts = await getAllFilesFrontMatter('blog', locale)
+export async function getStaticProps({ locale, locales, defaultLocale }) {
+  const posts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
 
   return { props: { posts } }
 }

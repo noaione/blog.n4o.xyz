@@ -4,15 +4,27 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import { getAllFilesFrontMatter } from '@/lib/mdx'
 
+import remark from 'remark'
+import markdown from 'remark-parse'
+import html from 'remark-html'
+
 import { useIntl } from 'react-intl'
 
 const MAX_DISPLAY = 5
 const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
 
-export async function getStaticProps({ locale }) {
-  const posts = await getAllFilesFrontMatter('blog', locale)
+export async function getStaticProps({ locale, locales, defaultLocale }) {
+  const posts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
 
   return { props: { posts } }
+}
+
+function summaryFormatter(textData) {
+  if (textData.replace(/\s/g) === '') {
+    return ''
+  }
+  const result = remark().use(markdown).use(html).processSync(textData)
+  return result.toString()
 }
 
 export default function Home({ posts }) {
@@ -100,9 +112,10 @@ export default function Home({ posts }) {
                             ))}
                           </div>
                         </div>
-                        <div className="prose text-gray-500 max-w-none dark:text-gray-400">
-                          {summary}
-                        </div>
+                        <div
+                          className="prose text-gray-500 max-w-none dark:text-gray-400"
+                          dangerouslySetInnerHTML={{ __html: summaryFormatter(summary) }}
+                        />
                       </div>
                       <div className="text-base font-medium leading-6">
                         <Link
