@@ -1,10 +1,23 @@
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
+
+import remark from 'remark'
+import markdown from 'remark-parse'
+import html from 'remark-html'
+
 import { useState } from 'react'
 import { useIntl } from 'react-intl'
 
 const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
+
+function summaryFormatter(textData) {
+  if (textData.replace(/\s/g) === '') {
+    return ''
+  }
+  const result = remark().use(markdown).use(html).processSync(textData)
+  return result.toString()
+}
 
 export default function ListLayout({ posts, title }) {
   const [searchValue, setSearchValue] = useState('')
@@ -96,9 +109,10 @@ export default function ListLayout({ posts, title }) {
                         ))}
                       </div>
                     </div>
-                    <div className="prose text-gray-500 max-w-none dark:text-gray-400">
-                      {summary}
-                    </div>
+                    <div
+                      className="prose text-gray-500 max-w-none dark:text-gray-400"
+                      dangerouslySetInnerHTML={{ __html: summaryFormatter(summary) }}
+                    />
                   </div>
                 </article>
               </li>

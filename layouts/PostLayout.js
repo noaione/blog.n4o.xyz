@@ -38,10 +38,19 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
     readingTime: {
       id: 'readingTime',
     },
+    readingTimeLessThan: {
+      id: 'readingTimeLessThan',
+    },
+  }
+
+  const rtmMin = readingTime.minutes
+  let readingTimeText = Math.ceil(rtmMin).toString()
+  if (rtmMin < 1) {
+    readingTimeText = intl.formatMessage(descriptors.readingTimeLessThan)
   }
 
   const readTimeText = intl.formatMessage(descriptors.readingTime, {
-    minutes: Math.ceil(readingTime.minutes).toString(),
+    minutes: readingTimeText,
   })
 
   return (
