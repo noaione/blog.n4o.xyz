@@ -4,12 +4,14 @@ import SectionContainer from '@/components/SectionContainer'
 import { BlogSeo } from '@/components/SEO'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
+import { durationToText } from '@/lib/utils'
 import React, { useEffect } from 'react'
 
 import { useIntl } from 'react-intl'
 import useSWR from 'swr'
 
-const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/blog/${fileName}`
+const editUrl = (fileName, locale = 'en') =>
+  `${siteMetadata.siteRepo}/blob/master/data/blog/${locale}/${fileName}`
 const discussUrl = (slug) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(
     `${siteMetadata.siteUrl}/posts/${slug}`
@@ -17,9 +19,60 @@ const discussUrl = (slug) =>
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
 
+class TimerLoader extends React.Component {
+  constructor(props) {
+    super(props)
+    const { current } = props
+    this.state = {
+      current,
+    }
+  }
+
+  componentDidMount() {
+    const outerThis = this
+    this.timerState = setInterval(() => {
+      this.setState(
+        (prev) => ({ current: prev.current + 1 }),
+        () => {
+          if (outerThis.state.current >= outerThis.props.total) {
+            if (this.timerState) {
+              clearInterval(this.timerState)
+            }
+            if (outerThis.props && typeof outerThis.props.onFinished === 'function') {
+              outerThis.props.onFinished()
+            }
+          }
+        }
+      )
+    }, 1000)
+  }
+
+  componentWillUnmount() {
+    if (this.timerState) {
+      clearInterval(this.timerState)
+    }
+  }
+
+  render() {
+    let { current } = this.state
+    const { total } = this.props
+    if (current >= total && this.timerState) {
+      clearInterval(this.timerState)
+      current = total
+    }
+
+    return (
+      <p className="text-gray-800 dark:text-gray-200 font-medium">
+        {durationToText(current)}/{durationToText(total)}
+      </p>
+    )
+  }
+}
+
 class SpotifyNow extends React.Component {
   constructor(props) {
     super(props)
+    this.refreshData = this.refreshData.bind(this)
     this.state = {
       data: {},
       loading: true,
@@ -28,6 +81,10 @@ class SpotifyNow extends React.Component {
   }
 
   async componentDidMount() {
+    await this.refreshData()
+  }
+
+  async refreshData() {
     const response = await fetch('/api/now')
     if (response.status !== 200) {
       this.setState({ error: true, loading: false, data: { playing: false } })
@@ -83,13 +140,33 @@ class SpotifyNow extends React.Component {
             )}
           </div>
         </div>
+        {!loading && !error && data.playing && (
+          <div className="flex flex-col mt-0.5">
+            <TimerLoader
+              current={data.data.progress / 1000}
+              total={data.data.duration / 1000}
+              onFinished={() =>
+                setTimeout(() => {
+                  this.refreshData()
+                    .then(() => {
+                      return
+                    })
+                    .catch(() => {
+                      return
+                    })
+                }, 2000)
+              }
+            />
+          </div>
+        )}
       </div>
     )
   }
 }
 
 export default function PostLayout({ children, frontMatter, next, prev }) {
-  const { slug, fileName, date, title, tags, readingTime } = frontMatter
+  const { slug, fileName, date, title, tags, readingTime, images } = frontMatter
+  console.info(frontMatter)
   const intl = useIntl()
 
   const descriptors = {
@@ -114,6 +191,11 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
     readingTimeLessThan: {
       id: 'readingTimeLessThan',
     },
+  }
+
+  let selectedImages
+  if (Array.isArray(images) && images.length > 0) {
+    selectedImages = images[0]
   }
 
   const rtmMin = readingTime.minutes
@@ -182,13 +264,20 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                 </dd>
               </dl>
               <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:pb-0 xl:col-span-3 xl:row-span-2">
-                <div className="pt-10 pb-8 prose dark:prose-dark max-w-none">{children}</div>
+                <div className="pt-10 pb-8 prose dark:prose-dark max-w-none">
+                  {selectedImages && (
+                    <div className="prose dark:prose-dark">
+                      <img className="max-w-full" src={selectedImages} alt="Featured Images" />
+                    </div>
+                  )}
+                  {children}
+                </div>
                 <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                  <Link href={discussUrl(slug)} rel="nofollow">
+                  {/* <Link href={discussUrl(slug)} rel="nofollow">
                     {'Discuss on Twitter'}
                   </Link>
-                  {` • `}
-                  <Link href={editUrl(fileName)}>{'View on GitHub'}</Link>
+                  {` • `} */}
+                  <Link href={editUrl(fileName, intl.locale)}>{'View on GitHub'}</Link>
                 </div>
               </div>
               <footer>
