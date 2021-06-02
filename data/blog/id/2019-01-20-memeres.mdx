@@ -1,0 +1,48 @@
+---
+title: 'Encoding: Memeresolution'
+summary: 'Memeres atau tidak rilisan fansub anda di 2018+3'
+lastmod: '2021-01-19T13:41:00+07:00'
+tags: ['fansub', 'encoding']
+draft: false
+---
+
+Memeres atau tidak rilisan fansub anda di 2018+3
+
+<!--more-->
+
+## Encoding: Memeres or not
+
+Tools your needing:
+
+- Otak
+- Komputer
+- Python 3
+- Skrip getnative [di sini](https://p.n4o.xyz/files/getnative.zip)
+
+Memeres, mungkin situ pernah denger (dari gua) atau orang lain, sebuah resolusi unik yang biasa digunakaan para fansubber.<br />
+Memeres atau bukan-resolusi-normal-yang-biasa-dipakai biasanya memiliki resolusi 810p, 864p, 878p, 900p.
+
+Anime yang situ tonton dengan resolusi 1080p tidak benar-benar 1080p (Kecuali beberapa anime, seperti Kyoto Animation) sebenernya diproduksi dalam resolusi
+aneh, biasanya 720p tapi itu dah ketinggalan jaman (kek), biasanya pakai resolusi yang tak sebutkan di atas.
+
+Akhirnya, anime tersebut di upscale menggunakan sebuah kernel, biasanya kernel Bicubic (b=1/3, c=13) itu dah cukup kalau Crunchyroll atau semacamnya ATAU studionya sendiri ngehancurin hasil upscale tersebut.
+
+Untuk bisa menemukan "Resolusi asli" atau "Native Resolution" kita akan menggunakan skrip bernama `getnative`, skrip ini akan mencoba untuk mencari resolusi asli dari gambar yang kita berikan.
+
+## Contoh
+
+![Lossless Screenshot](https://puu.sh/Czyft/1d326cc4c5.png)
+![Mask (837p)](https://puu.sh/Czymp/e33e8f3b5e.png)
+![Result Graph](https://puu.sh/Czyn6/d290793cb6.png)
+
+Bisa ambil hasil teksnya di sini [here](https://puu.sh/Czylk/a2451b6ed9.txt)
+
+Seperti yang bisa dilihat di gambar graph, ada semua spike drop di sekitar 873p dan 1079p, menandakan bahwa antara dua itu adalah resolusi asli dari Animenya (Eromanga Sensei OVA).
+
+Situ juga bisa cari resolusi asli via [anibin](http://anibin.blogspot.com/). Bisa jadi benar, bisa jadi salah /shrug.
+
+Bisa dilihat, 873p bukanlah resolusi normal yang biasa situ pakai, siapapun yang ngecoba rilis dengan resolusi ini itu terlalu bego, mending situ reupscale balik ke 1080p atau yang paling dekat 900p.
+
+Atau situ bisa descale/resize lagi ke 720p.
+
+Dah! Mungkin postingan selanjutnya tentang cara descale anime ke resolusi asli.
