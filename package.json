@@ -7,8 +7,7 @@
     "dev": "next dev -p 4500",
     "build": "next build && node ./scripts/generate-sitemap",
     "serve": "next start",
-    "analyze": "env ANALYZE=true next build",
-    "prepare": "husky install"
+    "analyze": "env ANALYZE=true next build"
   },
   "dependencies": {
     "@badrap/bar-of-progress": "^0.1.2",
@@ -64,7 +63,6 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "file-loader": "^6.0.0",
     "globby": "^11.0.3",
-    "husky": "^6.0.0",
     "lint-staged": "^10.5.3",
     "next-compose-plugins": "^2.2.1",
     "next-remote-watch": "^1.0.0",
