@@ -39,7 +39,12 @@ export async function getStaticProps({ params, locale, locales, defaultLocale })
   const useLocale = locale === defaultLocale ? '' : locale
 
   // rss
-  const rss = generateRss(allPosts, `${useLocale}/index.xml`, locale)
+  const rss = generateRss(
+    allPosts,
+    `${useLocale}${useLocale && '/'}index.xml`,
+    locale,
+    defaultLocale
+  )
   await fs.promises.mkdir(`./public/${useLocale}`, { recursive: true })
   await fs.promises.writeFile(`./public/${useLocale}${useLocale && '/'}index.xml`, rss)
 
