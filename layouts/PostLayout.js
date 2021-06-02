@@ -76,31 +76,54 @@ class SpotifyNow extends React.Component {
     this.state = {
       data: {},
       loading: true,
+      firstTime: true,
       error: false,
     }
   }
 
   async componentDidMount() {
     await this.refreshData()
+    this.timerData = setInterval(() => {
+      const { data, loading } = this.state
+      if (data && !data.playing && !loading) {
+        this.refreshData()
+          .then(() => {
+            return
+          })
+          .catch(() => {
+            return
+          })
+      }
+    }, 30 * 1000)
+  }
+
+  componentWillUnmount() {
+    if (this.timerData) {
+      clearInterval(this.timerData)
+    }
   }
 
   async refreshData() {
+    if (this.state.firstTime) {
+      this.setState({ loading: true })
+    }
     const response = await fetch('/api/now')
     if (response.status !== 200) {
-      this.setState({ error: true, loading: false, data: { playing: false } })
+      this.setState({ error: true, loading: false, data: { playing: false }, firstTime: false })
       return
     }
     const data = await response.json()
-    this.setState({ data, loading: false })
+    this.setState({ data, loading: false, firstTime: false })
   }
 
   render() {
+    const { localesData } = this.props
     const { data, loading, error } = this.state
 
     return (
       <div className="py-4 xl:py-8">
         <h2 className="text-s tracking-wide text-gray-500 uppercase dark:text-gray-400">
-          Now playing
+          {localesData.play}
         </h2>
         <div className="flex flex-row items-center gap-1 mt-1">
           <svg className="h-4 w-4 ml-auto" viewBox="0 0 168 168">
@@ -112,14 +135,12 @@ class SpotifyNow extends React.Component {
           <div className="flex flex-col sm:flex-row w-full max-w-full">
             {loading ? (
               <p className="text-gray-800 dark:text-gray-200 font-medium whitespace-pre-line">
-                Loading playing data...
+                {localesData.load}
               </p>
             ) : (
               <>
                 {error ? (
-                  <p className="text-gray-800 dark:text-gray-200 font-medium">
-                    Failed to get now "playing" data
-                  </p>
+                  <p className="text-gray-800 dark:text-gray-200 font-medium">{localesData.err}</p>
                 ) : (
                   <>
                     {data.playing ? (
@@ -131,7 +152,7 @@ class SpotifyNow extends React.Component {
                       </Link>
                     ) : (
                       <p className="text-gray-800 dark:text-gray-200 font-medium">
-                        Not playing anything
+                        {localesData.stop}
                       </p>
                     )}
                   </>
@@ -191,6 +212,21 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
     readingTimeLessThan: {
       id: 'readingTimeLessThan',
     },
+    spotifyListening2: {
+      id: 'spotifyListening2',
+    },
+    spotifyNotPlaying: {
+      id: 'spotifyNotPlaying',
+    },
+    spotifyAlbumBy: {
+      id: 'spotifyAlbumBy',
+    },
+    spotifyLoadingData: {
+      id: 'spotifyLoadingData',
+    },
+    spotifyLoadError: {
+      id: 'spotifyLoadError',
+    },
   }
 
   let selectedImages
@@ -207,6 +243,14 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
   const readTimeText = intl.formatMessage(descriptors.readingTime, {
     minutes: readingTimeText,
   })
+
+  const spotifyDataLocales = {
+    play: intl.formatMessage(descriptors.spotifyListening2),
+    stop: intl.formatMessage(descriptors.spotifyNotPlaying),
+    by: intl.formatMessage(descriptors.spotifyAlbumBy),
+    load: intl.formatMessage(descriptors.spotifyLoadingData),
+    err: intl.formatMessage(descriptors.spotifyLoadError),
+  }
 
   return (
     <>
@@ -294,7 +338,7 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                       </div>
                     </div>
                   )}
-                  <SpotifyNow />
+                  <SpotifyNow localesData={spotifyDataLocales} />
                   <>
                     {(next || prev) && (
                       <div className="flex justify-between py-4 xl:block xl:py-8 xl:space-y-8">

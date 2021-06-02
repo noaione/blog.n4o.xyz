@@ -95,9 +95,28 @@ class SpotifyNow extends React.Component {
   async componentDidMount() {
     await this.refreshData()
     this.setState({ firstTime: false })
+    this.timerData = setInterval(() => {
+      const { data, loading } = this.state
+      if (data && !data.playing && !loading) {
+        this.refreshData()
+          .then(() => {
+            return
+          })
+          .catch(() => {
+            return
+          })
+      }
+    }, 30 * 1000)
+  }
+
+  componentWillUnmount() {
+    if (this.timerData) {
+      clearInterval(this.timerData)
+    }
   }
 
   async refreshData() {
+    this.setState({ loading: true })
     const response = await fetch('/api/now')
     if (response.status !== 200) {
       this.setState({ error: true, loading: false, data: { playing: false } })
@@ -108,6 +127,7 @@ class SpotifyNow extends React.Component {
   }
 
   render() {
+    const { localesData, locale } = this.props
     const { data, loading, error, firstTime } = this.state
     if (error) {
       return null
@@ -128,9 +148,7 @@ class SpotifyNow extends React.Component {
                 src="https://cdn.betterttv.net/emote/5b77ac3af7bddc567b1d5fb2/3x"
                 alt="PepeJam"
               />
-              <p className="text-gray-400 dark:text-gray-500 tracking-wide">
-                Currently jamming to:
-              </p>
+              <p className="text-gray-400 dark:text-gray-500 tracking-wide">{localesData.play}</p>
             </div>
           )}
         </div>
@@ -160,10 +178,12 @@ class SpotifyNow extends React.Component {
                       </Link>
                     </div>
                     <div className="font-semibold text-gray-600 dark:text-gray-500 text-xl md:text-2xl">
-                      {mainData.album.name} by {mainData.artist.join(', ')}
+                      {mainData.album.name} {localesData.by} {mainData.artist.join(', ')}
                     </div>
                     <div className="font-light text-gray-400 dark:text-gray-500">
-                      {DateTime.fromSQL(mainData.album.date).toLocaleString(DateTime.DATE_FULL)}
+                      {DateTime.fromSQL(mainData.album.date)
+                        .setLocale(locale)
+                        .toLocaleString(DateTime.DATE_FULL)}
                     </div>
                     <TimerLoader
                       current={mainData.progress / 1000}
@@ -191,7 +211,7 @@ class SpotifyNow extends React.Component {
                     ></path>
                   </svg>
                   <h3 className="text-gray-800 dark:text-gray-200 font-medium text-xl">
-                    Not playing anything
+                    {localesData.stop}
                   </h3>
                 </div>
               )}
@@ -237,6 +257,21 @@ export default function Home({ posts }) {
       description: undefined,
       defaultMessage: undefined,
     },
+    spotifyListening: {
+      id: 'spotifyListening',
+    },
+    spotifyNotPlaying: {
+      id: 'spotifyNotPlaying',
+    },
+    spotifyAlbumBy: {
+      id: 'spotifyAlbumBy',
+    },
+  }
+
+  const spotifyDataLocales = {
+    play: intl.formatMessage(descriptors.spotifyListening),
+    stop: intl.formatMessage(descriptors.spotifyNotPlaying),
+    by: intl.formatMessage(descriptors.spotifyAlbumBy),
   }
 
   return (
@@ -335,7 +370,7 @@ export default function Home({ posts }) {
           </Link>
         </div>
       )}
-      <SpotifyNow />
+      <SpotifyNow locale={intl.locale} localesData={spotifyDataLocales} />
     </>
   )
 }

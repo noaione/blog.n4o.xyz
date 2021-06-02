@@ -20,6 +20,14 @@
   "noTags": "Tidak ada tagar.",
   "authors": "Penulis",
   "siteDesc": "Sebuah blog random untuk nulis artikel atau postingan yang tak mau",
+
   "404_1": "Maaf, laman tidak dapat ditemukan.",
-  "404_2": "Tapi jangan khawatir, masih banyak hal lain yang ada di laman utama blog ini"
+  "404_2": "Tapi jangan khawatir, masih banyak hal lain yang ada di laman utama blog ini",
+
+  "spotifyLoadingData": "Memuat data \"Now Playing\"...",
+  "spotifyLoadError": "Gagal mengambil data \"Now Playing\"",
+  "spotifyNotPlaying": "Tidak sedang mendengarkan apa-apa",
+  "spotifyListening": "Sedang mendengarkan:",
+  "spotifyListening2": "Sedang mendengarkan",
+  "spotifyAlbumBy": "oleh"
 }
