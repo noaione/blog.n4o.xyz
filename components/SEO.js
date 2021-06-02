@@ -1,5 +1,7 @@
 import { NextSeo, ArticleJsonLd } from 'next-seo'
 import siteMetadata from '@/data/siteMetadata'
+import { useIntl } from 'react-intl'
+import { useRouter } from 'next/router'
 
 export const SEO = {
   title: siteMetadata.title,
@@ -33,6 +35,12 @@ export const SEO = {
 }
 
 export const PageSeo = ({ title, description, url }) => {
+  const intl = useRouter()
+  if (intl.locale !== intl.defaultLocale) {
+    url = '/' + intl.locale + url
+  }
+  url = siteMetadata.siteUrl + url
+
   return (
     <NextSeo
       title={`${title} :: ${siteMetadata.title}`}
@@ -42,12 +50,15 @@ export const PageSeo = ({ title, description, url }) => {
         url,
         title,
         description,
+        locale: intl.locale,
+        site_name: siteMetadata.title,
       }}
     />
   )
 }
 
 export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] }) => {
+  const intl = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
   let imagesArr =
@@ -63,6 +74,12 @@ export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] 
       alt: title,
     }
   })
+  let useLocale = ''
+  if (intl.locale !== intl.defaultLocale) {
+    url = '/' + intl.locale + url
+    useLocale = '/' + intl.locale
+  }
+  url = siteMetadata.siteUrl + url
 
   return (
     <>
@@ -75,14 +92,17 @@ export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] 
           article: {
             publishedTime: publishedAt,
             modifiedTime: modifiedAt,
-            authors: [`${siteMetadata.siteUrl}/about`],
+            authors: [`${siteMetadata.siteUrl}${useLocale}/about`],
             tags,
           },
           url,
           title,
+          locale: intl.locale,
+          site_name: siteMetadata.title,
           description: summary,
           images: featuredImages,
         }}
+        twitter={{ cardType: 'summary_large_image' }}
         additionalMetaTags={[
           {
             name: 'twitter:image',
@@ -95,7 +115,7 @@ export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] 
         dateModified={modifiedAt}
         datePublished={publishedAt}
         description={summary}
-        images={featuredImages}
+        images={featuredImages.map((e) => e.url)}
         publisherName={siteMetadata.author}
         title={title}
         url={url}
