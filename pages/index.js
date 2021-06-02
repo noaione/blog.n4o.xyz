@@ -278,8 +278,8 @@ export default function Home({ posts }) {
     <>
       <PageSeo
         title={intl.formatMessage({ id: 'home' })}
-        description={siteMetadata.description}
-        url={siteMetadata.siteUrl}
+        description={intl.formatMessage(descriptors.siteDesc)}
+        url={'/'}
       />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">

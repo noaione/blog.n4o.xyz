@@ -25,8 +25,11 @@ export default function Projects() {
     <>
       <PageSeo
         title={intl.formatMessage({ id: 'projects' })}
-        description={siteMetadata.description}
-        url={`${siteMetadata.siteUrl}/projects`}
+        description={intl.formatMessage(
+          { id: 'descProjectsPage' },
+          { author: siteMetadata.author }
+        )}
+        url={`/projects`}
       />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">

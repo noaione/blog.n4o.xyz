@@ -19,8 +19,8 @@ export default function Blog({ posts }) {
     <>
       <PageSeo
         title={intl.formatMessage({ id: 'posts' })}
-        description={siteMetadata.description}
-        url={`${siteMetadata.siteUrl}/posts`}
+        description={intl.formatMessage({ id: 'descPostsPage' }, { blogName: siteMetadata.title })}
+        url={`/posts`}
       />
       <ListLayout posts={posts} title={intl.formatMessage(messages)} isPosts />
     </>

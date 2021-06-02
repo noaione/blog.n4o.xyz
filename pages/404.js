@@ -8,7 +8,7 @@ export default function FourZeroFour() {
 
   return (
     <>
-      <PageSeo title="404" description="Page not found" />
+      <PageSeo title="404" description={intl.formatMessage({ id: 'decs404Page' })} />
       <div className="flex flex-col items-start justify-start md:justify-center md:items-center md:flex-row md:space-x-6 md:mt-24">
         <div className="pt-6 pb-8 space-x-2 md:space-y-5">
           <h1 className="text-6xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 md:text-8xl md:leading-14 md:border-r-2 md:px-6">
