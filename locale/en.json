@@ -5,21 +5,32 @@
   "projects": "Projects",
   "about": "About",
   "latest": "Latest",
+
   "readMore": "Read More",
   "learnMore": "Learn more",
   "allPosts": "All Posts",
   "goBack": "Back to the blog",
+
   "readingTime": "{minutes} min read",
   "readingTimeLessThan": "Less than a",
+
   "previousArticle": "Previous Article",
   "nextArticle": "Next Article",
+
+  "authors": "Authors",
+  "siteDesc": "A random blog where I'll write stuff that I want to",
   "tagLine": "Someone that stuck on VTubers Hell for a while",
+  "descPostsPage": "All {blogName} blog in one place",
+  "descProjectsPage": "All projects made by {author}",
+  "descAboutPage": "A simple information about the blog author a.k.a {author}",
+  "descTagsPage": "All the tags you need for simple post categorizing.",
+  "descTaggedPage": "All post tagged with #{tag}",
+  "decs404Page": "The page you're trying to open doesn't exist on this website",
+
   "searchArticle": "Search articles",
   "searchNoResult": "No posts found.",
   "noArticle": "No article ¯\\_(ツ)_/¯",
   "noTags": "No tags found.",
-  "authors": "Authors",
-  "siteDesc": "A random blog where I'll write stuff that I want to",
 
   "404_1": "Sorry we couldn't find this page.",
   "404_2": "But dont worry, you can find plenty of other things on our homepage.",
