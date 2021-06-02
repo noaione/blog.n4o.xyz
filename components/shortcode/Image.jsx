@@ -32,7 +32,11 @@ export default function Image(props) {
           marginBottom: `${props.caption ? '0.25rem' : '2rem'}`,
         }}
       />
-      {props.caption && <figcaption style={{ alignSelf: 'center' }}>{props.caption}</figcaption>}
+      {props.caption && (
+        <figcaption style={{ alignSelf: 'center', fontStyle: 'italic' }}>
+          {props.caption}
+        </figcaption>
+      )}
     </ControlledZoom>
   )
 }
