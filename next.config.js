@@ -1,3 +1,5 @@
+const localeData = require('./locale-data')
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -8,11 +10,7 @@ module.exports = withBundleAnalyzer({
   future: {
     webpack5: true,
   },
-  i18n: {
-    locales: ['id', 'en'],
-    defaultLocale: 'id',
-    localeDetection: false,
-  },
+  i18n: Object.assign({}, localeData, { localeDetection: false }),
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
