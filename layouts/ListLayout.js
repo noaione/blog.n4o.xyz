@@ -98,11 +98,15 @@ export default function ListLayout({ posts, title, isPosts }) {
         <ul>
           {!filteredBlogPosts.length && <p className="mt-2">{intl.formatMessage(usedNoData)}</p>}
           {filteredBlogPosts.map((frontMatter) => {
-            const { slug, date, title, summary, tags } = frontMatter
+            const { slug, date, title, summary, tags, images } = frontMatter
+            let selectedImages
+            if (Array.isArray(images) && images.length > 0) {
+              selectedImages = images[0]
+            }
             return (
               <li key={slug} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:space-y-0 xl:items-baseline">
-                  <dl>
+                  <dl style={{ alignSelf: 'flex-start' }}>
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>
@@ -113,6 +117,16 @@ export default function ListLayout({ posts, title, isPosts }) {
                   <div className="space-y-3 xl:col-span-3">
                     <div>
                       <h3 className="text-2xl font-bold leading-8 tracking-tight">
+                        {selectedImages && (
+                          <div className="prose">
+                            <img
+                              className="max-w-full"
+                              style={{ marginBottom: '0.5rem' }}
+                              src={selectedImages}
+                              alt="Featured blog post data"
+                            />
+                          </div>
+                        )}
                         <Link
                           href={`/posts/${slug}`}
                           className="text-gray-900 dark:text-gray-100 hover:underline"
