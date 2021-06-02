@@ -30,12 +30,6 @@ export async function getStaticProps({ params, locale, locales, defaultLocale })
     (post) => post.draft !== true && post.tags.map((t) => kebabCase(t)).includes(params.tag)
   )
 
-  // rss
-  const rss = generateRss(filteredPosts, `tags/${params.tag}/index.xml`, locale)
-  const rssPath = path.join(root, 'public', 'tags', params.tag)
-  fs.mkdirSync(rssPath, { recursive: true })
-  fs.writeFileSync(path.join(rssPath, 'index.xml'), rss)
-
   return { props: { posts: filteredPosts, tag: params.tag } }
 }
 
