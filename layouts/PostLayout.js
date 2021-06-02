@@ -187,7 +187,6 @@ class SpotifyNow extends React.Component {
 
 export default function PostLayout({ children, frontMatter, next, prev }) {
   const { slug, fileName, date, title, tags, readingTime, images } = frontMatter
-  console.info(frontMatter)
   const intl = useIntl()
 
   const descriptors = {
