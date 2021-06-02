@@ -254,7 +254,7 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
   return (
     <>
       <SectionContainer>
-        <BlogSeo url={`${siteMetadata.siteUrl}/posts/${frontMatter.slug}`} {...frontMatter} />
+        <BlogSeo url={`/posts/${frontMatter.slug}`} {...frontMatter} />
         <article>
           <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
             <header className="pt-6 xl:pb-6">
