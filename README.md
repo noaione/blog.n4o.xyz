@@ -1,25 +1,6 @@
-![tailwind-nextjs-banner](/public/static/images/twitter-card.png)
+# N4O Personal Blog
 
-# Tailwind Nextjs Starter Blog
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/timlrx/tailwind-nextjs-starter-blog)
-
-This is a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com/) blogging starter template. Comes out of the box configured with the latest technologies to make technical writing a breeze. Easily configurable and customizable. Perfect as a replacement to existing Jekyll and Hugo individual blogs.
-
-## Examples
-
-- [Demo Blog](https://tailwind-nextjs-starter-blog.vercel.app/) - this repo
-- [My personal blog](https://www.timlrx.com) - modified to auto-generate blog posts with dates
-
-Using the template? Happy to accept any PR with modifications made e.g. sub-paths, localization or multiple authors
-
-## Motivation
-
-I wanted to port my existing blog to Nextjs and Tailwind CSS but there was no easy out of the box template to use so I decided to create one.
-
-It is inspired by [Lee Robinson's blog](https://github.com/leerob/leerob.io), but focuses only on static site generation. Design is adapted from [Tailwindlabs blog](https://github.com/tailwindlabs/blog.tailwindcss.com).
-
-I wanted it to be nearly as feature-rich as popular blogging templates like [beautiful-jekyll](https://github.com/daattali/beautiful-jekyll) and [Hugo Academic](https://github.com/wowchemy/wowchemy-hugo-modules) but with the best of React's ecosystem and current web development's best practices.
+This blog is based on [tailwind-nextjs-starter-blog](https://github.com/timlrx/tailwind-nextjs-starter-blog) by timlrx
 
 ## Features
 
@@ -37,22 +18,18 @@ I wanted it to be nearly as feature-rich as popular blogging templates like [bea
 - Projects page
 - SEO friendly with RSS feed, sitemaps and more!
 
-## Sample posts
+### Additional Features
+This feature only available on this fork
 
-- [A markdown guide](https://tailwind-nextjs-starter-blog.vercel.app/blog/github-markdown-guide)
-- [Learn more about images in Next.js](https://tailwind-nextjs-starter-blog.vercel.app/blog/guide-to-using-images-in-nextjs)
-- [A tour of math typesetting](https://tailwind-nextjs-starter-blog.vercel.app/blog/deriving-ols-estimator)
-- [Simple MDX image grid](https://tailwind-nextjs-starter-blog.vercel.app/blog/pictures-of-canada)
-- [Example of long prose](https://tailwind-nextjs-starter-blog.vercel.app/blog/the-time-machine)
-
-## Quick Start Guide
-
-1. `npx degit https://github.com/timlrx/tailwind-nextjs-starter-blog.git`
-2. Personalize `siteMetadata.json`
-3. Modify `projectsData.js`
-4. Modify `headerNavLinks.js` to customize navigation links
-5. Add blog posts
-6. Deploy on Vercel
+- Internationalization (i18n) ready
+- Added Spotify integration (Now playing) to the Home page and Post area
+- Added the featured images to everywhere possible
+- Added new shortcode
+  - GitHub Code Embed
+  - Gist Embed
+  - Admonitions
+  - GitHub-like Repository Card
+- Route loading indicator
 
 ## Development
 
@@ -64,34 +41,7 @@ npm start
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-## Extend / Customize
-
-`data/siteMetadata.json` - contains most of the site related information which should be modified for a user's need.
-
-`data/projectsData.js` - data used to generate styled card in projects page.
-
-`data/headerNavLinks.js` - navigation links.
-
-`data/logo.svg` - replace with your own logo.
-
-`data/blog` - replace with your own blog posts.
-
-`public/static` - store assets such as images and favicons.
-
-`css/tailwind.css` - contains the tailwind stylesheet which can be modified to change the overall look and feel of the site.
-
-`components/social-icons` - to add other icons, simply copy an svg file from [Simple Icons](https://simpleicons.org/) and map them in `index.js`. Other icons uses [heroicons](https://heroicons.com/).
-
-`components/MDXComponents.js` - pass your own JSX code or React component by specifying it over here. You can then call them directly in the `.mdx` or `.md` file. By default, a custom link and image component is passed.
-
-`layouts` - main templates used in pages.
-
-`pages` - pages to route to. Read the [Next.js documentation](https://nextjs.org/docs) for more information
-
+Open [http://localhost:4500](http://localhost:4500) with your browser to see the result.
 ## Post
 
 ### Frontmatter
@@ -142,6 +92,3 @@ This will generate `./data/blog/my-first-post.md` with pre-filled front matter.
 
 **Vercel**  
 The easiest way to deploy the template is to use the [Vercel Platform](https://vercel.com) from the creators of Next.js. Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-**Netlify / Github Pages / Firebase etc.**  
-As the template uses `next/image` for image optimization, additional configurations has to be made to deploy on other popular static hosting websites like [Netlify](https://www.netlify.com/) or [Github Pages](https://pages.github.com/). An alternative image optimization provider such as Imgix, Cloudinary or Akamai has to be used. Alternatively, replace the `next/image` component with a standard `<img>` tag. See [`next/image` documentation](https://nextjs.org/docs/basic-features/image-optimization) for more details.
