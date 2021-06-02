@@ -2,36 +2,35 @@
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
       <title>N4O Blog</title>
-      <link>https://blog.n4o.xyz//posts</link>
-      <description>Seseorang yang terjatuh ke neraka VTuber</description>
+      <link>https://blog.n4o.xyz/posts</link>
+      <description>Seseorang yang terjun ke Neraka VTuber</description>
       <language>id</language>
       <managingEditor>hi@n4o.xyz (N4O)</managingEditor>
       <webMaster>hi@n4o.xyz (N4O)</webMaster>
-      <lastBuildDate>Sat, 29 May 2021 00:00:00 GMT</lastBuildDate>
-      <atom:link href="https://blog.n4o.xyz///index.xml" rel="self" type="application/rss+xml"/>
+      <lastBuildDate>Mon, 04 Feb 2019 00:00:00 GMT</lastBuildDate>
+      <atom:link href="https://blog.n4o.xyz/index.xml" rel="self" type="application/rss+xml" />
       
   <item>
-    <guid>https://blog.n4o.xyz//posts/path-test</guid>
-    <title>Tes</title>
-    <link>https://blog.n4o.xyz//posts/path-test</link>
-    <description>
-Sebuah test untuk hal indah :)
-
-Line baru
-</description>
-    <pubDate>Sat, 29 May 2021 00:00:00 GMT</pubDate>
+    <guid>https://blog.n4o.xyz/posts/meme444</guid>
+    <title>Encoding: 4:4:4 Chroma Subsampling</title>
+    <link>https://blog.n4o.xyz/posts/meme444</link>
+    <description>Lebih baik atau tidak?</description>
+    <pubDate>Mon, 04 Feb 2019 00:00:00 GMT</pubDate>
     <author>hi@n4o.xyz (N4O)</author>
-    <category>features</category>
+    <category>fansub</category>
+    <category>encoding</category>
+    <category>tutorial</category>
   </item>
 
   <item>
-    <guid>https://blog.n4o.xyz//posts/shortcode-test</guid>
-    <title>Percobaan Shortcode</title>
-    <link>https://blog.n4o.xyz//posts/shortcode-test</link>
-    <description>A shortcode collection test an shit for giggles</description>
-    <pubDate>Tue, 06 Apr 2021 00:00:00 GMT</pubDate>
+    <guid>https://blog.n4o.xyz/posts/memeres</guid>
+    <title>Encoding: Memeresolution</title>
+    <link>https://blog.n4o.xyz/posts/memeres</link>
+    <description>Memeres atau tidak rilisan fansub anda di 2018+3</description>
+    <pubDate>Sun, 20 Jan 2019 00:00:00 GMT</pubDate>
     <author>hi@n4o.xyz (N4O)</author>
-    <category>next js</category><category>sample</category>
+    <category>fansub</category>
+    <category>encoding</category>
   </item>
 
     </channel>
