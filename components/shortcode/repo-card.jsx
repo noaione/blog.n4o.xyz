@@ -94,7 +94,10 @@ export default class RepoCard extends React.Component {
     }
 
     return (
-      <div className="border border-gray-100 rounded-md bg-gray-200 p-4 text-sm leading-normal text-gray-800 dark:text-gray-200 dark:bg-gray-800 dark:border-gray-900">
+      <div
+        className="border border-gray-100 rounded-md bg-gray-200 p-4 text-sm leading-normal text-gray-800 dark:text-gray-200 dark:bg-gray-800 dark:border-gray-900"
+        style={{ marginTop: '1rem', marginBottom: '1rem' }}
+      >
         <div className="flex items-center">
           <svg
             style={{ fill: '#606a75', marginRight: '8px' }}
