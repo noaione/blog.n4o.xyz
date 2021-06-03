@@ -29,7 +29,14 @@ This feature only available on this fork
   - Gist Embed
   - Admonitions
   - GitHub-like Repository Card
+  - Video embed support with VideoJS
+  - A Discord Emote stuff (idk why)
+  - Keystroke (A shortcut for multiple `<kbd>` input)
+  - Custom Image with Zooming support (Medium-like)
 - Route loading indicator
+
+**Removed/Disabled features**
+- `Discuss on Twitter` button, will be changed to Disqus (probably)
 
 ## Development
 
