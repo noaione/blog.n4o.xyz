@@ -1,0 +1,118 @@
+---
+title: 'Ripping: Mengunduh dari AbemaTV'
+lastmod: '2021-06-31T10:41:00+07:00'
+summary: 'Mengunduh video dari salah satu website VOD terbaik di Jepang!'
+images: ['/static/images/abemadl/thumb.png']
+
+tags: ['fansub', 'ripping', 'tutorial']
+---
+
+Tutorial ini akan menggunakan program `yuu` yang tak buat.
+
+<RepoCard username="noaione" reponame="yuu" />
+
+:::info note
+Semua perintah di gambar itu dah beda dengan versi terbaru, anda harus nambah kata `download` setelah `yuu` di versi terbaru
+:::
+
+Yang dibutuhkan:
+
+- Python 3.6+
+- FFMpeg (Opsional)
+- VPN/Proxy Jepang
+
+**Install Python 3.6+ terlebih dahulu, anda bisa ikuti tutorial ini: https://xo.tc/installing-python-36-on-windows.html**
+
+**FFMPEG**
+
+1. Download dari link ini: https://www.gyan.dev/ffmpeg/builds/ffmpeg-git-full.7z
+2. Ekstrak file yang sudah didownload, lalu copy file `ffmpeg.exe` dari folder `bin` ke `C:\Windows`
+
+## Install yuu dan Persiapan
+
+Setelah beres install Python dan mengekstrak ffmpeg, buka CMD atau Powershell dan gunakan perintah `cd` untuk pindah ke folder lain.
+
+Cara mudah lainnya adalah menggunakan `SHIFT-Right Click` di sebuah folder, dan klik `Open PowerShell window here` atau `Open Command Prompt window here`
+
+<Image src="/static/images/abemadl/01.png" caption="Mengubah direktori" />
+
+Ketik `pip install -U yuu` lalu tunggu sampai beres menginstall.
+
+<Image src="/static/images/abemadl/02.png" caption={'"pip install yuu -U"'} />
+
+Jika ada error `requests not found` atau yang sebagainya, ketik ini terlebih dahulu:
+
+```bash
+pip install requests[socks] tqdm pycryptodome m3u8
+```
+
+Lalu install `yuu` lagi.
+
+After `yuu` is installed, start by typing `yuu -h` and make sure it show something like this:
+
+<Image src="/static/images/abemadl/03.png" caption={'"yuu -h"'} />
+
+## Mengunduh Video
+
+Sekarang, aktifkan VPN Jepang anda, atau siapkan proxy yang situ akan pakai.<br />
+Jika situ pakai proxy, tak sarankan pakai yang HTTPS proxy atau semacamnya.
+
+```bash
+$ yuu -h
+Usage: yuu [OPTIONS] COMMAND [ARGS]...
+
+  A simple AbemaTV and other we(e)bsite video downloader
+
+Options:
+  -V, --version  Show current version
+  -h, --help     Show this message and exit.
+
+Commands:
+  download  Download a video from yuu Supported we(e)bsite
+  streams   Check supported website
+```
+
+Untuk mulai mengunduh, ketik:
+
+```bash
+> yuu download https://abema.tv/video/episode/54-25_s1_p1
+```
+
+Perintah diatas akan mulai mengunduh Episode 1 untuk Anime Yagate Kimi ni Naru.<br />
+Jika situ pakai Proxy, tambah parameter ini `-p ip:port`
+
+```bash
+> yuu download -p ip:port https://abema.tv/video/episode/54-25_s1_p1
+```
+
+Untuk memilih resolusi, gunakan `-r` (contoh: `-r 720p`)<br />
+Resolusi yang tersedia biasanya: 180p, 240p, 360p, 480p, 720p, 1080p<br />
+Anda dapat menggunakan perintah `yuu download -R https://abema.tv/video/episode/54-25_s1_p1` untuk memeriksa resolusi yang tersedia
+
+<Image src="/static/images/abemadl/04a.png" caption="Proses download" />
+<Image src="/static/images/abemadl/04b.png" caption="Download sukses" />
+<Image src="/static/images/abemadl/04c.png" caption="Hasil download" />
+
+File sudah bisa di mux ke .mkv menggunakan mkvtoolnix atau ffmpeg.
+
+Kalau error saat mux, situ bisa ketik perintah ini:
+
+```bash
+ffmpeg -i input.ts -map 0:0 -map 0:1 -c copy output-fix.ts
+```
+
+Ganti `input.ts` ke file anda dan `output-fix.ts` sesuka hati anda.
+
+<Image src="/static/images/abemadl/05a.png" caption="Perintah" />
+<Image src="/static/images/abemadl/05b.png" caption="Hasil ngejalanin perintah" />
+<Image src="/static/images/abemadl/05c.png" caption="File yang diperbaiki" />
+
+## Note
+
+Jika situ ada masalah, situ bisa lapor ke sini: [GitHub Issue](https://github.com/noaione/yuu/issues)<br />
+Mohon gunakan bahasa inggris di GitHub Issue.
+
+Atau anda dapat mengontak saya di Discord; `N4O#8868`
+
+**Contoh video**: Yagate Kimi ni Naru - 01<br />
+**Contoh video yang didownload**: 1-Page no Koi Trailer
