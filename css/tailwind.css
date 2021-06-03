@@ -17,6 +17,14 @@ html {
   scroll-behavior: smooth;
 }
 
+.twemoji-emoji {
+  display: inline-block !important;
+  width: 1.25rem !important;
+  height: 1.25rem !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
 /* Metadata */
 .file-meta {
   padding: 0.75rem;
@@ -65,6 +73,15 @@ html {
   .hide-in-phone {
     display: none;
   }
+}
+
+/* Task list GFM style */
+.task-list-item {
+  padding-left: 1rem !important;
+}
+.task-list-item > input {
+  margin-top: 0.25rem !important;
+  margin-bottom: 0.25rem !important;
 }
 
 /* Admonitions */
