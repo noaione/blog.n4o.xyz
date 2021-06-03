@@ -26,6 +26,10 @@ async function renderCodeContents(codeContents) {
   return result.toString()
 }
 
+function hash(text) {
+  return Buffer.from(text, 'utf-8').toString('base64')
+}
+
 class GHCodeEmbed extends React.Component {
   constructor(props) {
     super(props)
@@ -54,6 +58,7 @@ class GHCodeEmbed extends React.Component {
     }
 
     fileUrl += `#L${startLine}${endLineText}`
+    const hashedURL = hash(fileUrl)
 
     const wrapped =
       '```' +
@@ -62,14 +67,22 @@ class GHCodeEmbed extends React.Component {
       codeTextSplit.slice(startLine - 1, endLine).join('\n') +
       '\n```'
 
-    const rendered = await renderCodeContents(wrapped)
+    const matchThis = /<pre><code (.*)/im
+
+    let rendered = await renderCodeContents(wrapped)
+    rendered = rendered.replace(matchThis, `<pre><code id="hljs-${hashedURL}" $1`)
 
     const HLJSNum = new LineNumbers(document)
     this.setState({ finalUrl: fileUrl, rendered }, () => {
-      HLJSNum.documentReady({
-        startFrom: startLine > 0 ? Number.parseInt(startLine) : 1,
-        singleLine: true,
-      })
+      const blocks = document.getElementById(`hljs-${hashedURL}`)
+      if (blocks) {
+        if (!HLJSNum.isPluginDisabledForBlock(blocks)) {
+          HLJSNum.lineNumbersBlock(blocks, {
+            startFrom: startLine > 0 ? Number.parseInt(startLine) : 1,
+            singleLine: true,
+          })
+        }
+      }
     })
 
     document.addEventListener('copy', (ev) => {

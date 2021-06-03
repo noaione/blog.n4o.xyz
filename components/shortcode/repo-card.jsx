@@ -167,7 +167,10 @@ export default class RepoCard extends React.Component {
             </div>
           )}
           {loadedData.forks > 0 && (
-            <div className="flex items-center">
+            <div
+              className="flex items-center"
+              style={{ marginLeft: '0.75rem', marginRight: '0.75rem' }}
+            >
               <svg
                 style={{ fill: '#586069' }}
                 aria-label="fork"

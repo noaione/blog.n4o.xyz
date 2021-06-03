@@ -106,6 +106,10 @@ kbd {
   box-shadow: 0 1px 1px rgb(175 175 175 / 20%), 0 2px 0 0 rgb(97 97 97 / 70%) inset;
 }
 
+code.hljs::-webkit-scrollbar {
+  display: none !important;
+}
+
 /* Admonitions */
 /* base admonitions variables of off infima variables */
 :root {
