@@ -7,7 +7,11 @@ class MyDocument extends Document {
   }
 
   render() {
-    const { locale } = this.props
+    const { locale, defaultLocale } = this.props
+    let useLocale = '/' + locale
+    if (locale === defaultLocale) {
+      useLocale = ''
+    }
     return (
       <Html lang={locale || 'en'} prefix="og: https://ogp.me/ns#">
         <Head>
@@ -28,7 +32,7 @@ class MyDocument extends Document {
           <link rel="mask-icon" href="/static/favicons/safari-pinned-tab.svg" color="#F08257" />
           <meta name="msapplication-TileColor" content="#F08257" />
           <meta name="theme-color" content="#F08257" />
-          <link rel="alternate" type="application/rss+xml" href="/index.xml" />
+          <link rel="alternate" type="application/rss+xml" href={`${useLocale}/index.xml`} />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
@@ -80,7 +84,7 @@ class MyDocument extends Document {
 
 function WrapDocument(props) {
   const route = useRouter()
-  return <MyDocument locale={route.locale} {...props} />
+  return <MyDocument locale={route.locale} defaultLocale={route.defaultLocale} {...props} />
 }
 
 export default MyDocument
