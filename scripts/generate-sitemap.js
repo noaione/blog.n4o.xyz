@@ -152,6 +152,9 @@ function formatDateToYMD(dateData) {
           if (locale === localeData.defaultLocale) {
             locRoute = ''
           }
+          if (route === '/404' || route === '/500') {
+            return undefined
+          }
           return `
           <url>
             <loc>${`${siteMetadata.siteUrl}${locRoute}${route}`}</loc>
@@ -176,6 +179,7 @@ function formatDateToYMD(dateData) {
               .join('')}
           </url>`
         })
+        .filter((e) => typeof e === 'string')
         .join('')}
       ${preparedPosts
         .map((post) => {
