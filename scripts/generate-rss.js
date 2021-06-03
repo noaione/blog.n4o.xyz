@@ -1,9 +1,15 @@
+/* eslint-disable no-prototype-builtins */
 const fs = require('fs')
 const path = require('path')
 const globby = require('globby')
 const prettier = require('prettier')
 const matter = require('gray-matter')
 const luxon = require('luxon')
+
+const remark = require('remark')
+const markdown = require('remark-parse')
+const html = require('remark-html')
+
 const siteMetadata = require('../data/siteMetadata')
 const localeData = require('../locale-data')
 
@@ -13,6 +19,11 @@ const LocaleId = require('../locale/id')
 const LocaleLanguages = {
   id: LocaleId,
   en: LocaleEn,
+}
+
+function markdownToHTML(contents) {
+  const result = remark().use(markdown).use(html).processSync(contents)
+  return result.toString()
 }
 
 const kebabCase = (str) =>
@@ -94,12 +105,37 @@ function dateSortDesc(a, b) {
 
 function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en') {
   const postPath = basePath + 'posts/' + post.slug
+  let lbd
+  if (post.hasOwnProperty('lastmod')) {
+    lbd = new Date(post.lastmod).toUTCString()
+  } else if (post.hasOwnProperty('date')) {
+    lbd = new Date(post.date).toUTCString()
+  } else {
+    lbd = new Date().toUTCString()
+  }
+  const { images } = post
+  let featured
+  if (Array.isArray(images) && images.length > 0) {
+    featured = images[0]
+    if (featured.startsWith('/')) {
+      featured = `${basePath.slice(0, basePath.length - 1)}${featured}`
+    }
+  }
+
   return `
     <item>
       <title>${post.title}</title>
-      ${post.summary && `<description>${post.summary}</description>`}
+      ${
+        post.summary
+          ? `<description><![CDATA[${markdownToHTML(post.summary).trim()}]]></description>`
+          : ''
+      }
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
-      <author>$${siteMetadata.email} (${siteMetadata.author})</author>
+      <author>${siteMetadata.author}</author>${
+    typeof featured === 'string' ? `\n      <media:thumbnail url="${featured}" />` : ''
+  }${
+    typeof featured === 'string' ? `\n      <media:content url="${featured}" medium="image" />` : ''
+  }
       <link>${postPath}</link>
       <guid>${postPath}</guid>
       ${post.tags
@@ -116,8 +152,18 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
     basePath += locale + '/'
   }
 
+  const firstPost = validPosts[0]
+  let lbd
+  if (firstPost.hasOwnProperty('lastmod')) {
+    lbd = new Date(firstPost.lastmod).toUTCString()
+  } else if (firstPost.hasOwnProperty('date')) {
+    lbd = new Date(firstPost.date).toUTCString()
+  } else {
+    lbd = new Date().toUTCString()
+  }
+
   return `
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
   <channel>
     <title>${siteMetadata.title}</title>
     <link>${basePath}</link>
@@ -125,7 +171,8 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
     <language>${locale}</language>
     <managingEditor>${siteMetadata.email} (${siteMetadata.author})</managingEditor>
     <webMaster>${siteMetadata.email} (${siteMetadata.author})</webMaster>
-    <lastBuildDate>${new Date(validPosts[0].date).toUTCString()}</lastBuildDate>
+    <lastBuildDate>${lbd}</lastBuildDate>
+    <generator>NextJS/Vercel</generator>
     <atom:link href="${basePath}index.xml" rel="self" type="application/rss+xml" />
     ${validPosts
       .map((post) => {
