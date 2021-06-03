@@ -84,6 +84,28 @@ html {
   margin-bottom: 0.25rem !important;
 }
 
+/* Custom autolink styling */
+.h-autolink-wrap {
+  @apply font-mono;
+  margin-right: 0.25rem;
+  text-decoration: none !important;
+}
+.h-autolink-wrap:hover {
+  text-decoration: underline !important;
+}
+
+kbd {
+  @apply bg-gray-300 rounded border border-gray-400 text-gray-600 inline-block font-bold whitespace-nowrap;
+  @apply dark:bg-gray-600 dark:border-gray-500 dark:text-gray-300;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+  padding: 1px 2px;
+  font-size: 0.825rem;
+}
+
+.dark kbd {
+  box-shadow: 0 1px 1px rgb(175 175 175 / 20%), 0 2px 0 0 rgb(97 97 97 / 70%) inset;
+}
+
 /* Admonitions */
 /* base admonitions variables of off infima variables */
 :root {
