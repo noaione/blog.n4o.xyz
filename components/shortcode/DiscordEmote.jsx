@@ -3,7 +3,7 @@ import React from 'react'
 import EmoteData from './emote.json'
 
 export default function DiscordEmote(props) {
-  const { children } = props
+  const { children, inline } = props
   if (typeof children !== 'string') {
     return null
   }
@@ -15,8 +15,8 @@ export default function DiscordEmote(props) {
 
   return (
     <img
-      className="w-8 h-8"
-      style={{ marginTop: '1rem', marginBottom: '1rem' }}
+      className={`${inline ? 'inline-block w-6 h-6' : 'w-8 h-8'}`}
+      style={{ marginTop: inline ? '0' : '1rem', marginBottom: inline ? '0' : '1rem' }}
       alt={`:${emote.name}:`}
       title={`:${emote.name}:`}
       src={emote.url}
