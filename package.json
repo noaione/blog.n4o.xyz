@@ -51,7 +51,8 @@
     "swr": "^0.5.6",
     "tailwindcss": "^2.1.2",
     "tiny-glob": "^0.2.9",
-    "trim": "^1.0.1"
+    "trim": "^1.0.1",
+    "twemoji": "^13.1.0"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "10.2.0",
