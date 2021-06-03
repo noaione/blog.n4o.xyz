@@ -3,6 +3,7 @@ import GitHubCode from './ghcode'
 import DEmote from './DiscordEmote'
 import Image from './Image'
 import RepoCard from './repo-card'
+import Video from './VideoJS'
 
 const ShortCodeComponents = {
   DEmote,
@@ -10,6 +11,7 @@ const ShortCodeComponents = {
   GitHubCode,
   Image,
   RepoCard,
+  Video,
 }
 
 export default ShortCodeComponents
