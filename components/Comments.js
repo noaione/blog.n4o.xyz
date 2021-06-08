@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
 
 import { DiscussionEmbed } from 'disqus-react'
+import { useTheme } from 'next-themes'
 
 import siteMetadata from '@/data/siteMetadata'
 
@@ -25,6 +26,7 @@ function generateIdentifier(slug, locale, defaultLocale) {
 function DisqusComments(props) {
   const { slug, title } = props
   const router = useRouter()
+  const { theme } = useTheme()
 
   const locale = router.locale
   const defaultLocale = router.defaultLocale
@@ -37,7 +39,13 @@ function DisqusComments(props) {
     language: locale || defaultLocale || 'en',
   }
 
-  return <DiscussionEmbed shortname="catatann4o" config={disqusConfig} />
+  return (
+    <div className="disqus-wrapper">
+      <div id="comments">
+        <DiscussionEmbed shortname="catatann4o" config={disqusConfig} theme={theme} />
+      </div>
+    </div>
+  )
 }
 
 DisqusComments.propTypes = {

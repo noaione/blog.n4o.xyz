@@ -351,4 +351,18 @@ code.hljs::-webkit-scrollbar {
   @apply flex flex-col items-center justify-center;
 }
 
+.disqus-wrapper,
+#disqus_thread,
+#disqus_thread > iframe {
+  background: #fff;
+  color: #000;
+}
+
+.dark .disqus-wrapper,
+.dark #disqus_thread,
+.dark #disqus_thread > iframe {
+  background: #171717;
+  color: #fff;
+}
+
 @tailwind utilities;
