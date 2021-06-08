@@ -1,3 +1,4 @@
+import DisqusComments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
@@ -321,6 +322,9 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                   </Link>
                   {` • `} */}
                   <Link href={editUrl(fileName, intl.locale)}>{'View on GitHub'}</Link>
+                </div>
+                <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
+                  <DisqusComments title={title} slug={slug} />
                 </div>
               </div>
               <footer>
