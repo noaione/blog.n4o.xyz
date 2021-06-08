@@ -37,7 +37,7 @@ function DisqusComments(props) {
     language: locale || defaultLocale || 'en',
   }
 
-  return <DiscussionEmbed shortname="n4oblog" config={disqusConfig} />
+  return <DiscussionEmbed shortname="catatann4o" config={disqusConfig} />
 }
 
 DisqusComments.propTypes = {
