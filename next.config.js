@@ -45,4 +45,16 @@ module.exports = withBundleAnalyzer({
 
     return config
   },
+  async rewrites() {
+    return [
+      {
+        source: '/js/kryptonite.js',
+        destination: 'https://tr.n4o.xyz/js/plausible.js',
+      },
+      {
+        source: '/api/kryptonite',
+        destination: 'https://tr.n4o.xyz/api/event',
+      },
+    ]
+  },
 })

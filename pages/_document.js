@@ -72,6 +72,13 @@ class MyDocument extends Document {
             integrity="sha384-t5CR+zwDAROtph0PXGte6ia8heboACF9R5l/DiY+WZ3P2lxNgvJkQk5n7GPvLMYw"
             crossOrigin="anonymous"
           />
+          <script
+            defer
+            async
+            data-domain="blog.n4o.xyz"
+            data-api="/api/kryptonite"
+            src="/js/kryptonite.js"
+          />
         </Head>
         <body className="antialiased text-black bg-white dark:bg-gray-900 dark:text-white transition-colors duration-200 ease-in-out">
           <Main />
