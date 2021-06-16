@@ -55,21 +55,6 @@ module.exports = withBundleAnalyzer({
         source: '/api/event',
         destination: 'https://tr.n4o.xyz/api/event',
       },
-      /**
-       * Old redirect for Hugo
-       */
-      {
-        source: '/blog/:slug',
-        destination: '/posts/:slug',
-      },
-      {
-        source: '/r/:slug',
-        destination: 'https://shigoto.n4o.xyz/r/:slug',
-      },
-      {
-        source: '/release/:slug',
-        destination: 'https://shigoto.n4o.xyz/release/:slug',
-      },
     ]
   },
 })
