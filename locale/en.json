@@ -40,5 +40,9 @@
   "spotifyNotPlaying": "Not playing anything",
   "spotifyListening": "Currently jamming to:",
   "spotifyListening2": "Now playing",
-  "spotifyAlbumBy": "by"
+  "spotifyAlbumBy": "by",
+
+  "voteInfo": "What do you think?",
+  "voteTextSingle": "{count} vote",
+  "voteTextMultiple": "{count} votes"
 }

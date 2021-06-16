@@ -40,5 +40,9 @@
   "spotifyNotPlaying": "Tidak sedang mendengarkan apa-apa",
   "spotifyListening": "Sedang mendengarkan:",
   "spotifyListening2": "Sedang mendengarkan",
-  "spotifyAlbumBy": "oleh"
+  "spotifyAlbumBy": "oleh",
+
+  "voteInfo": "Bagaimana menurutmu postingannya?",
+  "voteTextSingle": "{count} vote",
+  "voteTextMultiple": "{count} votes"
 }

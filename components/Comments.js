@@ -1,5 +1,15 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { withRouter } from 'next/router'
 
+import UpdootButton from './UpdootButton'
+
+function generateID(slug, locale, defaultLocale) {
+  if (locale === defaultLocale) {
+    return slug
+  }
+  return slug + '-' + locale
+}
 class UtterancesComments extends React.Component {
   constructor(props) {
     super(props)
@@ -21,8 +31,20 @@ class UtterancesComments extends React.Component {
   }
 
   render() {
-    return <div ref={this.commentBox} className="comments-box"></div>
+    const { router, slug } = this.props
+    const voteID = generateID(slug, router.locale, router.defaultLocale)
+
+    return (
+      <>
+        <UpdootButton id={voteID} namespace="blogpost" />
+        <div ref={this.commentBox} className="comments-box"></div>
+      </>
+    )
   }
 }
 
-export default UtterancesComments
+UtterancesComments.propTypes = {
+  slug: PropTypes.string.isRequired,
+}
+
+export default withRouter(UtterancesComments)
