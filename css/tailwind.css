@@ -17,6 +17,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body[theme='dark'] {
+  background: #171717;
+}
+
 .twemoji-emoji {
   display: inline-block !important;
   width: 1.25rem !important;
@@ -349,20 +353,6 @@ code.hljs::-webkit-scrollbar {
   transition-property: transform;
   transform-origin: center center;
   @apply flex flex-col items-center justify-center;
-}
-
-.disqus-wrapper,
-#disqus_thread,
-#disqus_thread > iframe {
-  background: #fff;
-  color: #000;
-}
-
-.dark .disqus-wrapper,
-.dark #disqus_thread,
-.dark #disqus_thread > iframe {
-  background: #171717;
-  color: #fff;
 }
 
 @tailwind utilities;

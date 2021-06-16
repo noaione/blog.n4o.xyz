@@ -38,7 +38,7 @@ export default function App({ Component, pageProps, router }) {
 
   return (
     <IntlProvider messages={messages} locale={locale} defaultFormats={defaultLocale}>
-      <ThemeProvider attribute="class">
+      <ThemeProvider attribute="class" storageKey="theme">
         <MDXProvider components={MDXComponents}>
           <Head>
             <meta content="width=device-width, initial-scale=1" name="viewport" />

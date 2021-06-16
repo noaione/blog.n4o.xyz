@@ -1,6 +1,54 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
 import { useRouter } from 'next/router'
 
+import { InlineJs } from '@kachkaev/react-inline-js'
+
+const THEME_CHECKER_JS = `
+// Helper
+const isNullified = function(data) {
+    return typeof data === "undefined" || data === null;
+}
+
+// Ignore this page
+const isEmbedPage = location.pathname === "/embed";
+
+// Check for first user preferences.
+let userPreferDark;
+let systemPreferDark = false;
+if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    systemPreferDark = true;
+}
+try {
+    const themeStorage = localStorage.getItem("theme");
+    if (!isNullified(themeStorage)) {
+        userPreferDark = themeStorage === "dark" ? true : false;
+    }
+} catch (e) {};
+if (isNullified(userPreferDark)) {
+    if (systemPreferDark) {
+        if (!isEmbedPage) document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+    } else {
+        localStorage.setItem("theme", "light");
+    }
+} else {
+    if (userPreferDark && !isEmbedPage) {
+        document.documentElement.classList.add("dark");
+    }
+}
+
+// Theme toggler
+const toggleTheme = function() {
+    try {
+        if (isEmbedPage) {
+            const isDark = document.documentElement.classList.contains("dark");
+            isDark ? document.documentElement.classList.remove("dark") : document.documentElement.classList.add("dark");
+        }
+        localStorage.setItem("theme", isDark ? "light" : "dark");
+    } catch (e) {};
+};
+`
+
 class MyDocument extends Document {
   constructor(props) {
     super(props)
@@ -73,6 +121,7 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
           />
           <script defer async data-domain="blog.n4o.xyz" src="/js/kryptonite.js" />
+          <InlineJs code={THEME_CHECKER_JS} />
         </Head>
         <body className="antialiased text-black bg-white dark:bg-gray-900 dark:text-white transition-colors duration-200 ease-in-out">
           <Main />

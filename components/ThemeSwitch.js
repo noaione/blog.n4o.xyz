@@ -7,6 +7,17 @@ const ThemeSwitch = () => {
 
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), [])
+  useEffect(() => {
+    const message = {
+      type: 'set-theme',
+      theme: theme === 'dark' ? 'github-dark' : 'github-light',
+    }
+    const iframeData = document.querySelector('.utterances-frame')
+    console.info(iframeData)
+    if (iframeData !== null) {
+      iframeData.contentWindow.postMessage(message, 'https://utteranc.es')
+    }
+  }, [theme])
 
   return (
     <button
