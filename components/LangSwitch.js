@@ -22,10 +22,15 @@ const LanguageKey = (props) => {
   if (props.defaultLocale !== props.locale) {
     extraUrl = '/' + props.locale
   }
+
+  let realLocaleName = localeName.of(props.locale)
+  if (realLocaleName === props.locale) {
+    realLocaleName = realLocaleName.toUpperCase()
+  }
   return (
     <li className={styling}>
       {selLink === '#' ? (
-        <span className="select-none font-semibold">{localeName.of(props.locale)}</span>
+        <span className="select-none font-semibold">{realLocaleName}</span>
       ) : (
         <Link
           href={router.asPath}
@@ -34,7 +39,7 @@ const LanguageKey = (props) => {
           passHref
         >
           <a className="font-semibold block w-full" href={`${extraUrl}${router.asPath}`}>
-            {localeName.of(props.locale)}
+            {realLocaleName}
           </a>
         </Link>
       )}
