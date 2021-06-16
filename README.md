@@ -19,12 +19,15 @@ This blog is based on [tailwind-nextjs-starter-blog](https://github.com/timlrx/t
 - SEO friendly with RSS feed, sitemaps and more!
 
 ### Additional Features
-This feature only available on this fork
+This feature only available on this fork.
+
+**Side note**:<br />
+Not all of the added new feature is customizeable with config for now.
 
 - Internationalization (i18n) ready
 - Added Spotify integration (Now playing) to the Home page and Post area
 - Added the featured images to everywhere possible
-- Added new shortcode
+- Added new shortcodes
   - GitHub Code Embed
   - Gist Embed
   - Admonitions
@@ -34,9 +37,11 @@ This feature only available on this fork
   - Keystroke (A shortcut for multiple `<kbd>` input)
   - Custom Image with Zooming support (Medium-like)
 - Route loading indicator
+- Comment feature powered with GitHub Issues and Utteranc.es
+- Upvote/Downvote button for posts (Disqus like)
 
 **Removed/Disabled features**
-- `Discuss on Twitter` button, will be changed to Disqus (probably)
+- `Discuss on Twitter` button, changed to utterances
 
 ## Development
 
