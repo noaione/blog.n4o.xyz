@@ -1,4 +1,7 @@
 {
+  "#id": "en",
+  "#fullname": "English",
+
   "home": "Home",
   "posts": "Posts",
   "tags": "Tags",
@@ -20,6 +23,7 @@
   "authors": "Authors",
   "siteDesc": "A random blog where I'll write stuff that I want to",
   "tagLine": "Someone that stuck on VTubers Hell for a while",
+  "descHomePage": "The latest blog post from {author}",
   "descPostsPage": "All {blogName} blog in one place",
   "descProjectsPage": "All projects made by {author}",
   "descAboutPage": "A simple information about the blog author a.k.a {author}",

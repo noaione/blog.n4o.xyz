@@ -6,12 +6,13 @@ import { PageSeo } from '@/components/SEO'
 import { useIntl } from 'react-intl'
 
 import remark from 'remark'
+import linebreaks from 'remark-breaks'
 import gemoji from 'remark-gemoji'
 import markdown from 'remark-parse'
 import html from 'remark-html'
 
 function parseMarkdownSimple(inputText) {
-  const result = remark().use(gemoji).use(markdown).use(html).processSync(inputText)
+  const result = remark().use(gemoji).use(linebreaks).use(markdown).use(html).processSync(inputText)
   return result.toString()
 }
 
@@ -65,6 +66,7 @@ export default function About() {
             </div>
           </div>
           <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
+            <p className="italic text-center">{intl.formatMessage({ id: 'siteDesc' })}</p>
             {sectionsAbout.map((section, ev) => {
               const parsedHTML = parseMarkdownSimple(section)
               return <p key={`sec-${ev}`} dangerouslySetInnerHTML={{ __html: parsedHTML }} />

@@ -5,6 +5,7 @@ import Link from 'next/link'
 
 const LanguageKey = (props) => {
   const router = useRouter()
+  const intl = useIntl()
 
   let styling = 'p-2 rounded-lg'
   let selLink = props.route
@@ -25,7 +26,7 @@ const LanguageKey = (props) => {
 
   let realLocaleName = localeName.of(props.locale)
   if (realLocaleName === props.locale) {
-    realLocaleName = realLocaleName.toUpperCase()
+    realLocaleName = intl.formatMessage({ id: '#fullname' })
   }
   return (
     <li className={styling}>
@@ -48,14 +49,10 @@ const LanguageKey = (props) => {
 }
 
 const LangSwitch = () => {
-  const [mounted, setMounted] = useState(false)
   const [hovered, setHovered] = useState(false)
   const intl = useIntl()
   const router = useRouter()
   const defaultLang = intl.defaultLocale
-
-  // When mounted on client, now we can show the UI
-  useEffect(() => setMounted(true), [])
 
   return (
     <div className="inline-block relative align-top">

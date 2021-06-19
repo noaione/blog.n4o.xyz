@@ -1,19 +1,15 @@
 const aboutPageDataEnglish = [
-  `Tails Azimuth is a professor of atmospheric sciences at the Stanford AI Lab. His
-    research interests includes complexity modelling of tailwinds, headwinds and
-    crosswinds.`,
-  `He leads the clean energy group which develops 3D air pollution-climate models, writes
-    differential equation solvers, and manufactures titanium plated air ballons. In his
-    free time he bakes raspberry pi.`,
-  `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique
-    placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem
-    nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.`,
+  `Hello, my (nick)name is N4O. A free developer from Indonesia that currently majoring in Artificial Intelligence.
+    In my free time, I usually watch VTuber or code. Talking about VTuber a little bit, please subscribe to [Tokoyami Towa](https://www.youtube.com/channel/UC1uv2Oq6kNxgATlCiez59hw) :smile:`,
+  `Another thing I usually do is develop my Bot [naoTimes](https://naoti.me). A multi-function Discord Bot with the main feature is track Fansub project progress (Only available in Indonesian Language)`,
+  `You can usually find me at Discord: **N4O#8868**\nOr you can contact me via another social media!`,
 ]
 
 const aboutPageDataIndonesia = [
   `Halo, nama saya N4O. Seorang developer lepas dari Indonesia yang sekarang masih kuliah mengambil jurusan Artificial Intelligence.
       Saya sendiri sekarang hobi nonton VTuber. Ngomongin soal VTuber, tolong tonton [Tokoyami Towa](https://www.youtube.com/channel/UC1uv2Oq6kNxgATlCiez59hw), makasih. :smile:`,
   `Di waktu selang, kadang saya develop Bot [naoTimes](https://naoti.me). Sebuah bot multi-purpose dengan fungsi utama mencatat proses garapan sebuah Fansub`,
+  `Anda bisa menemukan saya di Discord: **N4O#8868**.\nAtau anda bisa menghubungi saya lewat berbagai macam sosial media lainnya!`,
 ]
 
 const aboutPageData = {

@@ -24,7 +24,7 @@ export default function Footer() {
           <span className="mr-1">Designed with</span>
           <Link
             href="https://github.com/timlrx/tailwind-nextjs-starter-blog"
-            className="hover:opacity-80 duration-100"
+            className="hover:opacity-80 duration-100 hover:underline"
           >
             a modified Tailwind NextJS Starter Blog
           </Link>

@@ -1,4 +1,7 @@
 {
+  "#id": "id",
+  "#fullname": "Indonesia",
+
   "home": "Utama",
   "posts": "Postingan",
   "tags": "Tagar",
@@ -20,6 +23,7 @@
   "authors": "Penulis",
   "tagLine": "Seseorang yang terjun ke Neraka VTuber",
   "siteDesc": "Sebuah blog random untuk nulis artikel atau postingan yang tak mau",
+  "descHomePage": "Postingan terbaru dari {author}",
   "descPostsPage": "Semua postingan blog {blogName} dalam satu tempat",
   "descProjectsPage": "Semua proyek yang dibuat oleh {author}",
   "descAboutPage": "Sebuah informasi sederhana tentang penulis di blog ini a.k.a {author}",

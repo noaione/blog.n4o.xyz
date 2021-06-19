@@ -80,6 +80,41 @@ class TimerLoader extends React.Component {
   }
 }
 
+class RotatingBorder extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      angle: 0,
+    }
+  }
+
+  componentDidMount() {
+    this.rotateData = setInterval(() => {
+      this.setState((e) => ({ angle: e.angle >= 360 ? 1 : e.angle + 1 }))
+    }, (10 / 360) * 1000)
+  }
+
+  componentWillUnmount() {
+    if (this.rotateData) {
+      clearInterval(this.rotateData)
+    }
+  }
+
+  render() {
+    const { angle } = this.state
+    return (
+      <div
+        className="absolute top-0 bottom-0 right-0 left-0 rounded-lg border-4 duration-[10s]"
+        style={{
+          // borderImage: `linear-gradient(${angle}deg, rgb(16, 185, 129), rgb(16 185 177)) 1`,
+          borderImageSource: `linear-gradient(rgb(16, 185, 129), rgb(16 185 177))`,
+          borderImageSlice: `1`,
+        }}
+      />
+    )
+  }
+}
+
 class SpotifyNow extends React.Component {
   constructor(props) {
     super(props)
@@ -161,8 +196,9 @@ class SpotifyNow extends React.Component {
                 <div className="flex flex-col items-center md:flex-row md:items-start gap-4">
                   <div className="relative">
                     <a href={mainData.url} rel="noopener noreferrer" target="_blank">
+                      <RotatingBorder />
                       <img
-                        className="h-96 rounded-lg !shadow-lg ring-4 ring-offset-green-500 ring-green-500"
+                        className="w-96 rounded-lg !shadow-lg"
                         src={mainData.album.url}
                         alt={`${mainData.album.name} Album Art`}
                       />
@@ -247,6 +283,9 @@ export default function Home({ posts }) {
       description: undefined,
       defaultMessage: undefined,
     },
+    latestDesc: {
+      id: 'descHomePage',
+    },
     searchArticle: {
       id: 'searchArticle',
       description: undefined,
@@ -287,7 +326,7 @@ export default function Home({ posts }) {
             {intl.formatMessage(descriptors.latest)}
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            {intl.formatMessage(descriptors.siteDesc)}
+            {intl.formatMessage(descriptors.latestDesc, { author: siteMetadata.author })}
           </p>
         </div>
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
