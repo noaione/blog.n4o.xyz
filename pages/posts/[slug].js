@@ -82,13 +82,19 @@ export default function Blog({ post, prev, next }) {
           {content}
         </PostLayout>
       ) : (
-        <div className="mt-24 text-center">
-          <PageTitle>
-            Under Construction{' '}
-            <span role="img" aria-label="roadwork sign">
-              🚧
-            </span>
-          </PageTitle>
+        <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
+          <div className="text-center" style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
+            <PageTitle>
+              Under Construction{' '}
+              <span role="img" aria-label="roadwork sign">
+                🚧
+              </span>
+            </PageTitle>
+            <p className="text-gray-400 mt-2">This post is still under writing</p>
+          </div>
+          <PostLayout frontMatter={frontMatter} prev={prev} next={next}>
+            {content}
+          </PostLayout>
         </div>
       )}
     </>
