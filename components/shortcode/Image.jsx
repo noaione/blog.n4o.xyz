@@ -33,7 +33,10 @@ export default function Image(props) {
         }}
       />
       {props.caption && (
-        <figcaption style={{ alignSelf: 'center', fontStyle: 'italic' }}>
+        <figcaption
+          className="text-gray-700 dark:text-gray-400"
+          style={{ alignSelf: 'center', marginTop: '0.5rem', fontSize: '0.9rem' }}
+        >
           {props.caption}
         </figcaption>
       )}
