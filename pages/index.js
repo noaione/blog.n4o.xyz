@@ -333,7 +333,7 @@ export default function Home({ posts }) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && <p className="mt-2">{intl.formatMessage(descriptors.noArticle)}</p>}
           {posts.slice(0, 1).map((frontMatter) => {
-            const { slug, date, title, summary, tags, images } = frontMatter
+            const { slug, date, title, summary, tags, images, draft } = frontMatter
             let selectedImages
             if (Array.isArray(images) && images.length > 0) {
               selectedImages = images[0]
@@ -368,6 +368,17 @@ export default function Home({ posts }) {
                               href={`/posts/${slug}`}
                               className="text-gray-900 dark:text-gray-100"
                             >
+                              {draft && (
+                                <>
+                                  <span>
+                                    {'('}
+                                    <span role="img" aria-label="construction sign">
+                                      🚧
+                                    </span>
+                                    {' Draft) '}
+                                  </span>
+                                </>
+                              )}
                               {title}
                             </Link>
                           </h2>

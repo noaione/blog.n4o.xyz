@@ -111,7 +111,7 @@ export default function ListLayout({
         <ul>
           {!filteredBlogPosts.length && <p className="mt-2">{intl.formatMessage(usedNoData)}</p>}
           {displayPosts.map((frontMatter) => {
-            const { slug, date, title, summary, tags, images } = frontMatter
+            const { slug, date, title, summary, tags, images, draft } = frontMatter
             let selectedImages
             if (Array.isArray(images) && images.length > 0) {
               selectedImages = images[0]
@@ -144,6 +144,17 @@ export default function ListLayout({
                           href={`/posts/${slug}`}
                           className="text-gray-900 dark:text-gray-100 hover:underline"
                         >
+                          {draft && (
+                            <>
+                              <span>
+                                {'('}
+                                <span role="img" aria-label="construction sign">
+                                  🚧
+                                </span>
+                                {' Draft) '}
+                              </span>
+                            </>
+                          )}
                           {title}
                         </Link>
                       </h3>
