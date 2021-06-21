@@ -1,17 +1,24 @@
-import { getAllFilesFrontMatter } from '@/lib/mdx'
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'
 import { PageSeo } from '@/components/SEO'
 
 import { defineMessage, useIntl } from 'react-intl'
 
-export async function getStaticProps({ locale, locales, defaultLocale }) {
-  const posts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
+export const POSTS_PER_PAGE = 5
 
-  return { props: { posts } }
+export async function getStaticProps({ locale, locales, defaultLocale }) {
+  const { getAllFilesFrontMatter } = await import('@/lib/mdx')
+  const getPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
+  const posts = getPosts.splice(0, POSTS_PER_PAGE)
+  const pagination = {
+    currentPage: 1,
+    totalPages: Math.ceil(getPosts.length / POSTS_PER_PAGE) + 1,
+  }
+
+  return { props: { posts, pagination } }
 }
 
-export default function Blog({ posts }) {
+export default function Blog({ posts, pagination }) {
   const intl = useIntl()
 
   const messages = { id: 'posts', description: undefined, defaultMessage: undefined }
@@ -22,7 +29,12 @@ export default function Blog({ posts }) {
         description={intl.formatMessage({ id: 'descPostsPage' }, { blogName: siteMetadata.title })}
         url={`/posts`}
       />
-      <ListLayout posts={posts} title={intl.formatMessage(messages)} isPosts />
+      <ListLayout
+        posts={posts}
+        pagination={pagination}
+        title={intl.formatMessage(messages)}
+        isPosts
+      />
     </>
   )
 }

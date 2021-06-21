@@ -1,10 +1,8 @@
-import Mail from './mail.svg'
-import Github from './github.svg'
-import Facebook from './facebook.svg'
-import Youtube from './youtube.svg'
-import Linkedin from './linkedin.svg'
-import Twitter from './twitter.svg'
-import Trakteer from './trakteer.svg'
+import Mail from './mail'
+import Github from './github'
+import Facebook from './facebook'
+import Twitter from './twitter'
+import Trakteer from './trakteer'
 
 // Icons taken from: https://simpleicons.org/
 
@@ -12,8 +10,6 @@ const components = {
   mail: Mail,
   github: Github,
   facebook: Facebook,
-  youtube: Youtube,
-  linkedin: Linkedin,
   twitter: Twitter,
   trakteer: Trakteer,
 }

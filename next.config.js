@@ -7,9 +7,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
-  future: {
-    webpack5: true,
-  },
   i18n: Object.assign({}, localeData, { localeDetection: false }),
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({

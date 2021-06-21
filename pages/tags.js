@@ -1,6 +1,5 @@
 import siteMetadata from '@/data/siteMetadata'
 import { kebabCase } from '@/lib/utils'
-import { getAllTags } from '@/lib/tags'
 import Tag from '@/components/Tag'
 import Link from '@/components/Link'
 import { PageSeo } from '@/components/SEO'
@@ -8,6 +7,7 @@ import { PageSeo } from '@/components/SEO'
 import { FormattedMessage, useIntl } from 'react-intl'
 
 export async function getStaticProps({ locale, locales, defaultLocale }) {
+  const { getAllTags } = await import('@/lib/tags')
   const tags = await getAllTags('blog', locale, locales, defaultLocale)
 
   return { props: { tags } }

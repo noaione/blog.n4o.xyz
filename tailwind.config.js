@@ -21,7 +21,7 @@ module.exports = {
       },
       colors: {
         gray: colors.trueGray,
-        blue: colors.lightBlue,
+        blue: colors.sky,
         code: {
           green: '#b5f4a5',
           yellow: '#ffe484',

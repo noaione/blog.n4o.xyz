@@ -1,5 +1,6 @@
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
+import Pagination from '@/components/Pagination'
 import siteMetadata from '@/data/siteMetadata'
 
 import remark from 'remark'
@@ -20,7 +21,13 @@ function summaryFormatter(textData) {
   return result.toString()
 }
 
-export default function ListLayout({ posts, title, isPosts }) {
+export default function ListLayout({
+  posts,
+  title,
+  pagination,
+  initialDisplayPosts = [],
+  isPosts,
+}) {
   const [searchValue, setSearchValue] = useState('')
   const intl = useIntl()
   const filteredBlogPosts = posts.filter((frontMatter) => {
@@ -55,6 +62,10 @@ export default function ListLayout({ posts, title, isPosts }) {
   if (searchValue !== '') {
     usedNoData = descriptors.searchNoResult
   }
+
+  // If initialDisplayPosts exist, display it if no searchValue is specified
+  const displayPosts =
+    initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts
 
   return (
     <>
@@ -98,7 +109,7 @@ export default function ListLayout({ posts, title, isPosts }) {
         </div>
         <ul>
           {!filteredBlogPosts.length && <p className="mt-2">{intl.formatMessage(usedNoData)}</p>}
-          {filteredBlogPosts.map((frontMatter) => {
+          {displayPosts.map((frontMatter) => {
             const { slug, date, title, summary, tags, images } = frontMatter
             let selectedImages
             if (Array.isArray(images) && images.length > 0) {
@@ -152,6 +163,9 @@ export default function ListLayout({ posts, title, isPosts }) {
           })}
         </ul>
       </div>
+      {pagination && pagination.totalPages > 1 && !searchValue && (
+        <Pagination currentPage={pagination.currentPage} totalPages={pagination.totalPages} />
+      )}
     </>
   )
 }

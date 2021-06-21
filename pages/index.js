@@ -3,7 +3,6 @@ import { PageSeo } from '@/components/SEO'
 import Tag from '@/components/Tag'
 import SpotifyHubSkeleton from '@/components/SpotifyHubSkeleton'
 import siteMetadata from '@/data/siteMetadata'
-import { getAllFilesFrontMatter } from '@/lib/mdx'
 import { durationToText } from '@/lib/utils'
 
 import remark from 'remark'
@@ -17,6 +16,7 @@ import { useIntl } from 'react-intl'
 const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
 
 export async function getStaticProps({ locale, locales, defaultLocale }) {
+  const { getAllFilesFrontMatter } = await import('@/lib/mdx')
   const posts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
 
   return { props: { posts } }

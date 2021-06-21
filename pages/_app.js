@@ -1,7 +1,6 @@
 import '@/css/tailwind.css'
 
 import ProgressBar from '@badrap/bar-of-progress'
-import { MDXProvider } from '@mdx-js/react'
 import { ThemeProvider } from 'next-themes'
 import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
@@ -11,7 +10,6 @@ import { IntlProvider } from 'react-intl'
 
 import { SEO } from '@/components/SEO'
 import LayoutWrapper from '@/components/LayoutWrapper'
-import MDXComponents from '@/components/MDXComponents'
 
 import LocaleEn from '@/locale/en'
 import LocaleId from '@/locale/id'
@@ -39,15 +37,13 @@ export default function App({ Component, pageProps, router }) {
   return (
     <IntlProvider messages={messages} locale={locale} defaultFormats={defaultLocale}>
       <ThemeProvider attribute="class" storageKey="theme">
-        <MDXProvider components={MDXComponents}>
-          <Head>
-            <meta content="width=device-width, initial-scale=1" name="viewport" />
-          </Head>
-          <DefaultSeo {...SEO} />
-          <LayoutWrapper>
-            <Component {...pageProps} />
-          </LayoutWrapper>
-        </MDXProvider>
+        <Head>
+          <meta content="width=device-width, initial-scale=1" name="viewport" />
+        </Head>
+        <DefaultSeo {...SEO} />
+        <LayoutWrapper>
+          <Component {...pageProps} />
+        </LayoutWrapper>
       </ThemeProvider>
     </IntlProvider>
   )
