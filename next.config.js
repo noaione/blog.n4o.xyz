@@ -8,6 +8,9 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   pageExtensions: ['js', 'jsx', 'md', 'mdx'],
   i18n: Object.assign({}, localeData, { localeDetection: false }),
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
