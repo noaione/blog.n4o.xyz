@@ -18,19 +18,5 @@
                 "value": "interest-cohort=()"
             }
         ]
-    }],
-    "redirects": [{
-            "source": "/blog/:slug*",
-            "destination": "/posts/:slug*"
-        },
-        {
-            "source": "/r/:slug*",
-            "destination": "https://shigoto.n4o.xyz/r/:slug*"
-        },
-        {
-            "source": "/release/:slug*",
-            "destination": "https://shigoto.n4o.xyz/release/:slug*"
-        }
-    ]
-
+    }]
 }

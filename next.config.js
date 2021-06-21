@@ -56,6 +56,18 @@ module.exports = withBundleAnalyzer({
           source: '/api/event',
           destination: 'https://tr.n4o.xyz/api/event',
         },
+        {
+          source: '/blog/:slug',
+          destination: '/api/oldredir/blog/:slug',
+        },
+        {
+          source: '/r/:slug',
+          destination: '/api/oldredir/r/:slug',
+        },
+        {
+          source: '/release/:slug',
+          destination: '/api/oldredir/release/:slug',
+        },
       ],
     }
   },
