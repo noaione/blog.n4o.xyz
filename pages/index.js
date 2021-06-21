@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from '@/components/Link'
 import { PageSeo } from '@/components/SEO'
 import Tag from '@/components/Tag'

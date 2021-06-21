@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import Pagination from '@/components/Pagination'

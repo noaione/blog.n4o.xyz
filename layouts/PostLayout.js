@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import DisqusComments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'

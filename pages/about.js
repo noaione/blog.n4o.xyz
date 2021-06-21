@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import siteMetadata from '@/data/siteMetadata'
 import aboutData from '@/data/aboutData'
 import SocialIcon from '@/components/social-icons'
