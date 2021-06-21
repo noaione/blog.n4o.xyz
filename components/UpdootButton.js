@@ -120,9 +120,11 @@ class UpdootButton extends React.Component {
             disabled={loading}
             style={user_vote_direction > 0 ? selectedStyles : null}
           >
-            <img
-              className="w-10 h-10 focus:outline-none"
+            <Image
               src="/static/images/yeahbutBTTV/peepoClap.gif"
+              className="!w-10 !h-10 !min-h-0 !min-w-0 focus:outline-none"
+              width={40}
+              height={40}
               alt="Good"
               title="Good Posts"
             />
@@ -136,9 +138,11 @@ class UpdootButton extends React.Component {
             disabled={loading}
             style={user_vote_direction < 0 ? selectedStyles : null}
           >
-            <img
-              className="w-10 h-10 focus:outline-none"
+            <Image
               src="/static/images/yeahbutBTTV/peepoLeave.gif"
+              className="focus:outline-none"
+              width={40}
+              height={40}
               alt="Bad"
               title="Bad Posts"
             />
