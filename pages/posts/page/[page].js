@@ -1,7 +1,7 @@
 import { PageSeo } from '@/components/SEO'
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayout'
-import { POSTS_PER_PAGE } from '../../posts'
+import { POSTS_PER_PAGE } from '..'
 import { useIntl } from 'react-intl'
 
 export async function getStaticPaths({ locales, defaultLocale }) {
@@ -73,6 +73,7 @@ export default function PostPage({ postsPerPage, pagination }) {
         posts={postsPerPage}
         pagination={pagination}
         title={intl.formatMessage({ id: 'posts' })}
+        isPosts
       />
     </>
   )

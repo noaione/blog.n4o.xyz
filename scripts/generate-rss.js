@@ -26,6 +26,9 @@ function markdownToHTML(contents) {
   return result.toString()
 }
 
+const convertStringToHTML = (string) =>
+  string.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;')
+
 const kebabCase = (str) =>
   str &&
   str
@@ -124,10 +127,12 @@ function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en')
 
   return `
     <item>
-      <title>${post.title}</title>
+      <title>${convertStringToHTML(post.title)}</title>
       ${
         post.summary
-          ? `<description><![CDATA[${markdownToHTML(post.summary).trim()}]]></description>`
+          ? `<description><![CDATA[${convertStringToHTML(
+              markdownToHTML(post.summary)
+            ).trim()}]]></description>`
           : ''
       }
       <pubDate>${new Date(post.date).toUTCString()}</pubDate>
@@ -165,9 +170,11 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
   return `
 <rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0">
   <channel>
-    <title>${siteMetadata.title}</title>
+    <title>${convertStringToHTML(siteMetadata.title)}</title>
     <link>${basePath}</link>
-    <description>${LocaleLanguages[locale]?.tagLine || siteMetadata.description}</description>
+    <description>${convertStringToHTML(
+      LocaleLanguages[locale]?.tagLine || siteMetadata.description
+    )}</description>
     <language>${locale}</language>
     <managingEditor>${siteMetadata.email} (${siteMetadata.author})</managingEditor>
     <webMaster>${siteMetadata.email} (${siteMetadata.author})</webMaster>

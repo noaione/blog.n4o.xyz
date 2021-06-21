@@ -43,15 +43,26 @@ module.exports = withBundleAnalyzer({
     return config
   },
   async rewrites() {
-    return [
-      {
-        source: '/js/kryptonite.js',
-        destination: 'https://tr.n4o.xyz/js/plausible.js',
-      },
-      {
-        source: '/api/event',
-        destination: 'https://tr.n4o.xyz/api/event',
-      },
-    ]
+    return {
+      beforeFiles: [
+        // These rewrites are checked after headers/redirects
+        // and before all files including _next/public files which
+        // allows overriding page files
+        {
+          source: '/',
+          destination: '/index',
+        },
+      ],
+      afterFiles: [
+        {
+          source: '/js/kryptonite.js',
+          destination: 'https://tr.n4o.xyz/js/plausible.js',
+        },
+        {
+          source: '/api/event',
+          destination: 'https://tr.n4o.xyz/api/event',
+        },
+      ],
+    }
   },
 })

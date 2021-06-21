@@ -3,14 +3,19 @@ import Link from '@/components/Link'
 import ChevronRight from '@heroicons/react/solid/ChevronRightIcon'
 import ChevronLeft from '@heroicons/react/solid/ChevronLeftIcon'
 import { useIntl } from 'react-intl'
+import { useRouter } from 'next/router'
 
-export default function Pagination({ totalPages, currentPage }) {
+export default function Pagination({ totalPages, currentPage, isPosts }) {
   const intl = useIntl()
+  const router = useRouter()
+
   currentPage = parseInt(currentPage)
   totalPages = parseInt(totalPages)
   const prevPage = parseInt(currentPage) - 1 > 0
   const nextPage = parseInt(currentPage) + 1 <= parseInt(totalPages)
   const pageOf = intl.formatMessage({ id: 'paginateOf' })
+
+  const baseUrl = isPosts ? '/posts/' : `/tags/${router.query?.tag}/`
 
   return (
     <div className="pt-6 pb-8 space-y-2 md:space-y-5">
@@ -18,7 +23,7 @@ export default function Pagination({ totalPages, currentPage }) {
         {!prevPage && (
           <button
             rel="previous"
-            className="flex flex-row items-center text-gray-900 dark:text-gray-100 cursor-not-allowed disabled:opacity-50"
+            className="flex flex-row items-center text-gray-900 dark:text-gray-100 cursor-not-allowed disabled:opacity-50 invisible"
             disabled={!prevPage}
           >
             <ChevronLeft className="w-5 h-5" aria-label="Paginate to Previous Page" />
@@ -26,7 +31,7 @@ export default function Pagination({ totalPages, currentPage }) {
           </button>
         )}
         {prevPage && (
-          <Link href={currentPage - 1 === 1 ? `/posts/` : `/posts/page/${currentPage - 1}`}>
+          <Link href={currentPage - 1 === 1 ? baseUrl : `${baseUrl}page/${currentPage - 1}`}>
             <button
               rel="previous"
               className="flex flex-row items-center text-gray-900 dark:text-gray-100 hover:underline focus:outline-none"
@@ -42,7 +47,7 @@ export default function Pagination({ totalPages, currentPage }) {
         {!nextPage && (
           <button
             rel="next"
-            className="flex flex-row items-center text-gray-900 dark:text-gray-100 cursor-not-allowed disabled:opacity-50"
+            className="flex flex-row items-center text-gray-900 dark:text-gray-100 cursor-not-allowed disabled:opacity-50 invisible"
             disabled={!nextPage}
           >
             <span className="hidden lg:block">{intl.formatMessage({ id: 'paginateNext' })}</span>
@@ -50,7 +55,7 @@ export default function Pagination({ totalPages, currentPage }) {
           </button>
         )}
         {nextPage && (
-          <Link href={`/posts/page/${currentPage + 1}`}>
+          <Link href={`${baseUrl}page/${currentPage + 1}`}>
             <button
               rel="next"
               className="flex flex-row items-center text-gray-900 dark:text-gray-100 hover:underline focus:outline-none"
