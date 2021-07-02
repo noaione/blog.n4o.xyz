@@ -100,7 +100,7 @@ function tryToSplitPath(paths: string) {
   return splitForward
 }
 
-interface RawPostFile {
+export interface RawPostFile {
   file: string
   slug: string
   rawDate: string
@@ -165,12 +165,12 @@ interface RawBlogContent {
   frontMatter: FrontMatterData
 }
 
-export async function getFileBySlug(postData: RawPostFile): Promise<RawBlogContent> {
+export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawBlogContent> {
   const source = fs.readFileSync(path.join(root, postData.file))
   const { data, content } = matter(source, { excerpt: true, excerpt_separator: '<!--more-->' })
   // eslint-disable-next-line no-prototype-builtins
   if (!data.hasOwnProperty('date')) {
-    data.date = postData.rawDate
+    data.date = postData.date
   }
   // eslint-disable-next-line no-prototype-builtins
   if (!data.hasOwnProperty('locale')) {

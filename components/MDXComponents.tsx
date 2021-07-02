@@ -1,3 +1,5 @@
+import { getMDXComponent } from 'mdx-bundler/client'
+import { useMemo } from 'react'
 import CustomLink from './Link'
 import Pre from './Pre'
 
@@ -9,4 +11,13 @@ const MDXComponents = {
   ...ShortCode,
 }
 
-export default MDXComponents
+interface LayoutRender {
+  mdxSource: string
+}
+
+export default function MDXLayoutRenderer(props: LayoutRender) {
+  const MDXComponent = useMemo(() => getMDXComponent(props.mdxSource), [props.mdxSource])
+
+  // @ts-ignore
+  return <MDXComponent components={MDXComponents} />
+}
