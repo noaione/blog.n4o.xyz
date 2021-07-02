@@ -38,3 +38,5 @@ public/*.xml
 *.env
 *.env.local
 *.env.production
+
+*.tsbuildinfo
