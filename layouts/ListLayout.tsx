@@ -7,7 +7,6 @@ import { FrontMatterData } from '@/components/SEO'
 import remark from 'remark'
 import markdown from 'remark-parse'
 import html from 'remark-html'
-import disemote from '@/lib/disemote'
 
 import { useState } from 'react'
 import { useIntl } from 'react-intl'
@@ -18,11 +17,11 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
   day: 'numeric',
 }
 
-function summaryFormatter(textData) {
-  if (textData.replace(/\s/g) === '') {
+function summaryFormatter(textData: string) {
+  if (textData.replace(/\s/g, '') === '') {
     return ''
   }
-  const result = remark().use(markdown).use(disemote).use(html).processSync(textData)
+  const result = remark().use(markdown).use(html).processSync(textData)
   return result.toString()
 }
 
