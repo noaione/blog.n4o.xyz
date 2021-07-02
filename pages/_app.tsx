@@ -1,4 +1,4 @@
-import '@/css/tailwind.css'
+import '../css/tailwind.css'
 
 import ProgressBar from '@badrap/bar-of-progress'
 import { ThemeProvider } from 'next-themes'
