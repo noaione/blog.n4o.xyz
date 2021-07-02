@@ -1,19 +1,27 @@
 import React from 'react'
 
+interface SkeletonLoader {
+  count: number;
+  duration?: number;
+  width?: number;
+  height?: number;
+  circle?: boolean;
+  style?: React.CSSProperties;
+  className?: string;
+}
+
 export default function Skeleton({
   count,
-  duration,
   width,
-  wrapper: Wrapper,
   height,
   circle,
   style: customStyle,
   className: customClassName,
-}) {
+}: SkeletonLoader) {
   const elements = []
 
   for (let i = 0; i < count; i++) {
-    let style = {}
+    const style: React.CSSProperties = {}
 
     if (width !== null) {
       style.width = width
@@ -48,14 +56,7 @@ export default function Skeleton({
 
   return (
     <span>
-      {Wrapper
-        ? elements.map((element, i) => (
-            <Wrapper key={i}>
-              {element}
-              &zwnj;
-            </Wrapper>
-          ))
-        : elements}
+      {elements}
     </span>
   )
 }

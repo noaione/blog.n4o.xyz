@@ -7,29 +7,53 @@ import html from 'remark-html'
 import highlight from 'remark-highlight.js'
 import LineNumbers from '@/lib/hljs-numbers'
 
-async function getCode(user, repo, branch, path) {
+async function getCode(
+  user: string,
+  repo: string,
+  branch: string,
+  path: string
+): Promise<[boolean, string]> {
   const rawFile = `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${path}`
   const resp = await fetch(rawFile)
   return [resp.ok, resp.ok ? await resp.text() : `${resp.status} - ${resp.statusText}`]
 }
 
-function isNullUndef(data) {
+type Nullable = null | undefined
+
+function isNullUndef<T>(data: T): data is Nullable {
   if (typeof data === 'undefined' || data === null) {
     return true
   }
   return false
 }
 
-async function renderCodeContents(codeContents) {
+async function renderCodeContents(codeContents: string) {
   const result = await remark().use(markdown).use(highlight).use(html).process(codeContents)
   return result.toString()
 }
 
-function hash(text) {
+function hash(text: string) {
   return Buffer.from(text, 'utf-8').toString('base64')
 }
 
-class GHCodeEmbed extends React.Component {
+interface GHCodeEmbedProps {
+  codeContents: string
+  fileName: string
+  fileUrl: string
+  rawFileUrl: string
+  lang: string
+  branchName: string
+  startLine?: number
+  endLine?: number
+  tabSize: number
+}
+
+interface GHCodeEmbedState {
+  rendered?: string
+  finalUrl: string
+}
+
+class GHCodeEmbed extends React.Component<GHCodeEmbedProps, GHCodeEmbedState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -39,7 +63,8 @@ class GHCodeEmbed extends React.Component {
   }
 
   async componentDidMount() {
-    let { startLine, endLine, codeContents, fileUrl } = this.props
+    const { codeContents } = this.props
+    let { startLine, endLine, fileUrl } = this.props
     const codeTextSplit = codeContents.split('\n')
     let endLineText = ''
     if (endLine === -1) {
@@ -77,7 +102,7 @@ class GHCodeEmbed extends React.Component {
       if (blocks) {
         if (!HLJSNum.isPluginDisabledForBlock(blocks)) {
           HLJSNum.lineNumbersBlock(blocks, {
-            startFrom: startLine > 0 ? Number.parseInt(startLine) : 1,
+            startFrom: startLine > 0 ? Number.parseInt((startLine as unknown) as string) : 1,
             singleLine: true,
           })
         }
@@ -85,9 +110,9 @@ class GHCodeEmbed extends React.Component {
     })
 
     document.addEventListener('copy', (ev) => {
-      let selection = window.getSelection()
+      const selection = window.getSelection()
       if (HLJSNum.isHljsLnCodeDescendant(selection.anchorNode)) {
-        let selText
+        let selText: string
         if (window.navigator.userAgent.indexOf('Edge') !== -1) {
           selText = HLJSNum.edgeGetSelectedCodeLines(selection)
         } else {
@@ -100,7 +125,7 @@ class GHCodeEmbed extends React.Component {
   }
 
   render() {
-    const { codeContents, fileUrl, rawFileUrl, lang, branchName, startLine, endLine } = this.props
+    const { rawFileUrl, branchName } = this.props
     const tabSize = this.props.tabSize ?? 4
     let fileName = this.props.fileName
 
@@ -218,7 +243,23 @@ class GHCodeEmbed extends React.Component {
   }
 }
 
-export default class GitHubCode extends React.Component {
+interface GHCodeProps {
+  user: string
+  repo: string
+  branch?: string
+  filepath?: string
+  lineStart?: number
+  lineEnd?: number
+  tabsize?: number
+}
+
+interface GHCodeState {
+  loaded: boolean
+  codeContents: string
+  isFailed: boolean
+}
+
+export default class GitHubCode extends React.Component<GHCodeProps, GHCodeState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -261,11 +302,17 @@ export default class GitHubCode extends React.Component {
     const path = this.props.filepath
 
     let tabSize = this.props.tabsize || 4
-    tabSize = isNaN(parseInt(tabSize)) ? 4 : parseInt(tabSize)
+    tabSize = isNaN(parseInt((tabSize as unknown) as string))
+      ? 4
+      : parseInt((tabSize as unknown) as string)
     let lineStart = this.props.lineStart
     let lineEnd = this.props.lineEnd
-    lineStart = isNaN(parseInt(lineStart)) ? -1 : parseInt(lineStart)
-    lineEnd = isNaN(parseInt(lineEnd)) ? -1 : parseInt(lineEnd)
+    lineStart = isNaN(parseInt((lineStart as unknown) as string))
+      ? -1
+      : parseInt((lineStart as unknown) as string)
+    lineEnd = isNaN(parseInt((lineEnd as unknown) as string))
+      ? -1
+      : parseInt((lineEnd as unknown) as string)
 
     const splitPath = path.split('/')
 

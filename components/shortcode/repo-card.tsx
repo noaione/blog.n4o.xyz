@@ -1,16 +1,15 @@
-import Link from 'next/link'
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
 import remark from 'remark'
 import gemoji from 'remark-gemoji'
 
-function parseMarkdownSimple(text) {
+function parseMarkdownSimple(text: string) {
   const parsed = remark().use(gemoji).processSync(text)
   return parsed.toString()
 }
 
-async function get(url) {
+async function get(url: string) {
   const resp = await fetch(url)
   if (resp.status !== 200) {
     throw new Error(`Got response ${resp.status} from the API while fetching ${url}`)
@@ -18,7 +17,12 @@ async function get(url) {
   return resp.json()
 }
 
-function SimpleURLAnchor(props) {
+interface SimpleURLAnchorProps {
+  url: string
+  children?: React.ReactNode | string
+}
+
+function SimpleURLAnchor(props: SimpleURLAnchorProps) {
   const [hover, setHover] = useState(false)
 
   const base = { color: '#58a6ff' }
@@ -45,7 +49,23 @@ SimpleURLAnchor.propTypes = {
   children: PropTypes.any,
 }
 
-export default class RepoCard extends React.Component {
+interface RepoCardProps {
+  username: string
+  reponame: string
+}
+
+interface ColorData {
+  color: string
+  url: string
+}
+
+interface RepoCardState {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  loadedData?: any
+  colors: { [colorName: string]: ColorData }
+}
+
+export default class RepoCard extends React.Component<RepoCardProps, RepoCardState> {
   constructor(props) {
     super(props)
     this.state = {
@@ -59,9 +79,9 @@ export default class RepoCard extends React.Component {
     if (!username || !reponame) {
       return
     }
-    const colors = await get(
+    const colors = (await get(
       'https://raw.githubusercontent.com/ozh/github-colors/master/colors.json'
-    )
+    )) as { [key: string]: ColorData }
     colors['Unknown'] = {
       color: '#565656',
       url: 'https://github.com/',
@@ -113,7 +133,7 @@ export default class RepoCard extends React.Component {
             ></path>
           </svg>
           <span className="font-semibold">
-            <SimpleURLAnchor url={loadedData.html_url}>
+            <SimpleURLAnchor url={loadedData.html_url as string}>
               {loadedData.owner.login + '/' + loadedData.name}
             </SimpleURLAnchor>
           </span>
@@ -121,8 +141,8 @@ export default class RepoCard extends React.Component {
         {loadedData.fork && (
           <div className="text-xs text-gray-500" style={{ marginTop: '0.25rem' }}>
             Forked from{' '}
-            <SimpleURLAnchor url={loadedData.source.html_url}>
-              {loadedData.source.full_name}
+            <SimpleURLAnchor url={loadedData.source.html_url as string}>
+              {loadedData.source.full_name as string}
             </SimpleURLAnchor>
           </div>
         )}

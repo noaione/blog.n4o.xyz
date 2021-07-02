@@ -1,6 +1,5 @@
 import { NextSeo, ArticleJsonLd } from 'next-seo'
-import siteMetadata from '@/data/siteMetadata'
-import { useIntl } from 'react-intl'
+import siteMetadata from '@/data/siteMetadata.json'
 import { useRouter } from 'next/router'
 
 export const SEO = {
@@ -34,7 +33,13 @@ export const SEO = {
   ],
 }
 
-export const PageSeo = ({ title, description, url }) => {
+interface PageSEOProps {
+  title: string;
+  description: string;
+  url: string;
+}
+
+export const PageSeo = ({ title, description, url }: PageSEOProps) => {
   const intl = useRouter()
   if (intl.locale !== intl.defaultLocale) {
     url = '/' + intl.locale + url
@@ -57,11 +62,21 @@ export const PageSeo = ({ title, description, url }) => {
   )
 }
 
-export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] }) => {
+interface BlogSeoProps {
+  title: string;
+  summary: string;
+  date: string;
+  lastmod: string;
+  url: string;
+  tags: string[];
+  images: string[];
+}
+
+export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] }: BlogSeoProps) => {
   const intl = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
-  let imagesArr =
+  const imagesArr =
     images.length === 0
       ? [siteMetadata.socialBanner]
       : typeof images === 'string'
@@ -117,6 +132,7 @@ export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] 
         description={summary}
         images={featuredImages.map((e) => e.url)}
         publisherName={siteMetadata.author}
+        publisherLogo={siteMetadata.image}
         title={title}
         url={url}
       />

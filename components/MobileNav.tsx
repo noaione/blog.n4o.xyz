@@ -66,6 +66,7 @@ const MobileNav = () => {
               href="/"
               className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
               onClick={onToggleNav}
+              locale={intl.locale}
             >
               {intl.formatMessage({ id: 'home' })}
             </Link>
@@ -76,7 +77,8 @@ const MobileNav = () => {
                 href={link.href}
                 className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
                 onClick={onToggleNav}
-              >
+                locale={intl.locale}
+                >
                 {intl.formatMessage({ id: link.title.toLowerCase(), defaultMessage: link.title })}
               </Link>
             </div>

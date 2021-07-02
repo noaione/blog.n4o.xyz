@@ -1,6 +1,7 @@
 import React from 'react'
+import { IconProps } from './_types'
 
-export default function GitHubIcon(props) {
+export default function GitHubIcon(props: IconProps) {
   return (
     <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
       <title>GitHub icon</title>

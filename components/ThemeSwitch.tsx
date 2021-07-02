@@ -12,7 +12,7 @@ const ThemeSwitch = () => {
       type: 'set-theme',
       theme: theme === 'dark' ? 'github-dark' : 'github-light',
     }
-    const iframeData = document.querySelector('.utterances-frame')
+    const iframeData = document.querySelector<HTMLIFrameElement>('.utterances-frame')
     if (iframeData !== null) {
       iframeData.contentWindow.postMessage(message, 'https://utteranc.es')
     }

@@ -1,16 +1,28 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { withRouter } from 'next/router'
+import { WithRouterProps } from 'next/dist/client/with-router'
 
 import UpdootButton from './UpdootButton'
 
-function generateID(slug, locale, defaultLocale) {
+function generateID(slug: string, locale: string, defaultLocale: string) {
   if (locale === defaultLocale) {
     return slug
   }
   return slug + '-' + locale
 }
-class UtterancesComments extends React.Component {
+
+interface CommentsProps extends WithRouterProps {
+  slug: string;
+}
+
+class UtterancesComments extends React.Component<CommentsProps> {
+  commentBox?: React.RefObject<HTMLDivElement>;
+
+  static propTypes = {
+    slug: PropTypes.string.isRequired,
+  }
+
   constructor(props) {
     super(props)
     this.commentBox = React.createRef()
@@ -41,10 +53,6 @@ class UtterancesComments extends React.Component {
       </>
     )
   }
-}
-
-UtterancesComments.propTypes = {
-  slug: PropTypes.string.isRequired,
 }
 
 export default withRouter(UtterancesComments)

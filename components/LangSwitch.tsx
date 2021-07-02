@@ -1,12 +1,16 @@
-import { useEffect, useRef, useState } from 'react'
-import { useIntl } from 'react-intl'
+import { useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
-const LanguageKey = (props) => {
-  const router = useRouter()
-  const intl = useIntl()
+interface LanguageKeyProps {
+  index: number;
+  locale: string;
+  currentLocale: string;
+  defaultLocale: string;
+  route: string;
+}
 
+const LanguageKey = (props: LanguageKeyProps) => {
   let styling = 'p-2 rounded-lg'
   let selLink = props.route
   if (props.index > 0) {
@@ -18,6 +22,7 @@ const LanguageKey = (props) => {
   } else {
     styling += ' bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 transition'
   }
+  // @ts-ignore
   const localeName = new Intl.DisplayNames([props.locale, 'en'], { type: 'language' })
   let extraUrl = ''
   if (props.defaultLocale !== props.locale) {
@@ -26,7 +31,7 @@ const LanguageKey = (props) => {
 
   let realLocaleName = localeName.of(props.locale)
   if (realLocaleName === props.locale) {
-    realLocaleName = intl.formatMessage({ id: '#fullname' })
+    realLocaleName = props.locale.toUpperCase();
   }
   return (
     <li className={styling}>
@@ -34,12 +39,11 @@ const LanguageKey = (props) => {
         <span className="select-none font-semibold">{realLocaleName}</span>
       ) : (
         <Link
-          href={router.asPath}
+          href={props.route}
           locale={props.locale}
-          className="font-semibold block w-full"
           passHref
         >
-          <a className="font-semibold block w-full" href={`${extraUrl}${router.asPath}`}>
+          <a className="font-semibold block w-full" href={`${extraUrl}${props.route}`}>
             {realLocaleName}
           </a>
         </Link>
@@ -50,9 +54,7 @@ const LanguageKey = (props) => {
 
 const LangSwitch = () => {
   const [hovered, setHovered] = useState(false)
-  const intl = useIntl()
   const router = useRouter()
-  const defaultLang = intl.defaultLocale
 
   return (
     <div className="inline-block relative align-top">

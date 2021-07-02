@@ -1,14 +1,30 @@
 import Head from 'next/head'
 import React from 'react'
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min) + min) //The maximum is exclusive and the minimum is inclusive
+interface EmbedGistProps {
+  id: string
+  file?: string
 }
 
-class EmbeddedGist extends React.Component {
-  constructor(props) {
+interface EmbedGistState {
+  loading: boolean
+  src: string
+}
+
+// Each time we request a Gist, we’ll need to generate a new
+// global function name to serve as the JSONP callback.
+let gistCallbackId = 0
+
+class EmbeddedGist extends React.Component<EmbedGistProps, EmbedGistState> {
+  stylesheetAdded: boolean
+  id: string
+  file?: string
+
+  static nextGistCallback() {
+    return 'embed_gist_callback_' + gistCallbackId++
+  }
+
+  constructor(props: EmbedGistProps) {
     super(props)
     this.addStylesheet = this.addStylesheet.bind(this)
     this.id = props.id
@@ -23,10 +39,10 @@ class EmbeddedGist extends React.Component {
   // The Gist JSON data includes a stylesheet to add to the page
   // to make it look correct. `addStylesheet` ensures we only add
   // the stylesheet one time.
-  addStylesheet(href) {
+  addStylesheet(href: string) {
     if (!this.stylesheetAdded) {
       this.stylesheetAdded = true
-      var link = document.createElement('link')
+      const link = document.createElement('link')
       link.type = 'text/css'
       link.rel = 'stylesheet'
       link.href = href
@@ -38,7 +54,7 @@ class EmbeddedGist extends React.Component {
   componentDidMount() {
     // Create a JSONP callback that will set our state
     // with the data that comes back from the Gist site
-    var gistCallback = EmbeddedGist.nextGistCallback()
+    const gistCallback = EmbeddedGist.nextGistCallback()
     window[gistCallback] = function (gist) {
       this.setState({
         loading: false,
@@ -46,12 +62,12 @@ class EmbeddedGist extends React.Component {
       })
       this.addStylesheet(gist.stylesheet)
     }.bind(this)
-    var url = 'https://gist.github.com/' + this.props.id + '.json?callback=' + gistCallback
+    let url = 'https://gist.github.com/' + this.props.id + '.json?callback=' + gistCallback
     if (this.props.file) {
       url += '&file=' + this.props.file
     }
     // Add the JSONP script tag to the document.
-    var script = document.createElement('script')
+    const script = document.createElement('script')
     script.type = 'text/javascript'
     script.src = url
     document.head.appendChild(script)
@@ -113,10 +129,5 @@ class EmbeddedGist extends React.Component {
     }
   }
 }
-// Each time we request a Gist, we’ll need to generate a new
-// global function name to serve as the JSONP callback.
-var gistCallbackId = 0
-EmbeddedGist.nextGistCallback = () => {
-  return 'embed_gist_callback_' + gistCallbackId++
-}
+
 export default EmbeddedGist

@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react'
+import { PropsChild } from './_global'
 
-export default function ComponentPreWrap(props) {
+export default function ComponentPreWrap(props: PropsChild) {
   const textInput = useRef(null)
   const [hovered, setHovered] = useState(false)
   const [copied, setCopied] = useState(false)

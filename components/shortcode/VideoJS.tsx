@@ -1,12 +1,25 @@
 /* eslint-disable jsx-a11y/media-has-caption */
 import { string } from 'prop-types'
 import { Component } from 'react'
-import videojs from 'video.js'
+import videojs, { VideoJsPlayer } from 'video.js'
 import 'video.js/dist/video-js.css'
 
-export default class VideoPlayer extends Component {
+interface VideoProps {
+  src: string
+  caption?: string
+}
+
+export default class VideoPlayer extends Component<VideoProps> {
+  player?: VideoJsPlayer
+  videoNode?: HTMLVideoElement
+
+  static propTypes = {
+    src: string.isRequired,
+    caption: string,
+  }
+
   componentDidMount() {
-    this.player = videojs(this.videoNode, { fluid: true, controls: true, preload: false })
+    this.player = videojs(this.videoNode, { fluid: true, controls: true, preload: 'no' })
   }
 
   componentWillUnmount() {
@@ -42,9 +55,4 @@ export default class VideoPlayer extends Component {
       </div>
     )
   }
-}
-
-VideoPlayer.propTypes = {
-  src: string.isRequired,
-  caption: string,
 }

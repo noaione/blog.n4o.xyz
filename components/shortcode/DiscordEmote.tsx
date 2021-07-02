@@ -1,8 +1,14 @@
 import React from 'react'
+import Image from 'next/image'
 
 import EmoteData from './emote.json'
 
-export default function DiscordEmote(props) {
+interface DiscordEmoteProps {
+  children: React.ReactNode | string
+  inline?: boolean
+}
+
+export default function DiscordEmote(props: DiscordEmoteProps) {
   const { children, inline } = props
   if (typeof children !== 'string') {
     return null
@@ -14,12 +20,13 @@ export default function DiscordEmote(props) {
   const emote = EmoteData[findEmote]
 
   return (
-    <img
-      className={`${inline ? 'inline-block w-6 h-6' : 'w-8 h-8'}`}
-      style={{ marginTop: inline ? '0' : '1rem', marginBottom: inline ? '0' : '1rem' }}
+    <Image
+      src={emote.url}
+      width="128px"
+      height="128px"
       alt={`:${emote.name}:`}
       title={`:${emote.name}:`}
-      src={emote.url}
+      className={inline ? 'inline-block w-6 h-6 my-0' : 'w-8 h-8 my-4'}
     />
   )
 }

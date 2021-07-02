@@ -3,7 +3,12 @@ import Image from 'next/image'
 import PropType from 'prop-types'
 import { useIntl } from 'react-intl'
 
-function Translated(props) {
+interface UpdootTLProps {
+  id: string;
+  sub?: {[key: string]: unknown};
+}
+
+function Translated(props: UpdootTLProps) {
   const intl = useIntl()
 
   const translated = intl.formatMessage(
@@ -16,13 +21,27 @@ function Translated(props) {
   return <span>{translated}</span>
 }
 
-Translated.propTypes = {
-  id: PropType.string.isRequired,
-  sub: PropType.object,
+interface UpdootButtonProps {
+  namespace: string;
+  id: string;
 }
 
-class UpdootButton extends React.Component {
-  constructor(props) {
+interface UpdootButtonState {
+  loading: boolean;
+  total_score: number;
+  user_vote_direction: number;
+  total_votes: number;
+}
+
+class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState> {
+  API_KEY: string;
+
+  static propTypes = {
+    namespace: PropType.string.isRequired,
+    id: PropType.string.isRequired,
+  }
+
+  constructor(props: UpdootButtonProps) {
     super(props)
     this.API_KEY = 'b5ab6e16ddf58617e2c7dea3abe6b8'
     this.requestAPI = this.requestAPI.bind(this)
@@ -63,8 +82,8 @@ class UpdootButton extends React.Component {
     })
   }
 
-  async updoot(type) {
-    if (this.loading) {
+  async updoot(type: "UP" | "DOWN") {
+    if (this.state.loading) {
       return
     }
     this.setState({ loading: true })
@@ -152,11 +171,6 @@ class UpdootButton extends React.Component {
       </div>
     )
   }
-}
-
-UpdootButton.propTypes = {
-  namespace: PropType.string.isRequired,
-  id: PropType.string.isRequired,
 }
 
 export default UpdootButton

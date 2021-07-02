@@ -1,10 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Controlled as ControlledZoom } from 'react-medium-image-zoom'
 import PropTypes from 'prop-types'
 import { useCallback, useState } from 'react'
 
-export default function Image(props) {
+interface ImageProps {
+  src: string
+  alt?: string
+  caption?: string
+}
+
+export default function Image(props: ImageProps) {
   const [isZoomed, setZoomed] = useState(false)
 
   const handleZoomChange = useCallback((shouldZoom) => {

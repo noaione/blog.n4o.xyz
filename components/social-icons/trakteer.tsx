@@ -1,6 +1,7 @@
 import React from 'react'
+import { IconProps } from './_types'
 
-export default function TrakteerIcon(props) {
+export default function TrakteerIcon(props: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 866.28 866.36" {...props}>
       <title>Trakteer Icon</title>
