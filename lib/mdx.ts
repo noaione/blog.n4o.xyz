@@ -1,14 +1,16 @@
 import fs from 'fs'
+import { bundleMDX } from 'mdx-bundler'
 import glob from 'tiny-glob/sync'
 import matter from 'gray-matter'
-import visit from 'unist-util-visit'
+import { visit, Node } from 'unist-util-visit'
 import path from 'path'
 import readingTime from 'reading-time'
-import { serialize } from 'next-mdx-remote/serialize'
 
-import MDXComponents from '@/components/MDXComponents'
-import imgToJsx from './img-to-jsx'
+import { FrontMatterData } from '@/components/SEO'
+
+import ImageToJSX from './img-to-jsx'
 import Twemoji from './twemoji'
+import RemarkCodeTitles from './remark-code-titles'
 import CustomHeading from './custom-heading'
 
 const root = process.cwd()
@@ -56,17 +58,18 @@ function formatSeparators(textData, separators) {
   return joinedText.join('\n')
 }
 
-function excerptFormatter(file, options) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function excerptFormatter(file: any, options: any) {
   file.excerpt = formatSeparators(file.content.split('\n'), options.excerpt_separator)
 }
 
-function formatDateToYMD(dateData) {
+function formatDateToYMD(dateData: Date) {
   const month = dateData.getUTCMonth().toString().padStart(2, '0')
   const days = dateData.getUTCDay().toString().padStart(2, '0')
   return `${dateData.getUTCFullYear()}-${month}-${days}`
 }
 
-function parseSlug(slugName) {
+function parseSlug(slugName: string) {
   // eslint-disable-next-line no-useless-escape
   const re = /([0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2})?\-?(.*)/i
   const parsed = slugName.match(re)
@@ -76,7 +79,7 @@ function parseSlug(slugName) {
   return [parsed[1], parsed[2]]
 }
 
-function findLocaleVersion(paths, locales = ['en', 'id']) {
+function findLocaleVersion(paths: string[], locales = ['en', 'id']) {
   for (let i = 0; i < paths.length; i++) {
     const path = paths[i]
     if (locales.includes(path)) {
@@ -86,10 +89,10 @@ function findLocaleVersion(paths, locales = ['en', 'id']) {
   return null
 }
 
-function tryToSplitPath(paths) {
-  let splitForward = paths.split('/')
+function tryToSplitPath(paths: string) {
+  const splitForward = paths.split('/')
   if (splitForward.length === 1) {
-    let splitBack = paths.split('\\')
+    const splitBack = paths.split('\\')
     if (splitBack.length > 1) {
       return splitBack
     }
@@ -97,7 +100,20 @@ function tryToSplitPath(paths) {
   return splitForward
 }
 
-export async function getFiles(type, extra = '*', locales = ['en', 'id'], defaultLocale = 'en') {
+interface RawPostFile {
+  file: string
+  slug: string
+  rawDate: string
+  locale: string
+  isDir: boolean
+}
+
+export async function getFiles(
+  type: string,
+  extra = '*',
+  locales = ['en', 'id'],
+  defaultLocale = 'en'
+): Promise<RawPostFile[]> {
   const finalPaths = path.join(root, 'data', type, '**', extra).replace(/\\/g, '/')
   const allFiles = glob(finalPaths, { filesOnly: true })
   const remappedFilesData = allFiles.map((res) => {
@@ -134,32 +150,54 @@ export async function getFiles(type, extra = '*', locales = ['en', 'id'], defaul
   return remappedFilesData.filter((r) => !r.isDir)
 }
 
-export function formatSlug(slug) {
+export function formatSlug(slug: string) {
   return slug.replace(/\.(mdx|md)/, '')
 }
 
-export function dateSortDesc(a, b) {
+export function dateSortDesc(a: string, b: string) {
   if (a > b) return -1
   if (a < b) return 1
   return 0
 }
 
-export async function getFileBySlug(type, postData, locales = ['en', 'id'], defaultLocale = 'en') {
-  const isMdx = postData.file.endsWith('.mdx')
+interface RawBlogContent {
+  mdxSource: string
+  frontMatter: FrontMatterData
+}
+
+export async function getFileBySlug(postData: RawPostFile): Promise<RawBlogContent> {
   const source = fs.readFileSync(path.join(root, postData.file))
   const { data, content } = matter(source, { excerpt: true, excerpt_separator: '<!--more-->' })
   // eslint-disable-next-line no-prototype-builtins
   if (!data.hasOwnProperty('date')) {
-    data.date = postData.date
+    data.date = postData.rawDate
   }
   // eslint-disable-next-line no-prototype-builtins
   if (!data.hasOwnProperty('locale')) {
     data.locale = postData.locale
   }
-  const mdxSource = await serialize(content, {
-    components: MDXComponents,
-    mdxOptions: {
-      remarkPlugins: [
+
+  if (process.platform === 'win32') {
+    process.env.ESBUILD_BINARY_PATH = path.join(
+      process.cwd(),
+      'node_modules',
+      'esbuild',
+      'esbuild.exe'
+    )
+  } else {
+    process.env.ESBUILD_BINARY_PATH = path.join(
+      process.cwd(),
+      'node_modules',
+      'esbuild',
+      'bin',
+      'esbuild'
+    )
+  }
+
+  const { code } = await bundleMDX(content, {
+    xdmOptions(options) {
+      ;(options.remarkPlugins = [
+        ...(options.remarkPlugins ?? []),
         require('remark-slug'),
         CustomHeading,
         [
@@ -174,57 +212,65 @@ export async function getFileBySlug(type, postData, locales = ['en', 'id'], defa
             linkProperties: { ariaHidden: 'true', tabIndex: -1, className: 'h-autolink-wrap' },
           },
         ],
-        [require('remark-footnotes'), { inlineNotes: true }],
         require('remark-gemoji'),
+        require('remark-gfm'),
+        RemarkCodeTitles,
+        [require('remark-footnotes'), { inlineNotes: true }],
         Twemoji,
-        require('remark-code-titles'),
         require('remark-math'),
         [require('remark-toc'), { ordered: true, tight: true }],
         require('remark-admonitions'),
-        imgToJsx,
-      ],
-      inlineNotes: true,
-      rehypePlugins: [
-        require('rehype-katex'),
-        [require('@mapbox/rehype-prism'), { ignoreMissing: true }],
-        // [require('@jsdevtools/rehype-toc'), {}],
-        () => {
-          return (tree) => {
-            visit(tree, 'element', (node, index, parent) => {
-              let [token, type] = node.properties.className || []
-              if (token === 'token') {
-                node.properties.className = [tokenClassNames[type]]
-              }
-            })
-          }
-        },
-      ],
+        ImageToJSX,
+      ]),
+        (options.rehypePlugins = [
+          ...(options.rehypePlugins || []),
+          require('rehype-katex'),
+          [require('rehype-prism-plus'), { ignoreMissing: true }],
+          () => {
+            return (tree) => {
+              visit(tree, 'element', (node: Node) => {
+                // @ts-ignore
+                const [token, type] = node.properties.className || []
+                if (token === 'token') {
+                  // @ts-ignore
+                  node.properties.className = [tokenClassNames[type]]
+                }
+              })
+            }
+          },
+        ])
+      return options
     },
   })
+
   const fnSplit = tryToSplitPath(postData.file)
   const fileName = fnSplit[fnSplit.length - 1] || postData.slug
 
   return {
-    mdxSource,
+    mdxSource: code,
     frontMatter: {
       // https://scholarwithin.com/average-reading-speed
       readingTime: readingTime(content, { wordsPerMinute: 275 }),
       slug: formatSlug(postData.slug) || null,
       fileName,
-      ...data,
+      ...(data as FrontMatterData),
     },
   }
 }
 
+interface FrontMatterExtended extends FrontMatterData {
+  file?: string
+}
+
 export async function getAllFilesFrontMatter(
-  type,
+  type: string,
   selectedLocale = 'en',
   locales = ['en', 'id'],
   defaultLocale = 'en'
-) {
+): Promise<FrontMatterExtended[]> {
   const files = await getFiles(type, '*', locales, defaultLocale)
 
-  const allFrontMatter = []
+  const allFrontMatter: FrontMatterExtended[] = []
 
   files.forEach((file) => {
     const filePath = path.join(root, file.file)
@@ -233,6 +279,7 @@ export async function getAllFilesFrontMatter(
     }
     const source = fs.readFileSync(filePath, 'utf8')
     const { data, excerpt } = matter(source, {
+      // @ts-ignore
       excerpt: excerptFormatter,
       excerpt_separator: '<!--more-->',
     })
@@ -251,13 +298,21 @@ export async function getAllFilesFrontMatter(
     }
     // let's override the slug
     if (typeof data.slug === 'string') {
-      allFrontMatter.push({ ...data, slug: formatSlug(data.slug), file: file.file })
+      allFrontMatter.push({
+        ...(data as FrontMatterData),
+        slug: formatSlug(data.slug),
+        file: file.file,
+      })
       return
     }
     if (data.draft === true && process.env.NODE_ENV !== 'development') {
       return
     }
-    allFrontMatter.push({ ...data, slug: formatSlug(file.slug), file: file.file })
+    allFrontMatter.push({
+      ...(data as FrontMatterData),
+      slug: formatSlug(file.slug),
+      file: file.file,
+    })
   })
 
   const filteredFrontMatter = allFrontMatter.filter(({ locale }) => {

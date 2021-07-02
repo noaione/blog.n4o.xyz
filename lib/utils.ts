@@ -1,20 +1,20 @@
-export const kebabCase = (str) =>
+export const kebabCase = (str: string) =>
   str &&
   str
     .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
     .map((x) => x.toLowerCase())
     .join('-')
 
-export function isNone(data) {
+export function isNone(data: unknown): data is null | undefined {
   return data === null || typeof data === 'undefined'
 }
 
-export function mapBoolean(input_data) {
+export function mapBoolean(input_data: unknown) {
   if (isNone(input_data)) {
     return false
   }
   let fstat = false
-  let data
+  let data: string
   if (typeof input_data === 'string') {
     data = input_data.toLowerCase()
   } else if (typeof input_data === 'number') {
@@ -48,11 +48,11 @@ export function mapBoolean(input_data) {
   return fstat
 }
 
-export function zeroPad(num) {
+export function zeroPad(num: number) {
   return Math.floor(num).toString().padStart(2, '0')
 }
 
-export function durationToText(seconds) {
+export function durationToText(seconds: number) {
   if (seconds < 0) {
     return 'N/A'
   }

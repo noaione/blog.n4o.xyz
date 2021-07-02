@@ -1,5 +1,4 @@
 import querystring from 'querystring'
-import { mapBoolean } from './utils'
 
 const clientId = process.env.SPOTIFY_CLIENT_ID
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET
@@ -123,7 +122,7 @@ const mockedNowPlayingData = {
 }
 
 export async function getNowPlaying(mock = false) {
-  let jsonData
+  let jsonData: typeof mockedNowPlayingData
   if (mock) {
     jsonData = mockedNowPlayingData
   } else {
@@ -142,7 +141,7 @@ export async function getNowPlaying(mock = false) {
     jsonData = await response.json()
   }
 
-  const { context, is_playing, progress_ms, item, currently_playing_type } = jsonData
+  const { is_playing, progress_ms, item, currently_playing_type } = jsonData
   if (currently_playing_type !== 'track') {
     return {
       playing: false,

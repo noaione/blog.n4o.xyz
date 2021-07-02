@@ -7,8 +7,13 @@ import { kebabCase } from './utils'
 
 const root = process.cwd()
 
+interface TagCount {
+  count: number
+  locale: string
+}
+
 export async function getAllTags(
-  type,
+  type: string,
   selectedLocale = 'en',
   locales = ['en', 'id'],
   defaultLocale = 'en',
@@ -16,8 +21,12 @@ export async function getAllTags(
 ) {
   const files = await getFiles(type, '*', locales, defaultLocale)
 
-  let tagCount = {}
-  let properLocalizedData = {}
+  const tagCount: { [key: string]: TagCount } = {}
+  const properLocalizedData: {
+    [locale: string]: {
+      [key: string]: TagCount
+    }
+  } = {}
   locales.map((r) => {
     properLocalizedData[r] = {}
   })
