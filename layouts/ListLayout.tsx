@@ -26,7 +26,7 @@ function summaryFormatter(textData) {
   return result.toString()
 }
 
-interface ListLayoutProps extends PaginationProps {
+interface ListLayoutProps {
   posts: FrontMatterData[]
   title: string
   pagination: PaginationProps
