@@ -34,9 +34,9 @@ export const SEO = {
 }
 
 interface PageSEOProps {
-  title: string;
-  description: string;
-  url: string;
+  title: string
+  description: string
+  url: string
 }
 
 export const PageSeo = ({ title, description, url }: PageSEOProps) => {
@@ -62,17 +62,37 @@ export const PageSeo = ({ title, description, url }: PageSEOProps) => {
   )
 }
 
-interface BlogSeoProps {
-  title: string;
-  summary: string;
-  date: string;
-  lastmod: string;
-  url: string;
-  tags: string[];
-  images: string[];
+interface IReadTimeResults {
+  text: string
+  time: number
+  words: number
+  minutes: number
 }
 
-export const BlogSeo = ({ title, summary, date, lastmod, url, tags, images = [] }: BlogSeoProps) => {
+export interface FrontMatterData {
+  slug: string
+  summary: string
+  fileName: string
+  date: string
+  url?: string
+  lastmod?: string
+  title: string
+  tags?: string[]
+  readingTime: IReadTimeResults
+  images?: string[]
+  locale?: string
+  draft?: boolean
+}
+
+export const BlogSeo = ({
+  title,
+  summary,
+  date,
+  lastmod,
+  url,
+  tags,
+  images = [],
+}: FrontMatterData) => {
   const intl = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
