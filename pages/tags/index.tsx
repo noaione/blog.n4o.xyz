@@ -1,20 +1,23 @@
-import siteMetadata from '@/data/siteMetadata'
 import { kebabCase } from '@/lib/utils'
+import { TagCount } from '@/lib/tags'
 import Tag from '@/components/Tag'
 import Link from '@/components/Link'
 import { PageSeo } from '@/components/SEO'
 
 import { FormattedMessage, useIntl } from 'react-intl'
+import { GetStaticPropsContext } from 'next'
 
-export async function getStaticProps({ locale, locales, defaultLocale }) {
+type TagDatas = { [key: string]: TagCount }
+
+export async function getStaticProps({ locale, locales, defaultLocale }: GetStaticPropsContext) {
   const { getAllTags } = await import('@/lib/tags')
   const tags = await getAllTags('blog', locale, locales, defaultLocale)
 
   return { props: { tags } }
 }
 
-export default function Tags({ tags }) {
-  const sortedTags = Object.keys(tags).sort((a, b) => tags[b] - tags[a])
+export default function Tags({ tags }: { tags: TagDatas }) {
+  const sortedTags = Object.keys(tags).sort((a, b) => tags[b].count - tags[a].count)
   const intl = useIntl()
 
   return (
@@ -39,6 +42,7 @@ export default function Tags({ tags }) {
                 <Link
                   href={`/tags/${kebabCase(t)}`}
                   className="-ml-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-300"
+                  locale={intl.locale}
                 >
                   {` (${tags[t]['count']})`}
                 </Link>
