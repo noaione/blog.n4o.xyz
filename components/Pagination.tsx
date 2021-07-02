@@ -5,10 +5,10 @@ import ChevronLeft from '@heroicons/react/solid/ChevronLeftIcon'
 import { useIntl } from 'react-intl'
 import { useRouter } from 'next/router'
 
-interface PaginationProps {
-  totalPages: string | number;
-  currentPage: string | number;
-  isPosts?: boolean;
+export interface PaginationProps {
+  totalPages: string | number
+  currentPage: string | number
+  isPosts?: boolean
 }
 
 export default function Pagination({ totalPages, currentPage, isPosts }: PaginationProps) {
@@ -17,8 +17,9 @@ export default function Pagination({ totalPages, currentPage, isPosts }: Paginat
 
   currentPage = parseInt(currentPage as string)
   totalPages = parseInt(totalPages as string)
-  const prevPage = parseInt(currentPage as unknown as string) - 1 > 0
-  const nextPage = parseInt(currentPage as unknown as string) + 1 <= parseInt(totalPages as unknown as string)
+  const prevPage = parseInt((currentPage as unknown) as string) - 1 > 0
+  const nextPage =
+    parseInt((currentPage as unknown) as string) + 1 <= parseInt((totalPages as unknown) as string)
   const pageOf = intl.formatMessage({ id: 'paginateOf' })
 
   const baseUrl = isPosts ? '/posts/' : `/tags/${router.query?.tag}/`
@@ -37,7 +38,10 @@ export default function Pagination({ totalPages, currentPage, isPosts }: Paginat
           </button>
         )}
         {prevPage && (
-          <Link href={currentPage - 1 === 1 ? baseUrl : `${baseUrl}page/${currentPage - 1}`} locale={router.locale}>
+          <Link
+            href={currentPage - 1 === 1 ? baseUrl : `${baseUrl}page/${currentPage - 1}`}
+            locale={router.locale}
+          >
             <button
               aria-label="Previous Page"
               className="flex flex-row items-center text-gray-900 dark:text-gray-100 hover:underline focus:outline-none"
@@ -52,7 +56,7 @@ export default function Pagination({ totalPages, currentPage, isPosts }: Paginat
         <span className="text-gray-700 dark:text-gray-300 font-semibold">{`${currentPage.toLocaleString()} ${pageOf} ${totalPages.toLocaleString()}`}</span>
         {!nextPage && (
           <button
-          aria-label="Next Page (Disabled)"
+            aria-label="Next Page (Disabled)"
             className="flex flex-row items-center text-gray-900 dark:text-gray-100 cursor-not-allowed disabled:opacity-50 invisible"
             disabled={!nextPage}
           >
