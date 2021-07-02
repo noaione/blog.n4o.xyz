@@ -1,17 +1,6 @@
 module.exports = {
   root: true,
-  parserOptions: {
-    ecmaVersion: 2020,
-    sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-    },
-  },
-  settings: {
-    react: {
-      version: 'detect',
-    },
-  },
+  parser: '@typescript-eslint/parser',
   env: {
     browser: true,
     amd: true,
@@ -19,11 +8,12 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    'plugin:react/recommended',
-    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:jsx-a11y/recommended',
-    'next',
     'plugin:prettier/recommended',
+    'next',
+    'next/core-web-vitals',
   ],
   rules: {
     'prettier/prettier': 'off',
@@ -39,5 +29,8 @@ module.exports = {
     'react/prop-types': 0,
     'no-unused-vars': 0,
     'react/no-unescaped-entities': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 }

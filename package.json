@@ -60,6 +60,11 @@
   "devDependencies": {
     "@next/bundle-analyzer": "10.2.3",
     "@svgr/webpack": "^5.5.0",
+    "@types/node": "^15.14.0",
+    "@types/react": "^17.0.13",
+    "@types/video.js": "^7.3.22",
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
     "cross-env": "^7.0.3",
     "esbuild": "^0.12.9",
     "eslint": "^7.29.0",
@@ -77,6 +82,7 @@
     "remark-frontmatter": "3.0.0",
     "remark-parse": "^9.0.0",
     "remark-stringify": "^9.0.1",
+    "typescript": "^4.3.5",
     "unified": "9.2.1"
   },
   "lint-staged": {
