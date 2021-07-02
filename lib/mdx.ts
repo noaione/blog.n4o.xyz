@@ -221,7 +221,7 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
         require('remark-gfm'),
         RemarkCodeTitles,
         [require('remark-footnotes'), { inlineNotes: true }],
-        Twemoji,
+        // Twemoji,
         require('remark-math'),
         ImageToJSX,
       ]),
