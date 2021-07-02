@@ -3,11 +3,13 @@ import Link from '@/components/Link'
 
 import { useIntl } from 'react-intl'
 
-interface ProjectCardsProps {
-  title: string;
-  description: string;
-  imgSrc: string;
-  href: string;
+type LocalizedString = { [locale: string]: string }
+
+export interface ProjectCardsProps {
+  title: string
+  description: LocalizedString | string
+  imgSrc: string
+  href: string
 }
 
 const Card = ({ title, description, imgSrc, href }: ProjectCardsProps) => {
