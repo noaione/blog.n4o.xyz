@@ -3,25 +3,37 @@ import DisqusComments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
-import { BlogSeo } from '@/components/SEO'
+import { BlogSeo, FrontMatterData } from '@/components/SEO'
 import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata.json'
 import { durationToText } from '@/lib/utils'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { useIntl } from 'react-intl'
-import useSWR from 'swr'
 
-const editUrl = (fileName, locale = 'en') =>
+const editUrl = (fileName: string, locale = 'en') =>
   `${siteMetadata.siteRepo}/blob/master/data/blog/${locale}/${fileName}`
-const discussUrl = (slug) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(
-    `${siteMetadata.siteUrl}/posts/${slug}`
-  )}`
 
-const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
+const postDateTemplate: Intl.DateTimeFormatOptions = {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
 
-class TimerLoader extends React.Component {
+interface TimerProps {
+  current: number
+  total: number
+  onFinished?: () => void
+}
+
+interface TimerState {
+  current: number
+}
+
+class TimerLoader extends React.Component<TimerProps, TimerState> {
+  timerState?: NodeJS.Timeout
+
   constructor(props) {
     super(props)
     const { current } = props
@@ -31,6 +43,7 @@ class TimerLoader extends React.Component {
   }
 
   componentDidMount() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
     const outerThis = this
     this.timerState = setInterval(() => {
       this.setState(
@@ -71,8 +84,31 @@ class TimerLoader extends React.Component {
   }
 }
 
-class SpotifyNow extends React.Component {
-  constructor(props) {
+interface SpotifyLocalesString {
+  play: string
+  stop: string
+  by: string
+  load: string
+  err: string
+}
+
+interface SpotifyNowState {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
+  loading: boolean
+  firstTime: boolean
+  error: boolean
+}
+
+interface SpotifyNowProps {
+  localesData: SpotifyLocalesString
+  currentLocale: string
+}
+
+class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
+  timerData?: NodeJS.Timeout
+
+  constructor(props: SpotifyNowProps) {
     super(props)
     this.refreshData = this.refreshData.bind(this)
     this.state = {
@@ -119,7 +155,7 @@ class SpotifyNow extends React.Component {
   }
 
   render() {
-    const { localesData } = this.props
+    const { localesData, currentLocale } = this.props
     const { data, loading, error } = this.state
 
     return (
@@ -149,6 +185,7 @@ class SpotifyNow extends React.Component {
                       <Link
                         href={data.data.url}
                         className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
+                        locale={currentLocale}
                       >
                         {data.data.artist.join(', ')} – {data.data.title}
                       </Link>
@@ -187,7 +224,14 @@ class SpotifyNow extends React.Component {
   }
 }
 
-export default function PostLayout({ children, frontMatter, next, prev }) {
+interface PostLayoutProps {
+  children?: React.ReactNode
+  frontMatter: FrontMatterData
+  next?: FrontMatterData
+  prev?: FrontMatterData
+}
+
+export default function PostLayout({ children, frontMatter, next, prev }: PostLayoutProps) {
   const { slug, fileName, date, title, tags, readingTime, images } = frontMatter
   const intl = useIntl()
 
@@ -301,6 +345,7 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                               <Link
                                 href={siteMetadata.twitter}
                                 className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
+                                locale={intl.locale}
                               >
                                 {siteMetadata.twitter.replace('https://twitter.com/', '@')}
                               </Link>
@@ -322,11 +367,9 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                   {children}
                 </div>
                 <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                  {/* <Link href={discussUrl(slug)} rel="nofollow">
-                    {'Discuss on Twitter'}
+                  <Link href={editUrl(fileName, intl.locale)} locale={intl.locale}>
+                    View on GitHub
                   </Link>
-                  {` • `} */}
-                  <Link href={editUrl(fileName, intl.locale)}>{'View on GitHub'}</Link>
                 </div>
                 <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
                   <DisqusComments title={title} slug={slug} />
@@ -346,7 +389,7 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                       </div>
                     </div>
                   )}
-                  <SpotifyNow localesData={spotifyDataLocales} />
+                  <SpotifyNow localesData={spotifyDataLocales} currentLocale={intl.locale} />
                   <>
                     {(next || prev) && (
                       <div className="flex justify-between py-4 xl:block xl:py-8 xl:space-y-8">
@@ -356,7 +399,9 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                               {intl.formatMessage(descriptors.prev)}
                             </h2>
                             <div className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400">
-                              <Link href={`/posts/${prev.slug}`}>{prev.title}</Link>
+                              <Link href={`/posts/${prev.slug}`} locale={intl.locale}>
+                                {prev.title}
+                              </Link>
                             </div>
                           </div>
                         )}
@@ -366,7 +411,9 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                               {intl.formatMessage(descriptors.next)}
                             </h2>
                             <div className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400">
-                              <Link href={`/posts/${next.slug}`}>{next.title}</Link>
+                              <Link href={`/posts/${next.slug}`} locale={intl.locale}>
+                                {next.title}
+                              </Link>
                             </div>
                           </div>
                         )}
@@ -377,6 +424,7 @@ export default function PostLayout({ children, frontMatter, next, prev }) {
                     <Link
                       href="/posts"
                       className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
+                      locale={intl.locale}
                     >
                       &larr; {intl.formatMessage(descriptors.back)}
                     </Link>

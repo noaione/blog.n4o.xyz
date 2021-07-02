@@ -1,8 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import Pagination from '@/components/Pagination'
-import siteMetadata from '@/data/siteMetadata'
+import Pagination, { PaginationProps } from '@/components/Pagination'
+import { FrontMatterData } from '@/components/SEO'
 
 import remark from 'remark'
 import markdown from 'remark-parse'
@@ -12,7 +12,11 @@ import disemote from '@/lib/disemote'
 import { useState } from 'react'
 import { useIntl } from 'react-intl'
 
-const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
+const postDateTemplate: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
 
 function summaryFormatter(textData) {
   if (textData.replace(/\s/g) === '') {
@@ -22,13 +26,21 @@ function summaryFormatter(textData) {
   return result.toString()
 }
 
+interface ListLayoutProps extends PaginationProps {
+  posts: FrontMatterData[]
+  title: string
+  pagination: PaginationProps
+  initialDisplayPosts?: FrontMatterData[]
+  isPosts?: boolean
+}
+
 export default function ListLayout({
   posts,
   title,
   pagination,
   initialDisplayPosts = [],
   isPosts,
-}) {
+}: ListLayoutProps) {
   const [searchValue, setSearchValue] = useState('')
   const intl = useIntl()
   const filteredBlogPosts = posts.filter((frontMatter) => {
@@ -112,7 +124,7 @@ export default function ListLayout({
           {!filteredBlogPosts.length && <p className="mt-2">{intl.formatMessage(usedNoData)}</p>}
           {displayPosts.map((frontMatter) => {
             const { slug, date, title, summary, tags, images, draft } = frontMatter
-            let selectedImages
+            let selectedImages: string
             if (Array.isArray(images) && images.length > 0) {
               selectedImages = images[0]
             }
@@ -143,6 +155,7 @@ export default function ListLayout({
                         <Link
                           href={`/posts/${slug}`}
                           className="text-gray-900 dark:text-gray-100 hover:underline"
+                          locale={intl.locale}
                         >
                           {draft && (
                             <>
