@@ -6,8 +6,9 @@ function isS(s: string): s is string {
   return typeof s === 'string' && s.length > 0
 }
 
-interface CustomLinkProps extends DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {
-  locale: string;
+interface CustomLinkProps
+  extends DetailedHTMLProps<AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement> {
+  locale: string
 }
 
 const CustomLink = ({ href, locale, ...rest }: CustomLinkProps) => {

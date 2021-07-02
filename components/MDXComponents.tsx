@@ -8,6 +8,7 @@ import ShortCode from './shortcode'
 const MDXComponents = {
   a: CustomLink,
   pre: Pre,
+  Link: CustomLink,
   ...ShortCode,
 }
 
@@ -15,9 +16,9 @@ interface LayoutRender {
   mdxSource: string
 }
 
-export default function MDXLayoutRenderer(props: LayoutRender) {
-  const MDXComponent = useMemo(() => getMDXComponent(props.mdxSource), [props.mdxSource])
+export default function MDXLayoutRenderer({ mdxSource }: LayoutRender) {
+  const CompiledMDX = useMemo(() => getMDXComponent(mdxSource), [mdxSource])
 
   // @ts-ignore
-  return <MDXComponent components={MDXComponents} />
+  return <CompiledMDX components={MDXComponents} />
 }

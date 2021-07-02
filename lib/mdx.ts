@@ -167,7 +167,11 @@ interface RawBlogContent {
 
 export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawBlogContent> {
   const source = fs.readFileSync(path.join(root, postData.file))
-  const { data, content } = matter(source, { excerpt: true, excerpt_separator: '<!--more-->' })
+  const { data, content } = matter(source, {
+    // @ts-ignore
+    excerpt: excerptFormatter,
+    excerpt_separator: '<!--more-->',
+  })
   // eslint-disable-next-line no-prototype-builtins
   if (!data.hasOwnProperty('date')) {
     data.date = postData.date
@@ -193,8 +197,9 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
       'esbuild'
     )
   }
+  const realContent = content.replace('<!--more-->', '{/* more */}')
 
-  const { code } = await bundleMDX(content, {
+  const { code } = await bundleMDX(realContent, {
     xdmOptions(options) {
       ;(options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
@@ -218,14 +223,12 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
         [require('remark-footnotes'), { inlineNotes: true }],
         Twemoji,
         require('remark-math'),
-        [require('remark-toc'), { ordered: true, tight: true }],
-        require('remark-admonitions'),
         ImageToJSX,
       ]),
         (options.rehypePlugins = [
           ...(options.rehypePlugins || []),
           require('rehype-katex'),
-          [require('rehype-prism-plus'), { ignoreMissing: true }],
+          [require('rehype-prism-plus'), { ignoreMissing: true, showLineNumbers: true }],
           () => {
             return (tree) => {
               visit(tree, 'element', (node: Node) => {

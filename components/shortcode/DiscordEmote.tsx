@@ -1,5 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react'
-import Image from 'next/image'
 
 import EmoteData from './emote.json'
 
@@ -20,13 +20,11 @@ export default function DiscordEmote(props: DiscordEmoteProps) {
   const emote = EmoteData[findEmote]
 
   return (
-    <Image
+    <img
       src={emote.url}
-      width="128px"
-      height="128px"
       alt={`:${emote.name}:`}
       title={`:${emote.name}:`}
-      className={inline ? 'inline-block w-6 h-6 my-0' : 'w-8 h-8 my-4'}
+      className={inline ? 'inline-block w-6 h-6 !my-0' : 'w-8 h-8 !my-4'}
     />
   )
 }

@@ -13,11 +13,13 @@ export default function CustomHeadingID() {
       if (lastChild && lastChild.type === 'text') {
         let evalText = lastChild.value as string
         evalText = evalText.replace(/ +$/, '')
-        const matched = evalText.match(/ {#([^]+?)}$/)
+        const matched = evalText.match(/ \|#([^]+?)\|$/)
 
         if (matched) {
           const id = matched[1]
           if (id.length > 0) {
+            evalText = evalText.substring(0, matched.index)
+            lastChild.value = evalText
             if (!node.data) {
               node.data = {}
             }
@@ -27,9 +29,6 @@ export default function CustomHeadingID() {
 
             // @ts-ignore
             node.data.id = node.data.hProperties.id = kebabCase(id)
-
-            evalText = evalText.substring(0, matched.index)
-            lastChild.value = evalText
           }
         }
       }

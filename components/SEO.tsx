@@ -36,7 +36,7 @@ export const SEO = {
 interface PageSEOProps {
   title: string
   description: string
-  url: string
+  url?: string
 }
 
 export const PageSeo = ({ title, description, url }: PageSEOProps) => {

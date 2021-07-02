@@ -33,13 +33,9 @@ export default function DisEmoteRemark() {
 
           const newNode = {
             type: 'mdxJsxFlowElement',
-            name: 'img',
-            attributes: [
-              { type: 'mdxJsxAttribute', name: 'className', value: 'w-8 h-8 inline-block !my-2' },
-              { type: 'mdxJsxAttribute', name: 'alt', value: `:${sel.name}:` },
-              { type: 'mdxJsxAttribute', name: 'title', value: `:${sel.name}:` },
-              { type: 'mdxJsxAttribute', name: 'src', value: sel.url },
-            ],
+            name: 'DEmote',
+            attributes: [{ type: 'mdxJsxAttribute', name: 'inline', value: true }],
+            children: [{ type: 'text', value: sel.name }],
           }
           slices.push(newNode)
           start = position + match[0].length

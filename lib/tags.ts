@@ -7,7 +7,7 @@ import { kebabCase } from './utils'
 
 const root = process.cwd()
 
-interface TagCount {
+export interface TagCount {
   count: number
   locale: string
 }
