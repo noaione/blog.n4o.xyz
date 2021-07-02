@@ -16,10 +16,10 @@ const Components = {
 }
 
 interface SocialIconProps {
-  kind: keyof typeof Components;
-  href: string;
-  size: number;
-  iconProps?: IconProps;
+  kind: keyof typeof Components
+  href: string
+  size?: number
+  iconProps?: IconProps
 }
 
 const SocialIcon = ({ kind, href, size = 8, iconProps = {} }: SocialIconProps) => {
