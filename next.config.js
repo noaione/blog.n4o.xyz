@@ -1,17 +1,23 @@
 const localeData = require('./locale-data')
 
+const withPlugins = require('next-compose-plugins')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
+const withTM = require('next-transpile-modules')(['unist-util-visit'])
 
-module.exports = withBundleAnalyzer({
+const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   i18n: Object.assign({}, localeData, { localeDetection: false }),
-  eslint: {
-    ignoreDuringBuilds: true,
+  images: {
+    domains: ['cdn.discordapp.com'],
   },
   webpack: (config, { dev, isServer }) => {
+    config.module.rules.push({
+      test: /\.mdx$/,
+      use: [{ loader: 'xdm/webpack.cjs', options: {} }],
+    })
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
@@ -71,4 +77,6 @@ module.exports = withBundleAnalyzer({
       ],
     }
   },
-})
+}
+
+module.exports = withPlugins([[withBundleAnalyzer], [withTM]], nextConfig)
