@@ -1,3 +1,5 @@
+import { ProjectCardsProps } from '@/components/Card'
+
 const localizedProjects1 = {
   id: 'Sebuah Bot Discord untuk melakukan tracking garapan Fansub',
   en: 'A Discord Bot to help manage Anime Fansub projects',
@@ -8,7 +10,7 @@ const localizedProjects2 = {
   en: 'A personal API proejct with focus of tracking live stream of a VTuber',
 }
 
-const projectsData = [
+const projectsData: ProjectCardsProps[] = [
   {
     title: 'naoTimes',
     description: localizedProjects1,
