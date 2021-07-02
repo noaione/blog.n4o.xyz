@@ -1,13 +1,16 @@
-import { PageSeo } from '@/components/SEO'
-import siteMetadata from '@/data/siteMetadata'
+import { FrontMatterData, PageSeo } from '@/components/SEO'
+import siteMetadata from '@/data/siteMetadata.json'
 import ListLayout from '@/layouts/ListLayout'
+import { RawPostFile } from '@/lib/mdx'
 import { POSTS_PER_PAGE } from '..'
 import { useIntl } from 'react-intl'
+import { GetStaticPathsContext, GetStaticPropsContext } from 'next'
+import { PaginationProps } from '@/components/Pagination'
 
-export async function getStaticPaths({ locales, defaultLocale }) {
+export async function getStaticPaths({ locales, defaultLocale }: GetStaticPathsContext) {
   const { getFiles } = await import('@/lib/mdx')
   const totalPosts = await getFiles('blog', '*', locales, defaultLocale)
-  const groupedByLocales = {}
+  const groupedByLocales: { [locale: string]: RawPostFile[] } = {}
   totalPosts.forEach((post) => {
     // eslint-disable-next-line no-prototype-builtins
     if (!groupedByLocales.hasOwnProperty(post.locale)) {
@@ -32,7 +35,7 @@ export async function getStaticPaths({ locales, defaultLocale }) {
   }
 }
 
-export async function getStaticProps(context) {
+export async function getStaticProps(context: GetStaticPropsContext) {
   const { getAllFilesFrontMatter } = await import('@/lib/mdx')
   const {
     params: { page },
@@ -41,7 +44,7 @@ export async function getStaticProps(context) {
     defaultLocale,
   } = context
   const getPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
-  const pageNumber = parseInt(page)
+  const pageNumber = parseInt(page as string)
   const postsPerPage = getPosts.slice(
     POSTS_PER_PAGE * (pageNumber - 1),
     POSTS_PER_PAGE * pageNumber
@@ -59,7 +62,12 @@ export async function getStaticProps(context) {
   }
 }
 
-export default function PostPage({ postsPerPage, pagination }) {
+interface BlogProps {
+  postsPerPage: FrontMatterData[]
+  pagination: PaginationProps
+}
+
+export default function PostPage({ postsPerPage, pagination }: BlogProps) {
   const intl = useIntl()
 
   return (
@@ -67,7 +75,7 @@ export default function PostPage({ postsPerPage, pagination }) {
       <PageSeo
         title={intl.formatMessage({ id: 'posts' })}
         description={intl.formatMessage({ id: 'descPostsPage' }, { blogName: siteMetadata.title })}
-        url={`/posts/${pagination.currentPage}`}
+        url={`/posts/page/${pagination.currentPage}`}
       />
       <ListLayout
         posts={postsPerPage}

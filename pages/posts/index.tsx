@@ -1,12 +1,14 @@
-import siteMetadata from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata.json'
 import ListLayout from '@/layouts/ListLayout'
-import { PageSeo } from '@/components/SEO'
+import { FrontMatterData, PageSeo } from '@/components/SEO'
+import { PaginationProps } from '@/components/Pagination'
 
-import { defineMessage, useIntl } from 'react-intl'
+import { useIntl } from 'react-intl'
+import { GetStaticPropsContext } from 'next'
 
 export const POSTS_PER_PAGE = 5
 
-export async function getStaticProps({ locale, locales, defaultLocale }) {
+export async function getStaticProps({ locale, locales, defaultLocale }: GetStaticPropsContext) {
   const { getAllFilesFrontMatter } = await import('@/lib/mdx')
   const getPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
   const posts = getPosts.splice(0, POSTS_PER_PAGE)
@@ -18,7 +20,12 @@ export async function getStaticProps({ locale, locales, defaultLocale }) {
   return { props: { posts, pagination } }
 }
 
-export default function Blog({ posts, pagination }) {
+interface BlogProps {
+  posts: FrontMatterData[]
+  pagination: PaginationProps
+}
+
+export default function Blog({ posts, pagination }: BlogProps) {
   const intl = useIntl()
 
   const messages = { id: 'posts', description: undefined, defaultMessage: undefined }

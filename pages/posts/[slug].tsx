@@ -1,12 +1,13 @@
-import { MDXRemote } from 'next-mdx-remote/index'
 import PostLayout from '@/layouts/PostLayout'
-import MDXComponents from '@/components/MDXComponents'
+import MDXRenderer from '@/components/MDXComponents'
 import PageTitle from '@/components/PageTitle'
+import { FrontMatterData } from '@/components/SEO'
 
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
+import { GetStaticPathsContext, GetStaticPropsContext } from 'next'
 
-export async function getStaticPaths({ locales, defaultLocale }) {
+export async function getStaticPaths({ locales, defaultLocale }: GetStaticPathsContext) {
   const { getFiles, formatSlug } = await import('@/lib/mdx')
   const posts = await getFiles('blog', '*', locales, defaultLocale)
   const allPaths = posts.map((p) => ({
@@ -22,7 +23,12 @@ export async function getStaticPaths({ locales, defaultLocale }) {
   }
 }
 
-export async function getStaticProps({ params, locale, locales, defaultLocale }) {
+export async function getStaticProps({
+  params,
+  locale,
+  locales,
+  defaultLocale,
+}: GetStaticPropsContext) {
   const { getFileBySlug, getAllFilesFrontMatter } = await import('@/lib/mdx')
   const allPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
   const postIndex = allPosts.findIndex((post) => post.slug === params.slug)
@@ -33,31 +39,40 @@ export async function getStaticProps({ params, locale, locales, defaultLocale })
   }
   const prev = allPosts[postIndex + 1] || null
   const next = allPosts[postIndex - 1] || null
-  const post = await getFileBySlug('blog', allPosts[postIndex], locales, defaultLocale)
-
-  const useLocale = locale === defaultLocale ? '' : locale
+  const post = await getFileBySlug(allPosts[postIndex])
 
   return { props: { post, prev, next } }
 }
 
-export default function Blog({ post, prev, next }) {
+interface BlogPostData {
+  mdxSource: string
+  frontMatter: FrontMatterData
+}
+
+interface BlogsPosts {
+  post: BlogPostData
+  prev: FrontMatterData
+  next: FrontMatterData
+}
+
+export default function Blog({ post, prev, next }: BlogsPosts) {
   const [reportedView, setReported] = useState(false)
-  const router = useRouter()
+  // const router = useRouter()
   const { mdxSource, frontMatter } = post
-  let fullSlug = router.asPath
-  if (typeof router.locale === 'string' && router.locale !== router.defaultLocale) {
-    fullSlug = `/${router.locale}${fullSlug}`
-  }
-  fullSlug += '/'
+  // let fullSlug = router.asPath
+  // if (typeof router.locale === 'string' && router.locale !== router.defaultLocale) {
+  //   fullSlug = `/${router.locale}${fullSlug}`
+  // }
+  // fullSlug += '/'
 
   async function postHits() {
-    const resp = await fetch('/api/1up', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ slug: fullSlug }),
-    })
+    // const resp = await fetch('/api/1up', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ slug: fullSlug }),
+    // })
   }
 
   useEffect(() => {
@@ -79,7 +94,7 @@ export default function Blog({ post, prev, next }) {
     <>
       {frontMatter.draft !== true ? (
         <PostLayout frontMatter={frontMatter} prev={prev} next={next}>
-          <MDXRemote {...mdxSource} components={MDXComponents} />
+          <MDXRenderer mdxSource={mdxSource} />
         </PostLayout>
       ) : (
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
@@ -93,7 +108,7 @@ export default function Blog({ post, prev, next }) {
             <p className="text-gray-400 mt-2">This post is still under writing</p>
           </div>
           <PostLayout frontMatter={frontMatter} prev={prev} next={next}>
-            <MDXRemote {...mdxSource} components={MDXComponents} />
+            <MDXRenderer mdxSource={mdxSource} />
           </PostLayout>
         </div>
       )}
