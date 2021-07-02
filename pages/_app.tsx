@@ -5,14 +5,13 @@ import { ThemeProvider } from 'next-themes'
 import { DefaultSeo } from 'next-seo'
 import Head from 'next/head'
 import Router from 'next/router'
-import { useRouter } from 'next/router'
 import { IntlProvider } from 'react-intl'
 
 import { SEO } from '@/components/SEO'
 import LayoutWrapper from '@/components/LayoutWrapper'
 
-import LocaleEn from '@/locale/en'
-import LocaleId from '@/locale/id'
+import LocaleEn from '@/locale/en.json'
+import LocaleId from '@/locale/id.json'
 
 const languages = {
   id: LocaleId,
@@ -30,7 +29,7 @@ Router.events.on('routeChangeStart', progress.start)
 Router.events.on('routeChangeComplete', progress.finish)
 Router.events.on('routeChangeError', progress.finish)
 
-export default function App({ Component, pageProps, router }) {
+export default function BlogApp({ Component, pageProps, router }) {
   const { locale, defaultLocale } = router
   const messages = languages[locale]
 

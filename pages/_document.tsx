@@ -1,7 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
-import { useRouter } from 'next/router'
+import { withRouter } from 'next/router'
 
 import { InlineJs } from '@kachkaev/react-inline-js'
+import { WithRouterProps } from 'next/dist/client/with-router'
 
 const THEME_CHECKER_JS = `
 // Helper
@@ -49,13 +50,15 @@ const toggleTheme = function() {
 };
 `
 
-class MyDocument extends Document {
+class BlogDocumentSection extends Document<WithRouterProps> {
   constructor(props) {
     super(props)
   }
 
   render() {
-    const { locale, defaultLocale } = this.props
+    const {
+      router: { locale, defaultLocale },
+    } = this.props
     let useLocale = '/' + locale
     if (locale === defaultLocale) {
       useLocale = ''
@@ -104,9 +107,4 @@ class MyDocument extends Document {
   }
 }
 
-function WrapDocument(props) {
-  const route = useRouter()
-  return <MyDocument locale={route.locale} defaultLocale={route.defaultLocale} {...props} />
-}
-
-export default MyDocument
+export default withRouter(BlogDocumentSection)

@@ -3,121 +3,64 @@ import Link from '@/components/Link'
 import { PageSeo } from '@/components/SEO'
 import Tag from '@/components/Tag'
 import SpotifyHubSkeleton from '@/components/SpotifyHubSkeleton'
-import siteMetadata from '@/data/siteMetadata'
-import { durationToText } from '@/lib/utils'
+import TimerLoader from '@/components/TimerLoader'
+import siteMetadata from '@/data/siteMetadata.json'
 
 import remark from 'remark'
 import markdown from 'remark-parse'
 import html from 'remark-html'
 import { DateTime } from 'luxon'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useIntl } from 'react-intl'
+import { GetStaticPropsContext } from 'next'
 
-const postDateTemplate = { year: 'numeric', month: 'long', day: 'numeric' }
+const postDateTemplate: Intl.DateTimeFormatOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
 
-export async function getStaticProps({ locale, locales, defaultLocale }) {
+export async function getStaticProps({ locale, locales, defaultLocale }: GetStaticPropsContext) {
   const { getAllFilesFrontMatter } = await import('@/lib/mdx')
   const posts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
 
   return { props: { posts } }
 }
 
-function summaryFormatter(textData) {
-  if (textData.replace(/\s/g) === '') {
+function summaryFormatter(textData: string) {
+  if (textData.replace(/\s/g, '') === '') {
     return ''
   }
   const result = remark().use(markdown).use(html).processSync(textData)
   return result.toString()
 }
 
-class TimerLoader extends React.Component {
-  constructor(props) {
-    super(props)
-    const { current } = props
-    this.state = {
-      current,
-    }
-  }
-
-  componentDidMount() {
-    const outerThis = this
-    this.timerState = setInterval(() => {
-      this.setState(
-        (prev) => ({ current: prev.current + 1 }),
-        () => {
-          if (outerThis.state.current >= outerThis.props.total) {
-            if (this.timerState) {
-              clearInterval(this.timerState)
-            }
-            if (outerThis.props && typeof outerThis.props.onFinished === 'function') {
-              outerThis.props.onFinished()
-            }
-          }
-        }
-      )
-    }, 1000)
-  }
-
-  componentWillUnmount() {
-    if (this.timerState) {
-      clearInterval(this.timerState)
-    }
-  }
-
-  render() {
-    let { current } = this.state
-    const { total } = this.props
-    if (current >= total && this.timerState) {
-      clearInterval(this.timerState)
-      current = total
-    }
-
-    return (
-      <div className="font-light text-gray-400 dark:text-gray-500">
-        {durationToText(current)}/{durationToText(total)}
-      </div>
-    )
-  }
+interface SpotifyLocalesString {
+  play: string
+  stop: string
+  by: string
+  load?: string
+  err?: string
 }
 
-class RotatingBorder extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      angle: 0,
-    }
-  }
-
-  componentDidMount() {
-    this.rotateData = setInterval(() => {
-      this.setState((e) => ({ angle: e.angle >= 360 ? 1 : e.angle + 1 }))
-    }, (10 / 360) * 1000)
-  }
-
-  componentWillUnmount() {
-    if (this.rotateData) {
-      clearInterval(this.rotateData)
-    }
-  }
-
-  render() {
-    const { angle } = this.state
-    return (
-      <div
-        className="absolute top-0 bottom-0 right-0 left-0 rounded-lg border-4 duration-[10s]"
-        style={{
-          // borderImage: `linear-gradient(${angle}deg, rgb(16, 185, 129), rgb(16 185 177)) 1`,
-          borderImageSource: `linear-gradient(rgb(16, 185, 129), rgb(16 185 177))`,
-          borderImageSlice: `1`,
-        }}
-      />
-    )
-  }
+interface SpotifyNowState {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any
+  loading: boolean
+  firstTime: boolean
+  error: boolean
 }
 
-class SpotifyNow extends React.Component {
-  constructor(props) {
+interface SpotifyNowProps {
+  localesData: SpotifyLocalesString
+  currentLocale: string
+}
+
+class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
+  timerData?: NodeJS.Timeout
+
+  constructor(props: SpotifyNowProps) {
     super(props)
     this.refreshData = this.refreshData.bind(this)
     this.state = {
@@ -163,7 +106,7 @@ class SpotifyNow extends React.Component {
   }
 
   render() {
-    const { localesData, locale } = this.props
+    const { localesData, currentLocale } = this.props
     const { data, loading, error, firstTime } = this.state
     if (error) {
       return null
@@ -197,7 +140,13 @@ class SpotifyNow extends React.Component {
                 <div className="flex flex-col items-center md:flex-row md:items-start gap-4">
                   <div className="relative">
                     <a href={mainData.url} rel="noopener noreferrer" target="_blank">
-                      <RotatingBorder />
+                      <div
+                        className="absolute top-0 bottom-0 right-0 left-0 rounded-lg border-4 duration-[10s]"
+                        style={{
+                          borderImageSource: `linear-gradient(rgb(16, 185, 129), rgb(16 185 177))`,
+                          borderImageSlice: `1`,
+                        }}
+                      />
                       <img
                         className="w-96 rounded-lg !shadow-lg"
                         src={mainData.album.url}
@@ -210,6 +159,7 @@ class SpotifyNow extends React.Component {
                       <Link
                         href={mainData.url}
                         className="hover:underline text-2xl md:text-3xl lg:text-4xl font-bold"
+                        locale={currentLocale}
                       >
                         {mainData.title}
                       </Link>
@@ -219,24 +169,26 @@ class SpotifyNow extends React.Component {
                     </div>
                     <div className="font-light text-gray-400 dark:text-gray-500">
                       {DateTime.fromSQL(mainData.album.date)
-                        .setLocale(locale)
+                        .setLocale(currentLocale)
                         .toLocaleString(DateTime.DATE_FULL)}
                     </div>
-                    <TimerLoader
-                      current={mainData.progress / 1000}
-                      total={mainData.duration / 1000}
-                      onFinished={() =>
-                        setTimeout(() => {
-                          this.refreshData()
-                            .then(() => {
-                              return
-                            })
-                            .catch(() => {
-                              return
-                            })
-                        }, 2000)
-                      }
-                    />
+                    <div className="font-light text-gray-400 dark:text-gray-500">
+                      <TimerLoader
+                        current={mainData.progress / 1000}
+                        total={mainData.duration / 1000}
+                        onFinished={() =>
+                          setTimeout(() => {
+                            this.refreshData()
+                              .then(() => {
+                                return
+                              })
+                              .catch(() => {
+                                return
+                              })
+                          }, 2000)
+                        }
+                      />
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -367,6 +319,7 @@ export default function Home({ posts }) {
                             <Link
                               href={`/posts/${slug}`}
                               className="text-gray-900 dark:text-gray-100"
+                              locale={intl.locale}
                             >
                               {draft && (
                                 <>
@@ -398,6 +351,7 @@ export default function Home({ posts }) {
                           href={`/posts/${slug}`}
                           className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
                           aria-label={`${intl.locale === 'en' ? 'Read' : 'Baca'} "${title}"`}
+                          locale={intl.locale}
                         >
                           {intl.formatMessage(descriptors.readMore)} &rarr;
                         </Link>
@@ -416,12 +370,13 @@ export default function Home({ posts }) {
             href="/posts"
             className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
             aria-label={intl.formatMessage(descriptors.readMore).toLowerCase()}
+            locale={intl.locale}
           >
             {intl.formatMessage(descriptors.allPosts)} &rarr;
           </Link>
         </div>
       )}
-      <SpotifyNow locale={intl.locale} localesData={spotifyDataLocales} />
+      <SpotifyNow currentLocale={intl.locale} localesData={spotifyDataLocales} />
     </>
   )
 }

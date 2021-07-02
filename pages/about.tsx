@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import siteMetadata from '@/data/siteMetadata'
+import siteMetadata from '@/data/siteMetadata.json'
 import aboutData from '@/data/aboutData'
 import SocialIcon from '@/components/social-icons'
 import { PageSeo } from '@/components/SEO'
@@ -12,12 +12,12 @@ import gemoji from 'remark-gemoji'
 import markdown from 'remark-parse'
 import html from 'remark-html'
 
-function parseMarkdownSimple(inputText) {
+function parseMarkdownSimple(inputText: string) {
   const result = remark().use(gemoji).use(linebreaks).use(markdown).use(html).processSync(inputText)
   return result.toString()
 }
 
-function buildAboutPage(selectedIntl) {
+function buildAboutPage(selectedIntl: string) {
   if (Array.isArray(aboutData)) {
     aboutData
   }
@@ -59,9 +59,6 @@ export default function About() {
             <div className="flex pt-6 space-x-3">
               <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} />
               <SocialIcon kind="github" href={siteMetadata.github} />
-              <SocialIcon kind="facebook" href={siteMetadata.facebook} />
-              <SocialIcon kind="youtube" href={siteMetadata.youtube} />
-              <SocialIcon kind="linkedin" href={siteMetadata.linkedin} />
               <SocialIcon kind="twitter" href={siteMetadata.twitter} />
               <SocialIcon kind="trakteer" href={siteMetadata.trakteer} />
             </div>
