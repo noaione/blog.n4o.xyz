@@ -6,6 +6,7 @@ module.exports = {
     amd: true,
     node: true,
   },
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/eslint-recommended',
