@@ -5,8 +5,8 @@ import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
 import { BlogSeo, FrontMatterData } from '@/components/SEO'
 import Tag from '@/components/Tag'
+import TimerLoader from '@/components/TimerLoader'
 import siteMetadata from '@/data/siteMetadata.json'
-import { durationToText } from '@/lib/utils'
 import React from 'react'
 
 import { useIntl } from 'react-intl'
@@ -19,69 +19,6 @@ const postDateTemplate: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-}
-
-interface TimerProps {
-  current: number
-  total: number
-  onFinished?: () => void
-}
-
-interface TimerState {
-  current: number
-}
-
-class TimerLoader extends React.Component<TimerProps, TimerState> {
-  timerState?: NodeJS.Timeout
-
-  constructor(props) {
-    super(props)
-    const { current } = props
-    this.state = {
-      current,
-    }
-  }
-
-  componentDidMount() {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const outerThis = this
-    this.timerState = setInterval(() => {
-      this.setState(
-        (prev) => ({ current: prev.current + 1 }),
-        () => {
-          if (outerThis.state.current >= outerThis.props.total) {
-            if (this.timerState) {
-              clearInterval(this.timerState)
-            }
-            if (outerThis.props && typeof outerThis.props.onFinished === 'function') {
-              outerThis.props.onFinished()
-            }
-          }
-        }
-      )
-    }, 1000)
-  }
-
-  componentWillUnmount() {
-    if (this.timerState) {
-      clearInterval(this.timerState)
-    }
-  }
-
-  render() {
-    let { current } = this.state
-    const { total } = this.props
-    if (current >= total && this.timerState) {
-      clearInterval(this.timerState)
-      current = total
-    }
-
-    return (
-      <p className="text-gray-800 dark:text-gray-200 font-medium">
-        {durationToText(current)}/{durationToText(total)}
-      </p>
-    )
-  }
 }
 
 interface SpotifyLocalesString {
@@ -202,21 +139,23 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
         </div>
         {!loading && !error && data.playing && (
           <div className="flex flex-col mt-0.5">
-            <TimerLoader
-              current={data.data.progress / 1000}
-              total={data.data.duration / 1000}
-              onFinished={() =>
-                setTimeout(() => {
-                  this.refreshData()
-                    .then(() => {
-                      return
-                    })
-                    .catch(() => {
-                      return
-                    })
-                }, 2000)
-              }
-            />
+            <p className="text-gray-800 dark:text-gray-200 font-medium">
+              <TimerLoader
+                current={data.data.progress / 1000}
+                total={data.data.duration / 1000}
+                onFinished={() =>
+                  setTimeout(() => {
+                    this.refreshData()
+                      .then(() => {
+                        return
+                      })
+                      .catch(() => {
+                        return
+                      })
+                  }, 2000)
+                }
+              />
+            </p>
           </div>
         )}
       </div>
