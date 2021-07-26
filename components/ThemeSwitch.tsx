@@ -8,13 +8,24 @@ const ThemeSwitch = () => {
   // When mounted on client, now we can show the UI
   useEffect(() => setMounted(true), [])
   useEffect(() => {
-    const message = {
+    const utteranceMessage = {
       type: 'set-theme',
       theme: theme === 'dark' ? 'github-dark' : 'github-light',
     }
-    const iframeData = document.querySelector<HTMLIFrameElement>('.utterances-frame')
-    if (iframeData !== null) {
-      iframeData.contentWindow.postMessage(message, 'https://utteranc.es')
+    const giscusMessage = {
+      giscus: {
+        setConfig: {
+          theme: theme === 'dark' ? 'transparent_dark' : 'light',
+        },
+      },
+    }
+    const utteranceFrame = document.querySelector<HTMLIFrameElement>('.utterances-frame')
+    const giscusFrame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame')
+    if (utteranceFrame !== null) {
+      utteranceFrame.contentWindow.postMessage(utteranceMessage, 'https://utteranc.es')
+    }
+    if (giscusFrame !== null) {
+      giscusFrame.contentWindow.postMessage(giscusMessage, 'https://giscus.app')
     }
   }, [theme])
 
