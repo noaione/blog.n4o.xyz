@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import DisqusComments from '@/components/Comments'
+import Comments from '@/components/Comments'
 import Link from '@/components/Link'
 import PageTitle from '@/components/PageTitle'
 import SectionContainer from '@/components/SectionContainer'
@@ -311,7 +311,7 @@ export default function PostLayout({ children, frontMatter, next, prev }: PostLa
                   </Link>
                 </div>
                 <div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-                  <DisqusComments title={title} slug={slug} />
+                  <Comments slug={slug} />
                 </div>
               </div>
               <footer>
