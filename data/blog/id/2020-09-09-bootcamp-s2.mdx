@@ -10,37 +10,48 @@ tags: ['tutorial', 'coding']
   </p>
 </div>
 
-:::warning Bagi pengguna OS lain
-Tutorial ini dibuat khusus untuk pengguna **Windows 10**<br />
-Jika pengguna OS lain, ada beberapa langkah yang dilewati.
-:::
+<Admonition type="warning" title="Bagi pengguna OS lain">
+  Tutorial ini dibuat khusus untuk pengguna **Windows 10**
+  <br />
+  Jika anda pengguna OS lain, ada beberapa langkah yang dilewati.
+</Admonition>
 
-## Setup WSL {#wsl}
+## Setup WSL |#wsl|
 
 Ikuti tutorial ini: [Microsoft Docs - WSL Install](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 
-:::warning Versi Distro
-Disarankan memilih **Ubuntu 20.04 LTS**<br />
-Bisa di klik link ini: [Microsoft Store](https://www.microsoft.com/store/apps/9n6svws3rx71)<br />
-Silakan Ikuti **Step 1 dan** langsung lompat ke **Step 6-7.**<br />
-Jika situ menggunakan Windows 10 2004, bisa ikuti Step 2-5 kalau mau tapi tidak tak rekomendasikan untuk sekarang.
-:::
+<Admonition type="warning" title="Versi distro">
+  Disarankan memilih **Ubuntu 20.04 LTS**
+  <br />
+  Bisa di klik link ini: [Microsoft Store](https://www.microsoft.com/store/apps/9n6svws3rx71)
+  <br />
+  Silakan Ikuti **Step 1 dan** langsung lompat ke **Step 6-7.**
+  <br />
+  Jika situ menggunakan Windows 10 2004, bisa ikuti Step 2-5 kalau mau tapi tidak tak rekomendasikan
+  untuk sekarang.
+</Admonition>
 
-:::info Jika tidak bisa install via MS Store
-Ikuti cara install melalui LxRunOffline di sini: <a href="/posts/lxrunoffline" locale="id">WSL dengan LxRunOffline</a>
-:::
+<Admonition type="info" title="Jika tidak bisa install via MS Store">
+  Ikuti cara install melalui LxRunOffline di sini:{' '}
+  <Link href="/posts/lxrunoffline" locale="id">
+    WSL dengan LxRunOffline
+  </Link>
+</Admonition>
 
 Jika sudah muncul kurang lebih seperti ini, WSL siap dipakai
 
 <Image src="/static/images/bootcamps2/wsl_ready.png" caption="WSL Ready" />
 
-:::danger Jika User adalah `root`
-**NOTE:**<br />
-Pastikan WSL/Ubuntu tidak jalan sebagai `root`, jika WSL/Ubuntu jalan sebagai `root` tolong Uninstall Ubuntu lalu Install kembali.<br />
-**Contoh jalan sebagai root adalah tanda: `root@HOSTNAME:~$` di Terminal/Console/CMD**
-:::
+<Admonition type="danger" title="Jika User adalah `root`">
+  **NOTE:**
+  <br />
+  Pastikan WSL/Ubuntu tidak jalan sebagai `root`, jika WSL/Ubuntu jalan sebagai `root` tolong
+  Uninstall Ubuntu lalu Install kembali.
+  <br />
+  **Contoh jalan sebagai root adalah tanda: `root@HOSTNAME:~$` di Terminal/Console/CMD**
+</Admonition>
 
-## Toolchain GCC/G++ + Git {#toolchain}
+## Toolchain GCC/G++ + Git |#toolchain|
 
 Jalankan command berikut:
 
@@ -58,7 +69,7 @@ gcc --version
 
 <Image src="/static/images/bootcamps2/wsl_gccgit_test.png" caption="GCC/Git Test Command" />
 
-## Homebrew on Linux {#linuxbrew}
+## Homebrew on Linux |#linuxbrew|
 
 Langkah pertama adalah menginstall Homebrew terlebih dahulu dengan command berikut
 
@@ -68,10 +79,11 @@ Langkah pertama adalah menginstall Homebrew terlebih dahulu dengan command berik
 
 <Image src="/static/images/bootcamps2/brew_start.png" caption="Install Homebrew" />
 
-:::info Waktu Instalasi
-Akan memakan waktu cukup lama, sekitar 30 menit lebih.<br />
-Dikarenakan harus mengunduh 300mb+ dari Git.
-:::
+<Admonition type="info" title="Waktu Instalasi">
+  Akan memakan waktu cukup lama, sekitar 30 menit lebih.
+  <br />
+  Dikarenakan harus mengunduh 300mb+ dari Git.
+</Admonition>
 
 ---
 
@@ -100,7 +112,7 @@ brew install hello
 
 <Video src="https://p.ihateani.me/cerxeavc.mp4" />
 
-## VSCode ❤️ WSL {#vscode-wsl}
+## VSCode ❤️ WSL |#vscode-wsl|
 
 Saatnya integrasi VSCode dengan WSL! Silakan install [VSCode](https://code.visualstudio.com/) jika belum.
 
@@ -120,18 +132,18 @@ Seharusnya akan muncul Window baru dan dipojok kiri bawah terdapat tulisan `WSL:
 
 VSCode telah sukses terkoneksi dengan WSL. 🎉
 
-### VSCode ❤️ WSL - Extensions {#vscode-extensions}
+### VSCode ❤️ WSL - Extensions |#vscode-extensions|
 
 VSCode jika berpindah Remote akan menggunakan Extensions yang sudah terinstall masing-masing.<br />
 Beberapa extension bersifat global, beberapa tidak.
 
 Berikut adalah Extensions yang disarankan.
 
-:::warning Note
-Mohon install ketika VSCode sudah terhubung dengan WSL.
-:::
+<Admonition type="warning" title="Note">
+  Mohon install ketika VSCode sudah terhubung dengan WSL.
+</Admonition>
 
-#### 1. Code Runner {#vscode-ext-crun}
+#### 1. Code Runner |#vscode-ext-crun|
 
 Berguna untuk menjalankan code lebih simpel.
 
@@ -145,7 +157,7 @@ Pilih `Remote [WSL: NamaDistro]` lalu ketik `code-runner.runInTerminal` di kolom
 
 Sekarang tinggal klik tombol `▶️` di pojok kanan atas atau shortcutnya `CTRL+ALT+N`
 
-:::warning Jika gagal
+<Admonition type="warning" title="Jika gagal">
 Pastikan sudah terinstall G++/GCC Toolchain dan sudah terconnect dengan WSL.<br />
 Jika masih tidak bisa, bisa menjalankan codenya secara manual dengan cara<br />
 
@@ -153,11 +165,11 @@ Jika masih tidak bisa, bisa menjalankan codenya secara manual dengan cara<br />
 g++ ./namaFile.cpp -o ./namaFile && ./namaFile
 ```
 
-:::
+</Admonition>
 
 <Image src="https://p.ihateani.me/kpjhhkkm.gif" caption="Code Runner in Terminal Options" />
 
-#### 2. C/C++ {#vscode-ext-ccpp}
+#### 2. C/C++ |#vscode-ext-ccpp|
 
 Sebagai helper utama C/C++
 
@@ -165,7 +177,7 @@ Link Instalasi: [ms-vscode.cpptools](https://marketplace.visualstudio.com/items?
 
 <Image src="https://p.ihateani.me/xmhvdbyu.png" caption="Extension 02" />
 
-#### 3. Visual Studio IntelliCode {#vscode-ext-vscintellicode}
+#### 3. Visual Studio IntelliCode |#vscode-ext-vscintellicode|
 
 Sebagai code completion untuk berbagai macam bahasa.
 
@@ -173,7 +185,7 @@ Link Instalasi: [VisualStudioExptTeam.vscodeintellicode](https://marketplace.vis
 
 <Image src="https://p.ihateani.me/kqolciuc.png" caption="Extension 03" />
 
-#### 4. Prettier - Code formatter {#vscode-ext-prettier}
+#### 4. Prettier - Code formatter |#vscode-ext-prettier|
 
 Sebagai code formatter biar lebih rapih.
 
@@ -181,7 +193,7 @@ Link Instalasi: [esbenp.prettier-vscode](https://marketplace.visualstudio.com/it
 
 <Image src="https://p.ihateani.me/mlashzri.png" caption="Extension 04" />
 
-#### 5. Bracket Pair Colorizer {#vscode-ext-brackerpair}
+#### 5. Bracket Pair Colorizer |#vscode-ext-brackerpair|
 
 Mempermudah membedakan code didalam bracket.
 
@@ -189,7 +201,7 @@ Link Instalasi: [CoenraadS.bracket-pair-colorizer](https://marketplace.visualstu
 
 <Image src="https://p.ihateani.me/nhwysqem.png" caption="Extension 05" />
 
-#### 6. Polacode {#vscode-ext-polacode}
+#### 6. Polacode |#vscode-ext-polacode|
 
 Membuat screenshot code yang dibuat. (Dokumentasi)
 
@@ -197,7 +209,7 @@ Link Instalasi: [pnp.polacode](https://marketplace.visualstudio.com/items?itemNa
 
 <Image src="https://p.ihateani.me/bykdqhqx.png" caption="Extension 06" />
 
-#### 7. GitLens — Git supercharged {#vscode-ext-gitlens}
+#### 7. GitLens — Git supercharged |#vscode-ext-gitlens|
 
 Extension terbaik untuk Integrasi Git(Hub/Lab).
 
@@ -205,7 +217,7 @@ Link Instalasi: [eamodio.gitlens](https://marketplace.visualstudio.com/items?ite
 
 <Image src="https://p.ihateani.me/pasjvpfa.png" caption="Extension 07" />
 
-#### 8. vscode-icons {#vscode-ext-vsicons}
+#### 8. vscode-icons |#vscode-ext-vsicons|
 
 Menambahkan Icon untuk extension File dengan tema yang ada.
 
@@ -213,7 +225,7 @@ Link Instalasi: [vscode-icons-team.vscode-icons](https://marketplace.visualstudi
 
 <Image src="https://p.ihateani.me/uuynlpsb.png" caption="Extension 08" />
 
-## Run code di WSL+VSCode {#vscode-coderun}
+## Run code di WSL+VSCode |#vscode-coderun|
 
 Pastikan [VSCode telah terhubung dengan WSL](#vscode-wsl)<br />
 Dan pastikan telah menginstall [extension Code Runner](#vscode-ext-crun).
@@ -244,18 +256,19 @@ int main() {
 Save filenya, dan klik tombol Play di pojok kanan atas (Akan ada jika sudah menginstall [extension Code Runner](#vscode-ext-crun)).<br />
 Jika codenya sukses di run, selamat WSL dan VSCode sudah benar-benar siap dipakai!
 
-:::info Note
-Disarankan menaruh code yang ingin di run di folder WSL.<br />
-Dikarenkan WSL tidak support `cd` (change directory) ke folder windows.
-:::
+<Admonition type="info" title="Note">
+  Disarankan menaruh code yang ingin di run di folder WSL.
+  <br />
+  Dikarenkan WSL tidak support `cd` (change directory) ke folder windows.
+</Admonition>
 
 <Image src="https://p.ihateani.me/qpkhfswk.gif" caption="Run Code @ WSL" />
 
-## Git Integrations {#vscode-git}
+## Git Integrations |#vscode-git|
 
 _Git is hard..._
 
-### Preparasi {#vscode-git-preface}
+### Preparasi |#vscode-git-preface|
 
 Mari buat akun baru di GitHub jika belum: [Sign Up](https://github.com/join).
 
@@ -271,7 +284,7 @@ Setelah itu klik `Create repository`, repo baru telah siap!
 
 <Video src="https://p.ihateani.me/uzomrkrx.mp4" />
 
-#### Konfigurasi Git {#git-config}
+#### Konfigurasi Git |#git-config|
 
 Sebelum memulai project, buka WSL terlebih dahulu.<br />
 Kita harus atur config untuk email dan user, caranya:
@@ -283,20 +296,20 @@ git config --global user.email "email@provider.tld"
 
 Jalankan kedua command tersebut di WSL.
 
-:::info Note
-Gunakan username github dan email yang dipake di github.
-:::
+<Admonition type="info" title="Note">
+  Gunakan username github dan email yang dipake di github.
+</Admonition>
 
 <Image src="https://p.ihateani.me/asqjkyxf.gif" caption="Config git" />
 
 Saatnya memulai project!, jika sudah ada folder bisa langsung ke [Sudah ada Folder](#vscode-git-fd-exists)<br />
 Jika belum silakan ke [Tidak ada Folder](#vscode-git-clone)
 
-:::warning Saran!
-**Disarankan jangan membuat folder terlebih dahulu untuk mempermudah**
-:::
+<Admonition type="warning" title="Saran!">
+  **Disarankan jangan membuat folder terlebih dahulu untuk mempermudah**
+</Admonition>
 
-### Git Integrations - Remote Add {#vscode-git-fd-exists}
+### Git Integrations - Remote Add |#vscode-git-fd-exists|
 
 Jika folder yang dibuat ada di Windows, silakan ke [Tidak ada Folder](#vscode-git-clone).<br />
 Folder harus berada di direktori WSL. (ex: `/home/USERNAME/bootcamp-s2/`)
@@ -325,7 +338,7 @@ GitHub telah sukses terhubung dengan project VSCode.
 
 <Video src="https://p.ihateani.me/wdlxsjjq.mp4" />
 
-#### Git Integrations - Remote Add (Checkout) {#vscode-git-fd-checkout}
+#### Git Integrations - Remote Add (Checkout) |#vscode-git-fd-checkout|
 
 Jika Repository yang ditambah ada isinya, silakan ikuti langka ini, jika tidak bisa loncat ke [Git - Commit/Push/Pull](#git-hell)
 
@@ -343,7 +356,7 @@ Folder akan terisi dengan file yang ada di GitHub.
 
 <Video src="https://p.ihateani.me/qitwmtob.mp4" />
 
-### Git Integrations - Remote Clone {#vscode-git-clone}
+### Git Integrations - Remote Clone |#vscode-git-clone|
 
 Pertama, connect ke WSL terlebih dahulu.<br />
 Lalu, pilih `Clone Repository`.
@@ -356,10 +369,11 @@ https://github.com/USERNAME/REPONAME.git
 
 Contohnya: `https://github.com/noaione/code-bootcamp-s2.git`
 
-:::info Note
-Jika repository itu bersifat Private, tambahkan Username dan Password akun ke URL repository.<br />
-Formatnya jadi: `https://USERNAME:PASSWORD@github.com/USERNAME/REPONAME.git`
-:::
+<Admonition type="info" title="Note">
+  Jika repository itu bersifat Private, tambahkan Username dan Password akun ke URL repository.
+  <br />
+  Formatnya jadi: `https://USERNAME:PASSWORD@github.com/USERNAME/REPONAME.git`
+</Admonition>
 
 Jika repo tidak ada apa-apa dan ada teks `Quick setup`, copy link yang disediakan.<br />
 Jika repo sudah ada isi klik tombol `Clone or Download` yang berwarna hijau dan klik tombol copy di kolom `Clone with HTTPS`.
@@ -376,13 +390,13 @@ GitHub telah sukses terhubung dengan project VSCode.
 
 <Video src="https://p.ihateani.me/zxoleuzs.mp4" />
 
-## Git - Commit/Push/Pull {#git-hell}
+## Git - Commit/Push/Pull |#git-hell|
 
 Dibagian ini, kita akan sedikit belajar tentang Commit, Push, dan Pull serta mengatasi File Conflict.
 
 Sebelum kita mulai commit-commit ke repo, disarankan kita setup file `.gitignore`, file ini berguna agar tidak ada "sampah" yang ikutan ke commit/push ke remote repository.
 
-### .gitignore File {#git-ignore}
+### .gitignore File |#git-ignore|
 
 Silakan buka website ini: [gitignore.io](https://www.toptal.com/developers/gitignore)
 
@@ -397,7 +411,7 @@ Copy hasilnya, lalu buat file `.gitignore` dan paste lalu save.
 
 <Video src="https://p.ihateani.me/jwecruts.mp4" />
 
-### Commit Changes {#git-commit}
+### Commit Changes |#git-commit|
 
 Sebelum kita bisa menambah file baru maupun modifikasi ke Repo Github kita, kita harus melakukan: stage changes, commit lalu push.
 
@@ -411,7 +425,7 @@ Setelah itu cukup Enter, dan Perubahanmu telah di commit dan siap untuk di Push.
 
 <Image src="https://p.ihateani.me/zpzcdvck.gif" caption="Commit changes" />
 
-### Push Changes {#git-push}
+### Push Changes |#git-push|
 
 Jika sudah membuat commit baru, kita tinggal melakukan yang namanya Push, yaitu "mendorong" perubahan menuju remote repository.
 
@@ -421,7 +435,7 @@ Sudah, hanya seperti itu, perubahan telah masuk ke GitHub.
 
 <Image src="https://p.ihateani.me/tbgmtidf.gif" caption="Push Changes" />
 
-### Pull Changes {#git-pull}
+### Pull Changes |#git-pull|
 
 Ternyata projek kita lakukan dikerjakan bersama kolaborator lain?!, dan ketika kita ingin Push Changes kita, ada error message.
 
@@ -435,7 +449,7 @@ Semua perubahan dari Remote repo akan masuk ke Local repo, dan situ bisa lanjut 
 
 <Image src="https://p.ihateani.me/xrvsisul.gif" caption="Pull Changes" />
 
-### Merge Conflicting Changes {#git-conflict-hell}
+### Merge Conflicting Changes |#git-conflict-hell|
 
 Ternyata, pas situ Pull Changes kolaborator rlain dan situ mengubah line yang sama dan muncul error ketika Pull Changes.
 
@@ -508,7 +522,7 @@ Jika kita klik `Accept Both Changes` maka akan menjadi
 	perubahan dari remote/pull
 ```
 
-## Penutup {#godhelpmeimtiredwritingthisanduploadingittomycdn}
+## Penutup |#godhelpmeimtiredwritingthisanduploadingittomycdn|
 
 Close halaman ini dan kembalilah ngoding.<br />
 Jika ada masalah (atau kurang ngerti) bisa kontak/mention **N4O#8868** di Discord.
