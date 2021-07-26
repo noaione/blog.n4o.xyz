@@ -10,35 +10,46 @@ tags: ['tutorial', 'coding']
   </p>
 </div>
 
-:::warning Bagi pengguna OS lain
-Tutorial ini dibuat khusus untuk pengguna **Windows 10**<br />
-Jika pengguna OS lain, ada beberapa langkah yang dilewati.
-:::
+<Admonition type="warning" title="Bagi pengguna OS lain">
+  Tutorial ini dibuat khusus untuk pengguna **Windows 10**
+  <br />
+  Jika anda pengguna OS lain, ada beberapa langkah yang dilewati.
+</Admonition>
 
 ## Setup WSL |#wsl|
 
 Ikuti tutorial ini: [Microsoft Docs - WSL Install](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 
-:::warning Versi Distro
-Disarankan memilih **Ubuntu 20.04 LTS**<br />
-Bisa di klik link ini: [Microsoft Store](https://www.microsoft.com/store/apps/9n6svws3rx71)<br />
-Silakan Ikuti **Step 1 dan** langsung lompat ke **Step 6-7.**<br />
-Jika situ menggunakan Windows 10 2004, bisa ikuti Step 2-5 kalau mau tapi tidak tak rekomendasikan untuk sekarang.
-:::
+<Admonition type="warning" title="Versi distro">
+  Disarankan memilih **Ubuntu 20.04 LTS**
+  <br />
+  Bisa di klik link ini: [Microsoft Store](https://www.microsoft.com/store/apps/9n6svws3rx71)
+  <br />
+  Silakan Ikuti **Step 1 dan** langsung lompat ke **Step 6-7.**
+  <br />
+  Jika situ menggunakan Windows 10 2004, bisa ikuti Step 2-5 kalau mau tapi tidak tak rekomendasikan
+  untuk sekarang.
+</Admonition>
 
-:::info Jika tidak bisa install via MS Store
-Ikuti cara install melalui LxRunOffline di sini: <Link href="/posts/lxrunoffline" locale="id">WSL dengan LxRunOffline</Link>
-:::
+<Admonition type="info" title="Jika tidak bisa install via MS Store">
+  Ikuti cara install melalui LxRunOffline di sini:{' '}
+  <Link href="/posts/lxrunoffline" locale="id">
+    WSL dengan LxRunOffline
+  </Link>
+</Admonition>
 
 Jika sudah muncul kurang lebih seperti ini, WSL siap dipakai
 
 <Image src="/static/images/bootcamps2/wsl_ready.png" caption="WSL Ready" />
 
-:::danger Jika User adalah `root`
-**NOTE:**<br />
-Pastikan WSL/Ubuntu tidak jalan sebagai `root`, jika WSL/Ubuntu jalan sebagai `root` tolong Uninstall Ubuntu lalu Install kembali.<br />
-**Contoh jalan sebagai root adalah tanda: `root@HOSTNAME:~$` di Terminal/Console/CMD**
-:::
+<Admonition type="danger" title="Jika User adalah `root`">
+  **NOTE:**
+  <br />
+  Pastikan WSL/Ubuntu tidak jalan sebagai `root`, jika WSL/Ubuntu jalan sebagai `root` tolong
+  Uninstall Ubuntu lalu Install kembali.
+  <br />
+  **Contoh jalan sebagai root adalah tanda: `root@HOSTNAME:~$` di Terminal/Console/CMD**
+</Admonition>
 
 ## Toolchain GCC/G++ + Git |#toolchain|
 
@@ -68,10 +79,11 @@ Langkah pertama adalah menginstall Homebrew terlebih dahulu dengan command berik
 
 <Image src="/static/images/bootcamps2/brew_start.png" caption="Install Homebrew" />
 
-:::info Waktu Instalasi
-Akan memakan waktu cukup lama, sekitar 30 menit lebih.<br />
-Dikarenakan harus mengunduh 300mb+ dari Git.
-:::
+<Admonition type="info" title="Waktu Instalasi">
+  Akan memakan waktu cukup lama, sekitar 30 menit lebih.
+  <br />
+  Dikarenakan harus mengunduh 300mb+ dari Git.
+</Admonition>
 
 ---
 
@@ -127,9 +139,9 @@ Beberapa extension bersifat global, beberapa tidak.
 
 Berikut adalah Extensions yang disarankan.
 
-:::warning Note
-Mohon install ketika VSCode sudah terhubung dengan WSL.
-:::
+<Admonition type="warning" title="Note">
+  Mohon install ketika VSCode sudah terhubung dengan WSL.
+</Admonition>
 
 #### 1. Code Runner |#vscode-ext-crun|
 
@@ -145,7 +157,7 @@ Pilih `Remote [WSL: NamaDistro]` lalu ketik `code-runner.runInTerminal` di kolom
 
 Sekarang tinggal klik tombol `▶️` di pojok kanan atas atau shortcutnya `CTRL+ALT+N`
 
-:::warning Jika gagal
+<Admonition type="warning" title="Jika gagal">
 Pastikan sudah terinstall G++/GCC Toolchain dan sudah terconnect dengan WSL.<br />
 Jika masih tidak bisa, bisa menjalankan codenya secara manual dengan cara<br />
 
@@ -153,7 +165,7 @@ Jika masih tidak bisa, bisa menjalankan codenya secara manual dengan cara<br />
 g++ ./namaFile.cpp -o ./namaFile && ./namaFile
 ```
 
-:::
+</Admonition>
 
 <Image src="https://p.ihateani.me/kpjhhkkm.gif" caption="Code Runner in Terminal Options" />
 
@@ -244,10 +256,11 @@ int main() {
 Save filenya, dan klik tombol Play di pojok kanan atas (Akan ada jika sudah menginstall [extension Code Runner](#vscode-ext-crun)).<br />
 Jika codenya sukses di run, selamat WSL dan VSCode sudah benar-benar siap dipakai!
 
-:::info Note
-Disarankan menaruh code yang ingin di run di folder WSL.<br />
-Dikarenkan WSL tidak support `cd` (change directory) ke folder windows.
-:::
+<Admonition type="info" title="Note">
+  Disarankan menaruh code yang ingin di run di folder WSL.
+  <br />
+  Dikarenkan WSL tidak support `cd` (change directory) ke folder windows.
+</Admonition>
 
 <Image src="https://p.ihateani.me/qpkhfswk.gif" caption="Run Code @ WSL" />
 
@@ -283,18 +296,18 @@ git config --global user.email "email@provider.tld"
 
 Jalankan kedua command tersebut di WSL.
 
-:::info Note
-Gunakan username github dan email yang dipake di github.
-:::
+<Admonition type="info" title="Note">
+  Gunakan username github dan email yang dipake di github.
+</Admonition>
 
 <Image src="https://p.ihateani.me/asqjkyxf.gif" caption="Config git" />
 
 Saatnya memulai project!, jika sudah ada folder bisa langsung ke [Sudah ada Folder](#vscode-git-fd-exists)<br />
 Jika belum silakan ke [Tidak ada Folder](#vscode-git-clone)
 
-:::warning Saran!
-**Disarankan jangan membuat folder terlebih dahulu untuk mempermudah**
-:::
+<Admonition type="warning" title="Saran!">
+  **Disarankan jangan membuat folder terlebih dahulu untuk mempermudah**
+</Admonition>
 
 ### Git Integrations - Remote Add |#vscode-git-fd-exists|
 
@@ -356,10 +369,11 @@ https://github.com/USERNAME/REPONAME.git
 
 Contohnya: `https://github.com/noaione/code-bootcamp-s2.git`
 
-:::info Note
-Jika repository itu bersifat Private, tambahkan Username dan Password akun ke URL repository.<br />
-Formatnya jadi: `https://USERNAME:PASSWORD@github.com/USERNAME/REPONAME.git`
-:::
+<Admonition type="info" title="Note">
+  Jika repository itu bersifat Private, tambahkan Username dan Password akun ke URL repository.
+  <br />
+  Formatnya jadi: `https://USERNAME:PASSWORD@github.com/USERNAME/REPONAME.git`
+</Admonition>
 
 Jika repo tidak ada apa-apa dan ada teks `Quick setup`, copy link yang disediakan.<br />
 Jika repo sudah ada isi klik tombol `Clone or Download` yang berwarna hijau dan klik tombol copy di kolom `Clone with HTTPS`.
