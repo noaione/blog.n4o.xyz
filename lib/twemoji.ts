@@ -47,7 +47,6 @@ export default function TwemojiEmoteRemark() {
       }
 
       if (emoteSlices.length > 0) {
-        console.info(emoteSlices, parent)
         emoteSlices.push({ type: 'text', value: value.slice(start) })
         parent.children = emoteSlices
       }
