@@ -1,4 +1,3 @@
-import { NextSeo, ArticleJsonLd } from 'next-seo'
 import siteMetadata from '@/data/siteMetadata.json'
 import { useRouter } from 'next/router'
 import Head from 'next/head'
@@ -84,18 +83,11 @@ export interface FrontMatterData {
   draft?: boolean
 }
 
-export const BlogSeo = ({
-  title,
-  summary,
-  date,
-  lastmod,
-  url,
-  tags,
-  images = [],
-}: FrontMatterData) => {
-  const intl = useRouter()
+export function BlogSeo({ title, summary, date, lastmod, url, images = [] }: FrontMatterData) {
+  const router = useRouter()
   const publishedAt = new Date(date).toISOString()
   const modifiedAt = new Date(lastmod || date).toISOString()
+
   const imagesArr =
     images.length === 0
       ? [siteMetadata.socialBanner]
@@ -109,53 +101,60 @@ export const BlogSeo = ({
       alt: title,
     }
   })
-  let useLocale = ''
-  if (intl.locale !== intl.defaultLocale) {
-    url = '/' + intl.locale + url
-    useLocale = '/' + intl.locale
+
+  const authorData = {
+    '@type': 'Person',
+    name: siteMetadata.author,
   }
-  url = siteMetadata.siteUrl + url
+
+  const structuredData = {
+    '@context': 'http://schema.org',
+    '@type': 'Article',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+    heading: title,
+    image: featuredImages,
+    datePublished: publishedAt,
+    dateModified: modifiedAt,
+    author: authorData,
+    publisher: {
+      '@type': 'Organization',
+      name: siteMetadata.author,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteMetadata.siteUrl}${siteMetadata.image}`,
+      },
+    },
+    description: summary,
+  }
 
   return (
-    <>
-      <NextSeo
-        title={`${title} :: ${siteMetadata.title}`}
-        description={summary}
-        canonical={url}
-        openGraph={{
-          type: 'article',
-          article: {
-            publishedTime: publishedAt,
-            modifiedTime: modifiedAt,
-            authors: [`${siteMetadata.siteUrl}${useLocale}/about`],
-            tags,
-          },
-          url,
-          title,
-          locale: intl.locale,
-          site_name: siteMetadata.title,
-          description: summary,
-          images: featuredImages,
-        }}
-        twitter={{ cardType: 'summary_large_image' }}
-        additionalMetaTags={[
-          {
-            name: 'twitter:image',
-            content: featuredImages[0].url,
-          },
-        ]}
+    <Head>
+      <title>{`${title}`}</title>
+      <meta name="robots" content="follow, index" />
+      <meta name="description" content={summary} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={summary} />
+      <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />
+      <meta property="og:type" content="article" />
+      <meta property="og:site_name" content={siteMetadata.title} />
+      {featuredImages.map((img) => (
+        <meta property="og:image" content={img.url} key={img.url} />
+      ))}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content={siteMetadata.twitter} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={summary} />
+      <meta name="twitter:image" content={featuredImages[0].url} />
+      {date && <meta property="article:published_time" content={publishedAt} />}
+      {lastmod && <meta property="article:modified_time" content={modifiedAt} />}
+      <link rel="canonical" href={`${siteMetadata.siteUrl}${router.asPath}`} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData, null, 2) }}
       />
-      <ArticleJsonLd
-        authorName={siteMetadata.author}
-        dateModified={modifiedAt}
-        datePublished={publishedAt}
-        description={summary}
-        images={featuredImages.map((e) => e.url)}
-        publisherName={siteMetadata.author}
-        publisherLogo={siteMetadata.image}
-        title={title}
-        url={url}
-      />
-    </>
+    </Head>
   )
 }
