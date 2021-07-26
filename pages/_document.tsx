@@ -36,17 +36,6 @@ if (isNullified(userPreferDark)) {
         document.documentElement.classList.add("dark");
     }
 }
-
-// Theme toggler
-const toggleTheme = function() {
-    try {
-        if (isEmbedPage) {
-            const isDark = document.documentElement.classList.contains("dark");
-            isDark ? document.documentElement.classList.remove("dark") : document.documentElement.classList.add("dark");
-        }
-        localStorage.setItem("theme", isDark ? "light" : "dark");
-    } catch (e) {};
-};
 `
 
 class BlogDocumentSection extends Document {
