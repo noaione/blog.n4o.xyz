@@ -230,7 +230,7 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
         (options.rehypePlugins = [
           ...(options.rehypePlugins || []),
           require('rehype-katex'),
-          [require('rehype-prism-plus'), { ignoreMissing: true, showLineNumbers: true }],
+          [require('rehype-prism-plus'), { ignoreMissing: true, showLineNumbers: false }],
           () => {
             return (tree) => {
               visit(tree, 'element', (node: Node) => {
