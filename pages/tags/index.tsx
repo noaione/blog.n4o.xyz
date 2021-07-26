@@ -25,7 +25,6 @@ export default function Tags({ tags }: { tags: TagDatas }) {
       <PageSeo
         title={intl.formatMessage({ id: 'tags' })}
         description={intl.formatMessage({ id: 'descTagsPage' })}
-        url={`/tags`}
       />
       <div className="flex flex-col items-start justify-start divide-y divide-gray-200 dark:divide-gray-700 md:justify-center md:items-center md:divide-y-0 md:flex-row md:space-x-6 md:mt-24">
         <div className="pt-6 pb-8 space-x-2 md:space-y-5">

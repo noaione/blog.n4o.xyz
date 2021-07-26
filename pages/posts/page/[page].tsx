@@ -75,7 +75,6 @@ export default function PostPage({ postsPerPage, pagination }: BlogProps) {
       <PageSeo
         title={intl.formatMessage({ id: 'posts' })}
         description={intl.formatMessage({ id: 'descPostsPage' }, { blogName: siteMetadata.title })}
-        url={`/posts/page/${pagination.currentPage}`}
       />
       <ListLayout
         posts={postsPerPage}

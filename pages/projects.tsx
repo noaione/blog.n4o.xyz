@@ -27,7 +27,6 @@ export default function Projects() {
           { id: 'descProjectsPage' },
           { author: siteMetadata.author }
         )}
-        url={`/projects`}
       />
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">

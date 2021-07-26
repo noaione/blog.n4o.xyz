@@ -1,6 +1,7 @@
 import { NextSeo, ArticleJsonLd } from 'next-seo'
 import siteMetadata from '@/data/siteMetadata.json'
 import { useRouter } from 'next/router'
+import Head from 'next/head'
 
 export const SEO = {
   title: siteMetadata.title,
@@ -36,29 +37,28 @@ export const SEO = {
 interface PageSEOProps {
   title: string
   description: string
-  url?: string
 }
 
-export const PageSeo = ({ title, description, url }: PageSEOProps) => {
-  const intl = useRouter()
-  if (intl.locale !== intl.defaultLocale) {
-    url = '/' + intl.locale + url
-  }
-  url = siteMetadata.siteUrl + url
+export function PageSeo({ title, description }: PageSEOProps) {
+  const router = useRouter()
 
   return (
-    <NextSeo
-      title={`${title} :: ${siteMetadata.title}`}
-      description={description}
-      canonical={url}
-      openGraph={{
-        url,
-        title,
-        description,
-        locale: intl.locale,
-        site_name: siteMetadata.title,
-      }}
-    />
+    <Head>
+      <title>{`${title}`}</title>
+      <meta name="robots" content="follow, index" />
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:url" content={`${siteMetadata.siteUrl}${router.asPath}`} />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content={siteMetadata.title} />
+      <meta property="og:image" content={`${siteMetadata.siteUrl}${siteMetadata.socialBanner}`} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:site" content={siteMetadata.twitter} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={`${siteMetadata.siteUrl}${siteMetadata.socialBanner}`} />
+    </Head>
   )
 }
 

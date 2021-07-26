@@ -76,7 +76,6 @@ export default function Tag({ posts, tag, pagination }: TagPageProps) {
       <PageSeo
         title={`#${tag} - Tags`}
         description={intl.formatMessage({ id: 'descTaggedPage' }, { tag: tag })}
-        url={`/tags/${tag}/page/${pagination.currentPage}`}
       />
       <ListLayout posts={posts} title={title} pagination={pagination} />
     </>

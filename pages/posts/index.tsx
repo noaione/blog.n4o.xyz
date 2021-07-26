@@ -34,7 +34,6 @@ export default function Blog({ posts, pagination }: BlogProps) {
       <PageSeo
         title={intl.formatMessage({ id: 'posts' })}
         description={intl.formatMessage({ id: 'descPostsPage' }, { blogName: siteMetadata.title })}
-        url={`/posts`}
       />
       <ListLayout
         posts={posts}

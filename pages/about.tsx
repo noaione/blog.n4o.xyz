@@ -39,7 +39,6 @@ export default function About() {
       <PageSeo
         title={`${intl.formatMessage({ id: 'about' })} - ${siteMetadata.author}`}
         description={intl.formatMessage({ id: 'descAboutPage' }, { author: siteMetadata.author })}
-        url={`/about`}
       />
       <div className="divide-y">
         <div className="pt-6 pb-8 space-y-2 md:space-y-5">
