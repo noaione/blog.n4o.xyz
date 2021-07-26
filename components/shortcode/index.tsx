@@ -1,3 +1,4 @@
+import Admonition from './Admonition'
 import Gist from './gist'
 import GitHubCode from './ghcode'
 import DEmote from './DiscordEmote'
@@ -8,6 +9,7 @@ import Twemoji from './Twemoji'
 import Video from './VideoJS'
 
 const ShortCodeComponents = {
+  Admonition,
   DEmote,
   Gist,
   GitHubCode,
