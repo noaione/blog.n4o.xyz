@@ -5,7 +5,7 @@ import remark from 'remark'
 import markdown from 'remark-parse'
 import html from 'remark-html'
 import highlight from 'remark-highlight.js'
-import LineNumbers from '@/lib/hljs-numbers'
+import LineNumbers from '@/lib/hljs-numbers-ts'
 
 async function getCode(
   user: string,
