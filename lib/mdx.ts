@@ -10,6 +10,7 @@ import { FrontMatterData } from '@/components/SEO'
 
 import ImageToJSX from './img-to-jsx'
 import Twemoji from './twemoji'
+import DisEmoteRemark from './disemote'
 import RemarkCodeTitles from './remark-code-titles'
 import CustomHeading from './custom-heading'
 
@@ -220,8 +221,9 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
         require('remark-gemoji'),
         require('remark-gfm'),
         RemarkCodeTitles,
+        Twemoji,
+        DisEmoteRemark,
         [require('remark-footnotes'), { inlineNotes: true }],
-        // Twemoji,
         require('remark-math'),
         ImageToJSX,
       ]),
@@ -242,6 +244,16 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
             }
           },
         ])
+      return options
+    },
+    esbuildOptions: (options) => {
+      options.loader = {
+        ...options.loader,
+        // @ts-ignore
+        '.js': 'jsx',
+        // @ts-ignore
+        '.ts': 'tsx',
+      }
       return options
     },
   })

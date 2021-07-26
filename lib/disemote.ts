@@ -9,11 +9,60 @@ import EmojiSets from '@/components/shortcode/emote.json'
 
 const EmojiRegExp = /:(\+1|[-\w]+):/g
 
-export default function DisEmoteRemark() {
+export function LegacyDisEmote() {
   function transformer(tree: Node) {
     visit<Literal>(tree, 'text', (node) => {
       const value = node.value as string
       const slices = []
+      let start = 0
+      let match: RegExpExecArray
+      let position: number
+      EmojiRegExp.lastIndex = 0
+      match = EmojiRegExp.exec(value as string)
+
+      while (match) {
+        position = match.index
+        const eIdx = EmojiSets.findIndex((e) => e.name === match[1])
+        if (eIdx !== -1) {
+          if (start !== position) {
+            slices.push(value.slice(start, position))
+          }
+          const sel = EmojiSets[eIdx]
+
+          const newNode = {
+            type: 'html',
+            value: `<img
+              class="w-8 h-8 inline-block !my-2"
+              alt=":${sel.name}:"
+              title=":${sel.name}:"
+              src="${sel.url}"
+            />`,
+          }
+          slices.push(newNode.value)
+          start = position + match[0].length
+        } else {
+          EmojiRegExp.lastIndex = position + 1
+        }
+
+        match = EmojiRegExp.exec(value)
+      }
+
+      if (slices.length > 0) {
+        slices.push(value.slice(start))
+        node.value = slices.join('')
+        node.type = 'html'
+      }
+    })
+  }
+
+  return transformer
+}
+
+export default function DisEmoteRemark() {
+  function transformer(tree: Node) {
+    visit<Literal>(tree, 'text', (node, index, parent) => {
+      const value = node.value as string
+      const emoteSlices = []
       let start = 0
       let match: RegExpExecArray
       let position: number
@@ -27,17 +76,18 @@ export default function DisEmoteRemark() {
 
         if (eIdx !== -1) {
           if (start !== position) {
-            slices.push(value.slice(start, position))
+            emoteSlices.push({ type: 'text', value: value.slice(start, position) })
           }
           const sel = EmojiSets[eIdx]
+          const shouldInline = match[0].length !== match.input.length
 
           const newNode = {
             type: 'mdxJsxFlowElement',
             name: 'DEmote',
-            attributes: [{ type: 'mdxJsxAttribute', name: 'inline', value: true }],
+            attributes: [{ type: 'mdxJsxAttribute', name: 'inline', value: shouldInline }],
             children: [{ type: 'text', value: sel.name }],
           }
-          slices.push(newNode)
+          emoteSlices.push(newNode)
           start = position + match[0].length
         } else {
           EmojiRegExp.lastIndex = position + 1
@@ -46,10 +96,9 @@ export default function DisEmoteRemark() {
         match = EmojiRegExp.exec(value)
       }
 
-      if (slices.length > 0) {
-        slices.push(value.slice(start))
-        node.type = 'html'
-        node.value = slices.join('')
+      if (emoteSlices.length > 0) {
+        emoteSlices.push({ type: 'text', value: value.slice(start) })
+        parent.children = emoteSlices
       }
     })
   }

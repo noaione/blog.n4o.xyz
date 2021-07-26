@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { mapBoolean } from '@/lib/utils'
 import React from 'react'
 
 import EmoteData from './emote.json'
@@ -24,7 +25,7 @@ export default function DiscordEmote(props: DiscordEmoteProps) {
       src={emote.url}
       alt={`:${emote.name}:`}
       title={`:${emote.name}:`}
-      className={inline ? 'inline-block w-6 h-6 !my-0' : 'w-8 h-8 !my-4'}
+      className={mapBoolean(inline) ? 'inline-block w-6 h-6 !my-0' : 'w-8 h-8 !my-4'}
     />
   )
 }
