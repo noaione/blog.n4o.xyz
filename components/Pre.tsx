@@ -67,7 +67,7 @@ export default function ComponentPreWrap(props: PropsChild) {
         </button>
       )}
 
-      <pre>{props.children}</pre>
+      <pre className="!pr-6 !pl-4">{props.children}</pre>
     </div>
   )
 }
