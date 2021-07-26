@@ -3,6 +3,7 @@ import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import Pagination, { PaginationProps } from '@/components/Pagination'
 import { FrontMatterData } from '@/components/SEO'
+import { LegacyDisEmote } from '@/lib/disemote'
 
 import remark from 'remark'
 import markdown from 'remark-parse'
@@ -21,7 +22,7 @@ function summaryFormatter(textData: string) {
   if (textData.replace(/\s/g, '') === '') {
     return ''
   }
-  const result = remark().use(markdown).use(html).processSync(textData)
+  const result = remark().use(markdown).use(LegacyDisEmote).use(html).processSync(textData)
   return result.toString()
 }
 
