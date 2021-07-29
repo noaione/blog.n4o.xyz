@@ -259,10 +259,13 @@ code.hljs::-webkit-scrollbar {
   width: 100%;
   height: 100%;
   transition-property: background-color;
+  background-color: rgba(255, 255, 255, 0) !important;
+  backdrop-filter: blur(10px);
 }
 
 .dark [data-rmiz-overlay] {
-  background-color: rgb(38, 38, 38) !important;
+  background-color: rgba(0, 0, 0, 0) !important;
+  backdrop-filter: blur(10px);
 }
 [data-rmiz-btn-open],
 [data-rmiz-btn-close] {
