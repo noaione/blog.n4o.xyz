@@ -53,7 +53,7 @@
     "tiny-glob": "^0.2.9",
     "trim": "^1.0.1",
     "twemoji": "^13.1.0",
-    "video.js": "^7.12.3"
+    "video.js": "^7.14.3"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "10.2.3",
