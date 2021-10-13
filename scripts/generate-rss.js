@@ -251,6 +251,7 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
     if (validPosts.length < 1) {
       return
     }
+    validPosts = validPosts.filter((post) => !post.draft);
     const rssData = generateRSSXML(validPosts, locale, localeData.defaultLocale)
 
     // const formatted = prettier.format(rssData, {

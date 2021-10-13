@@ -72,6 +72,9 @@ function formatDateToYMD(dateData) {
     const realLocale = findLocaleVersion(fnSplit, localeData.locales) || localeData.defaultLocale
     const src = fs.readFileSync(path.join(process.cwd(), post))
     const { data } = matter(src)
+    if (data.draft) {
+      return;
+    }
     // eslint-disable-next-line no-prototype-builtins
     if (!data.hasOwnProperty('date') && dateFromFile) {
       data.date = dateFromFile
