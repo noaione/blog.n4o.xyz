@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const globby = require('globby');
 const prettier = require('prettier');
 const matter = require('gray-matter');
 const luxon = require('luxon');
@@ -45,19 +44,20 @@ function tryToSplitPath(paths) {
   return splitForward;
 }
 
-function formatDateToYMD(dateData) {
-  const month = dateData.getUTCMonth().toString().padStart(2, '0');
-  const days = dateData.getUTCDay().toString().padStart(2, '0');
-  return `${dateData.getUTCFullYear()}-${month}-${days}`;
-}
-
 (async () => {
   const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
-  const pages = await globby([
+  const globby = await import('globby');
+  const pages = await globby.globby([
     'pages/*.js',
+    'pages/*.ts',
+    'pages/*.tsx',
+    'pages/*.jsx',
     'data/**/*.mdx',
     'data/**/*.md',
     '!pages/_*.js',
+    '!pages/_*.jsx',
+    '!pages/_*.ts',
+    '!pages/_*.tsx',
     '!pages/api',
   ]);
 
@@ -139,47 +139,50 @@ function formatDateToYMD(dateData) {
     }
     const sitemap = `
     <?xml version="1.0" encoding="UTF-8"?>
-    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
       ${otherPages
         .map((page) => {
           const path = page
             .replace('pages/', '/')
             .replace('data/blog', '/posts')
             .replace('public/', '/')
+            .replace('.tsx', '')
+            .replace('.jsx', '')
             .replace('.js', '')
+            .replace('.ts', '')
             .replace('.mdx', '')
             .replace('.md', '')
             .replace('/index.xml', '');
-          const route = path === '/index' ? '' : path;
-          let locRoute = '/' + locale;
-          if (locale === localeData.defaultLocale) {
-            locRoute = '';
+          let route = path === '/index' ? '' : path;
+          if (!route.startsWith('/')) {
+            route = `/${route}`;
           }
-          if (route === '/404' || route === '/500') {
+          const baseRoute = '/' + locale;
+          if (route.startsWith('/404') || route.startsWith('/500')) {
             return undefined;
           }
+
+          const maxPriority = 1.0;
+          const lowestPriority = 0.4;
+          const step = (maxPriority - lowestPriority) / 10;
+          // Determine page priority
+          // check by how many slugs the route has
+          let priority = maxPriority;
+          const routeSplit = route.split('/').filter((e) => e !== '');
+          if (routeSplit.length > 1) {
+            for (let i = 0; i < routeSplit.length; i++) {
+              priority -= step;
+            }
+          }
+
+          priority = priority.toFixed(2);
+
           return `
           <url>
-            <loc>${`${siteMetadata.siteUrl}${locRoute}${route}`}</loc>
+            <loc>${`${siteMetadata.siteUrl}${baseRoute}${route}`}</loc>
             <lastmod>${currentTime}</lastmod>
-            ${localeData.locales
-              .map((lc) => {
-                const path = page
-                  .replace('pages/', '/')
-                  .replace('data/blog', '/posts')
-                  .replace('public/', '/')
-                  .replace('.js', '')
-                  .replace('.mdx', '')
-                  .replace('.md', '')
-                  .replace('/index.xml', '');
-                let route = path === '/index' ? '' : path;
-                if (lc !== localeData.defaultLocale) {
-                  route = `/${lc}` + route;
-                }
-                return `<xhtml:link rel="alternate" hreflang="${lc}" href="${`${siteMetadata.siteUrl}${route}`}" />
-                `;
-              })
-              .join('')}
+            <changefreq>weekly</changefreq>
+            <priority>${priority}</priority>
           </url>`;
         })
         .filter((e) => typeof e === 'string')
@@ -193,22 +196,30 @@ function formatDateToYMD(dateData) {
           if (post.locale !== localeData.defaultLocale) {
             route = '/' + post.locale + route;
           }
+
+          const maxPriority = 1.0;
+          const lowestPriority = 0.4;
+          const step = (maxPriority - lowestPriority) / 10;
+          // Determine page priority
+          // check by how many slugs the route has
+          let priority = maxPriority;
+          const routeSplit = route
+            .split('/')
+            .filter((e) => e !== '')
+            // dont include locale
+            .filter((e) => e !== locale);
+          if (routeSplit.length > 1) {
+            for (let i = 0; i < routeSplit.length; i += 1) {
+              priority -= step;
+            }
+          }
+          // round to 2 decimals
+          priority = priority.toFixed(2);
           return `<url>
           <loc>${`${siteMetadata.siteUrl}${route}`}</loc>
           <lastmod>${currentTime}</lastmod>
-          ${localeData.locales
-            .map((e) => {
-              let rr = route;
-              if (e !== post.locale) {
-                rr = '/posts/' + post.slug;
-                if (e !== localeData.defaultLocale) {
-                  rr = '/' + e + rr;
-                }
-              }
-              return `<xhtml:link rel="alternate" hreflang="${e}" href="${`${siteMetadata.siteUrl}${rr}`}" />
-            `;
-            })
-            .join('')}
+          <changefreq>weekly</changefreq>
+          <priority>${priority}</priority>
         </url>`;
         })
         .filter((e) => typeof e === 'string')
@@ -219,9 +230,26 @@ function formatDateToYMD(dateData) {
           if (locale !== localeData.defaultLocale) {
             route = '/' + locale + route;
           }
+
+          const maxPriority = 0.8;
+          const lowestPriority = 0.4;
+          const step = (maxPriority - lowestPriority) / 10;
+          // Determine page priority
+          // check by how many slugs the route has
+          let priority = maxPriority;
+          const routeSplit = route.split('/').filter((e) => e !== '');
+          if (routeSplit.length > 1) {
+            for (let i = 0; i < routeSplit.length; i++) {
+              priority -= step;
+            }
+          }
+
+          priority = priority.toFixed(2);
           return `<url>
             <loc>${`${siteMetadata.siteUrl}${route}`}</loc>
             <lastmod>${currentTime}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>${priority}</priority>
           </url>
           `;
         })

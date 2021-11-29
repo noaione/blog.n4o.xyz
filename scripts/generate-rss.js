@@ -1,14 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 const fs = require('fs');
 const path = require('path');
-const globby = require('globby');
-const prettier = require('prettier');
 const matter = require('gray-matter');
-const luxon = require('luxon');
-
-const remark = require('remark');
-const markdown = require('remark-parse');
-const html = require('remark-html');
 
 const siteMetadata = require('../data/siteMetadata');
 const localeData = require('../locale-data');
@@ -21,13 +14,21 @@ const LocaleLanguages = {
   en: LocaleEn,
 };
 
-function markdownToHTML(contents) {
-  const result = remark().use(markdown).use(html).processSync(contents);
+async function markdownToHTML(contents) {
+  const unified = (await import('unified')).unified;
+  const parse = (await import('remark-parse')).default;
+  const stringify = (await import('remark-html')).default;
+  const result = await unified().use(parse).use(stringify).process(contents);
   return result.toString();
 }
 
-const convertStringToHTML = (string) =>
-  string.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+const convertStringToHTML = (string) => {
+  return string
+    .replace(/&/g, '&amp;')
+    .replace(/>/g, '&gt;')
+    .replace(/</g, '&lt;')
+    .replace(/"/g, '&quot;');
+};
 
 const kebabCase = (str) =>
   str &&
@@ -106,16 +107,16 @@ function dateSortDesc(a, b) {
   return 0;
 }
 
-function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en') {
+async function generateRSSXMLItem(post, basePath) {
   const postPath = basePath + 'posts/' + post.slug;
-  let lbd;
-  if (post.hasOwnProperty('lastmod')) {
-    lbd = new Date(post.lastmod).toUTCString();
-  } else if (post.hasOwnProperty('date')) {
-    lbd = new Date(post.date).toUTCString();
-  } else {
-    lbd = new Date().toUTCString();
-  }
+  // let lbd;
+  // if (post.hasOwnProperty('lastmod')) {
+  //   lbd = new Date(post.lastmod).toUTCString();
+  // } else if (post.hasOwnProperty('date')) {
+  //   lbd = new Date(post.date).toUTCString();
+  // } else {
+  //   lbd = new Date().toUTCString();
+  // }
   const { images } = post;
   let featured;
   if (Array.isArray(images) && images.length > 0) {
@@ -131,7 +132,7 @@ function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en')
       ${
         post.summary
           ? `<description><![CDATA[${convertStringToHTML(
-              markdownToHTML(post.summary)
+              await markdownToHTML(post.summary)
             ).trim()}]]></description>`
           : ''
       }
@@ -151,7 +152,7 @@ function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en')
     </item>`;
 }
 
-function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
+async function generateRSSXML(validPosts, locale = 'en') {
   let basePath = siteMetadata.siteUrl + '/';
   if (locale !== localeData.defaultLocale) {
     basePath += locale + '/';
@@ -165,6 +166,12 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
     lbd = new Date(firstPost.date).toUTCString();
   } else {
     lbd = new Date().toUTCString();
+  }
+
+  const mappedFiles = [];
+  for (let i = 0; i < validPosts.length; i++) {
+    const post = validPosts[i];
+    mappedFiles.push(await generateRSSXMLItem(post, basePath));
   }
 
   return `
@@ -181,21 +188,17 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
     <lastBuildDate>${lbd}</lastBuildDate>
     <generator>NextJS/Vercel</generator>
     <atom:link href="${basePath}index.xml" rel="self" type="application/rss+xml" />
-    ${validPosts
-      .map((post) => {
-        return generateRSSXMLItem(post, basePath, locale, defaultLocale);
-      })
-      .join('')}
+    ${mappedFiles.join('')}
   </channel>
 </rss>
   `;
 }
 
 (async () => {
-  const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
-  const pages = await globby(['data/**/*.mdx', 'data/**/*.md']);
+  const globby = await import('globby');
+  const pages = await globby.globby(['data/**/*.mdx', 'data/**/*.md']);
 
-  const currentTime = luxon.DateTime.now().toUTC().toISO();
+  // const currentTime = luxon.DateTime.now().toUTC().toISO();
 
   const allPosts = pages.filter((e) => e.startsWith('data/blog'));
   const preparedPosts = [];
@@ -239,8 +242,7 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
   });
 
   const allRSSLocaleFormatted = {};
-  localeData.locales.forEach((locale) => {
-    let lastBuildDate;
+  for (const locale of localeData.locales) {
     let validPosts = [];
     preparedPosts.forEach((post) => {
       if (locale === post.locale) {
@@ -252,14 +254,10 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
       return;
     }
     validPosts = validPosts.filter((post) => !post.draft);
-    const rssData = generateRSSXML(validPosts, locale, localeData.defaultLocale);
+    const rssData = await generateRSSXML(validPosts, locale);
 
-    // const formatted = prettier.format(rssData, {
-    //   ...prettierConfig,
-    //   parser: 'html',
-    // })
     allRSSLocaleFormatted[locale] = rssData;
-  });
+  }
 
   for (let [key, value] of Object.entries(allRSSLocaleFormatted)) {
     let fullPath = `${key}/index.xml`;
