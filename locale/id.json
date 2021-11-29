@@ -20,6 +20,7 @@
 
   "readingTime": "Durasi baca {minutes} menit",
   "readingTimeLessThan": "kurang dari 1",
+  "viewCount": "{count}x dilihat",
 
   "previousArticle": "Artikel Sebelumnya",
   "nextArticle": "Artikel Selanjutnya",

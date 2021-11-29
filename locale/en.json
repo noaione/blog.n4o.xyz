@@ -20,6 +20,7 @@
 
   "readingTime": "{minutes} min read",
   "readingTimeLessThan": "Less than a",
+  "viewCount": "{count} views",
 
   "previousArticle": "Previous Article",
   "nextArticle": "Next Article",

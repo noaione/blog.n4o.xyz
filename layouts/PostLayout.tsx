@@ -7,9 +7,12 @@ import { BlogSeo, FrontMatterData } from '@/components/SEO';
 import Tag from '@/components/Tag';
 import TimerLoader from '@/components/TimerLoader';
 import siteMetadata from '@/data/siteMetadata.json';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+
+import EyeIcon from '@heroicons/react/solid/EyeIcon';
 
 import { useIntl } from 'react-intl';
+import { NextRouter, useRouter } from 'next/router';
 
 const editUrl = (fileName: string, locale = 'en') =>
   `${siteMetadata.siteRepo}/blob/master/data/blog/${locale}/${fileName}`;
@@ -173,6 +176,8 @@ interface PostLayoutProps {
 export default function PostLayout({ children, frontMatter, next, prev }: PostLayoutProps) {
   const { slug, fileName, date, title, tags, readingTime, images } = frontMatter;
   const intl = useIntl();
+  const [viewState, setViewState] = useState<number>(0);
+  const router = useRouter();
 
   const descriptors = {
     authors: {
@@ -228,6 +233,13 @@ export default function PostLayout({ children, frontMatter, next, prev }: PostLa
     minutes: readingTimeText,
   });
 
+  const viewCountText = intl.formatMessage(
+    { id: 'viewCount' },
+    {
+      count: viewState.toLocaleString(),
+    }
+  );
+
   const spotifyDataLocales = {
     play: intl.formatMessage(descriptors.spotifyListening2),
     stop: intl.formatMessage(descriptors.spotifyNotPlaying),
@@ -235,6 +247,32 @@ export default function PostLayout({ children, frontMatter, next, prev }: PostLa
     load: intl.formatMessage(descriptors.spotifyLoadingData),
     err: intl.formatMessage(descriptors.spotifyLoadError),
   };
+
+  async function requestHits(route: NextRouter): Promise<{ hits: number }> {
+    const { asPath, defaultLocale, locale } = route;
+    let slug = asPath;
+    if (defaultLocale !== locale) {
+      slug = `/${locale}${slug}`;
+    }
+    const url = new URLSearchParams();
+    url.append('slug', slug);
+    console.info(`[PageHit] ${slug}`);
+    const response = await fetch(`/api/hits?${url.toString()}`);
+    console.info(`[PageHit] ${slug} ${response.status}`);
+    const jsonResponse = await response.json();
+    return jsonResponse;
+  }
+
+  useEffect(() => {
+    requestHits(router)
+      .then((hits) => {
+        setViewState(hits.hits);
+      })
+      .catch((a) => {
+        console.error(a);
+        setViewState(0);
+      });
+  }, [router]);
 
   return (
     <>
@@ -256,7 +294,12 @@ export default function PostLayout({ children, frontMatter, next, prev }: PostLa
                 </dl>
                 <div>
                   <PageTitle>{title}</PageTitle>
-                  <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">{readTimeText}</p>
+                  <p className="text-sm mt-1 text-gray-600 dark:text-gray-400">
+                    <span>{readTimeText}</span>
+                    <span style={{ marginLeft: '0.25rem', marginRight: '0.25rem' }}>|</span>
+                    <EyeIcon className="w-4 h-4 mr-1 inline-block" aria-label="View Count" />
+                    <span>{viewCountText}</span>
+                  </p>
                 </div>
               </div>
             </header>
