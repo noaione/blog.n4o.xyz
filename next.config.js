@@ -1,23 +1,33 @@
-const localeData = require('./locale-data')
-
-const withPlugins = require('next-compose-plugins')
+const fs = require('fs');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
-const withTM = require('next-transpile-modules')(['unist-util-visit'])
+});
+const localeData = require('./locale-data');
 
-const nextConfig = {
+// Monkeypatch preact package.json
+const preactConfig = __dirname + '/node_modules/preact/package.json';
+const preactPackage = JSON.parse(fs.readFileSync(preactConfig));
+preactPackage.exports = Object.assign({}, preactPackage.exports, {
+  './compat/jsx-runtime.js': preactPackage.exports['./jsx-runtime'],
+});
+console.info('Monkeypatching preact');
+fs.writeFileSync(preactConfig, JSON.stringify(preactPackage, null, 4));
+const internationalizationConfig = Object.assign({}, localeData, { localeDetection: false });
+
+module.exports = withBundleAnalyzer({
   reactStrictMode: true,
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  i18n: Object.assign({}, localeData, { localeDetection: false }),
-  images: {
-    domains: ['cdn.discordapp.com'],
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'tsx', 'ts'],
+  eslint: {
+    dirs: ['pages', 'components', 'lib', 'layouts'],
   },
+  i18n: internationalizationConfig,
+  images: {
+    domains: ['cdn.discordapp.com', 'p.ihateani.me'],
+  },
+  productionBrowserSourceMaps: true,
+  swcLoader: true,
+  swcMinify: true,
   webpack: (config, { dev, isServer }) => {
-    config.module.rules.push({
-      test: /\.mdx$/,
-      use: [{ loader: 'xdm/webpack.cjs', options: {} }],
-    })
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
@@ -29,16 +39,12 @@ const nextConfig = {
           },
         },
       ],
-    })
-
-    if (!isServer) {
-      config.resolve.fallback.fs = false
-    }
+    });
 
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
+    });
 
     if (!dev && !isServer) {
       // Replace React with Preact only in client production build
@@ -46,10 +52,13 @@ const nextConfig = {
         react: 'preact/compat',
         'react-dom/test-utils': 'preact/test-utils',
         'react-dom': 'preact/compat',
-      })
+        'react/jsx-runtime': 'preact/jsx-runtime',
+      });
     }
 
-    return config
+    // console.info(config);
+
+    return config;
   },
   async rewrites() {
     return {
@@ -75,8 +84,6 @@ const nextConfig = {
           destination: '/api/oldredir/release/:slug',
         },
       ],
-    }
+    };
   },
-}
-
-module.exports = withPlugins([[withBundleAnalyzer], [withTM]], nextConfig)
+});

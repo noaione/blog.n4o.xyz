@@ -1,118 +1,118 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from '@/components/Link'
-import { PageSeo } from '@/components/SEO'
-import Tag from '@/components/Tag'
-import SpotifyHubSkeleton from '@/components/SpotifyHubSkeleton'
-import TimerLoader from '@/components/TimerLoader'
-import siteMetadata from '@/data/siteMetadata.json'
+import Link from '@/components/Link';
+import { PageSeo } from '@/components/SEO';
+import Tag from '@/components/Tag';
+import SpotifyHubSkeleton from '@/components/SpotifyHubSkeleton';
+import TimerLoader from '@/components/TimerLoader';
+import siteMetadata from '@/data/siteMetadata.json';
 
-import remark from 'remark'
-import markdown from 'remark-parse'
-import html from 'remark-html'
-import { DateTime } from 'luxon'
+import { unified } from 'unified';
+import markdown from 'remark-parse';
+import html from 'remark-html';
+import { DateTime } from 'luxon';
 
-import React from 'react'
-import { useIntl } from 'react-intl'
-import { GetStaticPropsContext } from 'next'
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { GetStaticPropsContext } from 'next';
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-}
+};
 
 export async function getStaticProps({ locale, locales, defaultLocale }: GetStaticPropsContext) {
-  const { getAllFilesFrontMatter } = await import('@/lib/mdx')
-  const posts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
+  const { getAllFilesFrontMatter } = await import('@/lib/mdx');
+  const posts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale);
 
-  return { props: { posts } }
+  return { props: { posts } };
 }
 
 function summaryFormatter(textData: string) {
   if (textData.replace(/\s/g, '') === '') {
-    return ''
+    return '';
   }
-  const result = remark().use(markdown).use(html).processSync(textData)
-  return result.toString()
+  const result = unified().use(markdown).use(html).processSync(textData);
+  return result.toString();
 }
 
 interface SpotifyLocalesString {
-  play: string
-  stop: string
-  by: string
-  load?: string
-  err?: string
+  play: string;
+  stop: string;
+  by: string;
+  load?: string;
+  err?: string;
 }
 
 interface SpotifyNowState {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any
-  loading: boolean
-  firstTime: boolean
-  error: boolean
+  data: any;
+  loading: boolean;
+  firstTime: boolean;
+  error: boolean;
 }
 
 interface SpotifyNowProps {
-  localesData: SpotifyLocalesString
-  currentLocale: string
+  localesData: SpotifyLocalesString;
+  currentLocale: string;
 }
 
 class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
-  timerData?: NodeJS.Timeout
+  timerData?: NodeJS.Timeout;
 
   constructor(props: SpotifyNowProps) {
-    super(props)
-    this.refreshData = this.refreshData.bind(this)
+    super(props);
+    this.refreshData = this.refreshData.bind(this);
     this.state = {
       data: {},
       loading: true,
       firstTime: true,
       error: false,
-    }
+    };
   }
 
   async componentDidMount() {
-    await this.refreshData()
-    this.setState({ firstTime: false })
+    await this.refreshData();
+    this.setState({ firstTime: false });
     this.timerData = setInterval(() => {
-      const { data, loading } = this.state
+      const { data, loading } = this.state;
       if (data && !data.playing && !loading) {
         this.refreshData()
           .then(() => {
-            return
+            return;
           })
           .catch(() => {
-            return
-          })
+            return;
+          });
       }
-    }, 30 * 1000)
+    }, 30 * 1000);
   }
 
   componentWillUnmount() {
     if (this.timerData) {
-      clearInterval(this.timerData)
+      clearInterval(this.timerData);
     }
   }
 
   async refreshData() {
-    this.setState({ loading: true })
-    const response = await fetch('/api/now')
+    this.setState({ loading: true });
+    const response = await fetch('/api/now');
     if (response.status !== 200) {
-      this.setState({ error: true, loading: false, data: { playing: false } })
-      return
+      this.setState({ error: true, loading: false, data: { playing: false } });
+      return;
     }
-    const data = await response.json()
-    this.setState({ data, loading: false })
+    const data = await response.json();
+    this.setState({ data, loading: false });
   }
 
   render() {
-    const { localesData, currentLocale } = this.props
-    const { data, loading, error, firstTime } = this.state
+    const { localesData, currentLocale } = this.props;
+    const { data, loading, error, firstTime } = this.state;
     if (error) {
-      return null
+      return null;
     }
-    const mainData = data.data || {}
-    const { playing } = data
+    const mainData = data.data || {};
+    const { playing } = data;
 
     return (
       <div>
@@ -180,11 +180,11 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
                           setTimeout(() => {
                             this.refreshData()
                               .then(() => {
-                                return
+                                return;
                               })
                               .catch(() => {
-                                return
-                              })
+                                return;
+                              });
                           }, 2000)
                         }
                       />
@@ -208,12 +208,12 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
           )}
         </div>
       </div>
-    )
+    );
   }
 }
 
 export default function Home({ posts }) {
-  const intl = useIntl()
+  const intl = useIntl();
 
   const descriptors = {
     latest: {
@@ -258,13 +258,13 @@ export default function Home({ posts }) {
     spotifyAlbumBy: {
       id: 'spotifyAlbumBy',
     },
-  }
+  };
 
   const spotifyDataLocales = {
     play: intl.formatMessage(descriptors.spotifyListening),
     stop: intl.formatMessage(descriptors.spotifyNotPlaying),
     by: intl.formatMessage(descriptors.spotifyAlbumBy),
-  }
+  };
 
   return (
     <>
@@ -284,10 +284,10 @@ export default function Home({ posts }) {
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {!posts.length && <p className="mt-2">{intl.formatMessage(descriptors.noArticle)}</p>}
           {posts.slice(0, 1).map((frontMatter) => {
-            const { slug, date, title, summary, tags, images, draft } = frontMatter
-            let selectedImages
+            const { slug, date, title, summary, tags, images, draft } = frontMatter;
+            let selectedImages;
             if (Array.isArray(images) && images.length > 0) {
-              selectedImages = images[0]
+              selectedImages = images[0];
             }
             return (
               <li key={slug} className="py-12">
@@ -359,7 +359,7 @@ export default function Home({ posts }) {
                   </div>
                 </article>
               </li>
-            )
+            );
           })}
         </ul>
       </div>
@@ -377,5 +377,5 @@ export default function Home({ posts }) {
       )}
       <SpotifyNow currentLocale={intl.locale} localesData={spotifyDataLocales} />
     </>
-  )
+  );
 }

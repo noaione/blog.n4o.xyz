@@ -1,37 +1,37 @@
-import { Fragment } from 'react'
-import { PropsChild } from '../_global'
+import { Fragment } from 'react';
+import { PropsChild } from '../_global';
 
 function tryToSplitStroke(textData: string) {
-  let final = textData.split('-')
+  let final = textData.split('-');
   if (final.length !== 1) {
-    return final
+    return final;
   }
-  final = textData.split('+')
+  final = textData.split('+');
   if (final.length !== 1) {
-    return final
+    return final;
   }
-  final = textData.split('=')
-  return final
+  final = textData.split('=');
+  return final;
 }
 
 export default function Keystroke(props: PropsChild) {
-  const { children } = props
+  const { children } = props;
   if (typeof children !== 'string') {
-    return null
+    return null;
   }
 
-  const splitted = tryToSplitStroke(children)
+  const splitted = tryToSplitStroke(children);
   return (
     <span aria-label={children}>
       {splitted.map((ks, idx) => {
-        const addPlus = idx !== splitted.length - 1
+        const addPlus = idx !== splitted.length - 1;
         return (
           <Fragment key={`ksf-${ks.toLowerCase()}`}>
             <kbd>{ks.toUpperCase()}</kbd>
             {addPlus && '+'}
           </Fragment>
-        )
+        );
       })}
     </span>
-  )
+  );
 }

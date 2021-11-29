@@ -1,28 +1,28 @@
-import Link from '@/components/Link'
+import Link from '@/components/Link';
 
-import ChevronRight from '@heroicons/react/solid/ChevronRightIcon'
-import ChevronLeft from '@heroicons/react/solid/ChevronLeftIcon'
-import { useIntl } from 'react-intl'
-import { useRouter } from 'next/router'
+import ChevronRight from '@heroicons/react/solid/ChevronRightIcon';
+import ChevronLeft from '@heroicons/react/solid/ChevronLeftIcon';
+import { useIntl } from 'react-intl';
+import { useRouter } from 'next/router';
 
 export interface PaginationProps {
-  totalPages: string | number
-  currentPage: string | number
-  isPosts?: boolean
+  totalPages: string | number;
+  currentPage: string | number;
+  isPosts?: boolean;
 }
 
 export default function Pagination({ totalPages, currentPage, isPosts }: PaginationProps) {
-  const intl = useIntl()
-  const router = useRouter()
+  const intl = useIntl();
+  const router = useRouter();
 
-  currentPage = parseInt(currentPage as string)
-  totalPages = parseInt(totalPages as string)
-  const prevPage = parseInt((currentPage as unknown) as string) - 1 > 0
+  currentPage = parseInt(currentPage as string);
+  totalPages = parseInt(totalPages as string);
+  const prevPage = parseInt(currentPage as unknown as string) - 1 > 0;
   const nextPage =
-    parseInt((currentPage as unknown) as string) + 1 <= parseInt((totalPages as unknown) as string)
-  const pageOf = intl.formatMessage({ id: 'paginateOf' })
+    parseInt(currentPage as unknown as string) + 1 <= parseInt(totalPages as unknown as string);
+  const pageOf = intl.formatMessage({ id: 'paginateOf' });
 
-  const baseUrl = isPosts ? '/posts/' : `/tags/${router.query?.tag}/`
+  const baseUrl = isPosts ? '/posts/' : `/tags/${router.query?.tag}/`;
 
   return (
     <div className="pt-6 pb-8 space-y-2 md:space-y-5">
@@ -77,5 +77,5 @@ export default function Pagination({ totalPages, currentPage, isPosts }: Paginat
         )}
       </nav>
     </div>
-  )
+  );
 }

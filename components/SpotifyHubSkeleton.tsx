@@ -1,4 +1,4 @@
-import Skeleton from './Skeleton'
+import Skeleton from './Skeleton';
 
 export default function SpotifyHubSkeleton() {
   return (
@@ -18,5 +18,5 @@ export default function SpotifyHubSkeleton() {
         </div>
       </div>
     </div>
-  )
+  );
 }

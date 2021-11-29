@@ -1,12 +1,12 @@
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
-import Link from './Link'
+import Link from './Link';
 
-import siteMetadata from '@/data/siteMetadata.json'
-import SocialIcon from '@/components/social-icons'
+import siteMetadata from '@/data/siteMetadata.json';
+import SocialIcon from '@/components/social-icons';
 
 export default function Footer() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <footer>
       <div className="flex flex-col items-center mt-16">
@@ -33,5 +33,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import Mail from './mail'
-import Github from './github'
-import Facebook from './facebook'
-import Twitter from './twitter'
-import Trakteer from './trakteer'
-import { IconProps } from './_types'
+import Mail from './mail';
+import Github from './github';
+import Facebook from './facebook';
+import Twitter from './twitter';
+import Trakteer from './trakteer';
+import { IconProps } from './_types';
 
 // Icons taken from: https://simpleicons.org/
 
@@ -13,19 +13,19 @@ const Components = {
   facebook: Facebook,
   twitter: Twitter,
   trakteer: Trakteer,
-}
+};
 
 interface SocialIconProps {
-  kind: keyof typeof Components
-  href: string
-  size?: number
-  iconProps?: IconProps
+  kind: keyof typeof Components;
+  href: string;
+  size?: number;
+  iconProps?: IconProps;
 }
 
 const SocialIcon = ({ kind, href, size = 8, iconProps = {} }: SocialIconProps) => {
-  if (!href) return null
+  if (!href) return null;
 
-  const SocialSvg = Components[kind]
+  const SocialSvg = Components[kind];
 
   return (
     <a
@@ -40,7 +40,7 @@ const SocialIcon = ({ kind, href, size = 8, iconProps = {} }: SocialIconProps) =
         {...iconProps}
       />
     </a>
-  )
-}
+  );
+};
 
-export default SocialIcon
+export default SocialIcon;

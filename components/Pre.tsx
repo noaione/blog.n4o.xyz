@@ -1,28 +1,28 @@
-import { useState, useRef } from 'react'
-import { PropsChild } from './_global'
+import { useState, useRef } from 'react';
+import { PropsChild } from './_global';
 
 export default function ComponentPreWrap(props: PropsChild) {
-  const textInput = useRef(null)
-  const [hovered, setHovered] = useState(false)
-  const [copied, setCopied] = useState(false)
+  const textInput = useRef(null);
+  const [hovered, setHovered] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const onEnter = () => {
-    setHovered(true)
-  }
+    setHovered(true);
+  };
   const onExit = () => {
-    setHovered(false)
-    setCopied(false)
-  }
+    setHovered(false);
+    setCopied(false);
+  };
 
   const onCopy = () => {
     if (textInput && textInput.current) {
-      setCopied(true)
-      navigator.clipboard.writeText(textInput.current.textContent)
+      setCopied(true);
+      navigator.clipboard.writeText(textInput.current.textContent);
       setTimeout(() => {
-        setCopied(false)
-      }, 2000)
+        setCopied(false);
+      }, 2000);
     }
-  }
+  };
 
   return (
     <div ref={textInput} onMouseEnter={onEnter} onMouseLeave={onExit} className="relative">
@@ -69,5 +69,5 @@ export default function ComponentPreWrap(props: PropsChild) {
 
       <pre className="!pr-6 !pl-4">{props.children}</pre>
     </div>
-  )
+  );
 }

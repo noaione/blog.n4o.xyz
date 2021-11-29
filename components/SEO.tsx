@@ -1,6 +1,6 @@
-import siteMetadata from '@/data/siteMetadata.json'
-import { useRouter } from 'next/router'
-import Head from 'next/head'
+import siteMetadata from '@/data/siteMetadata.json';
+import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export const SEO = {
   title: siteMetadata.title,
@@ -31,15 +31,15 @@ export const SEO = {
       content: siteMetadata.author,
     },
   ],
-}
+};
 
 interface PageSEOProps {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }
 
 export function PageSeo({ title, description }: PageSEOProps) {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <Head>
@@ -58,54 +58,54 @@ export function PageSeo({ title, description }: PageSEOProps) {
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={`${siteMetadata.siteUrl}${siteMetadata.socialBanner}`} />
     </Head>
-  )
+  );
 }
 
 interface IReadTimeResults {
-  text: string
-  time: number
-  words: number
-  minutes: number
+  text: string;
+  time: number;
+  words: number;
+  minutes: number;
 }
 
 export interface FrontMatterData {
-  slug: string
-  summary: string
-  fileName: string
-  date: string
-  url?: string
-  lastmod?: string
-  title: string
-  tags?: string[]
-  readingTime: IReadTimeResults
-  images?: string[]
-  locale?: string
-  draft?: boolean
+  slug: string;
+  summary: string;
+  fileName: string;
+  date: string;
+  url?: string;
+  lastmod?: string;
+  title: string;
+  tags?: string[];
+  readingTime: IReadTimeResults;
+  images?: string[];
+  locale?: string;
+  draft?: boolean;
 }
 
 export function BlogSeo({ title, summary, date, lastmod, url, images = [] }: FrontMatterData) {
-  const router = useRouter()
-  const publishedAt = new Date(date).toISOString()
-  const modifiedAt = new Date(lastmod || date).toISOString()
+  const router = useRouter();
+  const publishedAt = new Date(date).toISOString();
+  const modifiedAt = new Date(lastmod || date).toISOString();
 
   const imagesArr =
     images.length === 0
       ? [siteMetadata.socialBanner]
       : typeof images === 'string'
       ? [images]
-      : images
+      : images;
 
   const featuredImages = imagesArr.map((img) => {
     return {
       url: `${siteMetadata.siteUrl}${img}`,
       alt: title,
-    }
-  })
+    };
+  });
 
   const authorData = {
     '@type': 'Person',
     name: siteMetadata.author,
-  }
+  };
 
   const structuredData = {
     '@context': 'http://schema.org',
@@ -128,7 +128,7 @@ export function BlogSeo({ title, summary, date, lastmod, url, images = [] }: Fro
       },
     },
     description: summary,
-  }
+  };
 
   return (
     <Head>
@@ -156,5 +156,5 @@ export function BlogSeo({ title, summary, date, lastmod, url, images = [] }: Fro
         dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData, null, 2) }}
       />
     </Head>
-  )
+  );
 }

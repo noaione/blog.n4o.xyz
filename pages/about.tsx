@@ -1,38 +1,43 @@
 /* eslint-disable @next/next/no-img-element */
-import siteMetadata from '@/data/siteMetadata.json'
-import aboutData from '@/data/aboutData'
-import SocialIcon from '@/components/social-icons'
-import { PageSeo } from '@/components/SEO'
+import siteMetadata from '@/data/siteMetadata.json';
+import aboutData from '@/data/aboutData';
+import SocialIcon from '@/components/social-icons';
+import { PageSeo } from '@/components/SEO';
 
-import { useIntl } from 'react-intl'
+import { useIntl } from 'react-intl';
 
-import remark from 'remark'
-import linebreaks from 'remark-breaks'
-import gemoji from 'remark-gemoji'
-import markdown from 'remark-parse'
-import html from 'remark-html'
+import { unified } from 'unified';
+import linebreaks from 'remark-breaks';
+import gemoji from 'remark-gemoji';
+import markdown from 'remark-parse';
+import html from 'remark-html';
 
 function parseMarkdownSimple(inputText: string) {
-  const result = remark().use(gemoji).use(linebreaks).use(markdown).use(html).processSync(inputText)
-  return result.toString()
+  const result = unified()
+    .use(gemoji)
+    .use(linebreaks)
+    .use(markdown)
+    .use(html)
+    .processSync(inputText);
+  return result.toString();
 }
 
 function buildAboutPage(selectedIntl: string) {
   if (Array.isArray(aboutData)) {
-    aboutData
+    aboutData;
   }
 
-  const allKeys = Object.keys(aboutData)
+  const allKeys = Object.keys(aboutData);
   if (!allKeys.includes(selectedIntl)) {
-    return aboutData[allKeys[0]]
+    return aboutData[allKeys[0]];
   }
-  return aboutData[selectedIntl]
+  return aboutData[selectedIntl];
 }
 
 export default function About() {
-  const intl = useIntl()
+  const intl = useIntl();
 
-  const sectionsAbout = buildAboutPage(intl.locale)
+  const sectionsAbout = buildAboutPage(intl.locale);
 
   return (
     <>
@@ -65,12 +70,12 @@ export default function About() {
           <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">
             <p className="italic text-center">{intl.formatMessage({ id: 'siteDesc' })}</p>
             {sectionsAbout.map((section, ev) => {
-              const parsedHTML = parseMarkdownSimple(section)
-              return <p key={`sec-${ev}`} dangerouslySetInnerHTML={{ __html: parsedHTML }} />
+              const parsedHTML = parseMarkdownSimple(section);
+              return <p key={`sec-${ev}`} dangerouslySetInnerHTML={{ __html: parsedHTML }} />;
             })}
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }

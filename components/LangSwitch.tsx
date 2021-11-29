@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface LanguageKeyProps {
   index: number;
@@ -11,25 +11,25 @@ interface LanguageKeyProps {
 }
 
 const LanguageKey = (props: LanguageKeyProps) => {
-  let styling = 'p-2 rounded-lg'
-  let selLink = props.route
+  let styling = 'p-2 rounded-lg';
+  let selLink = props.route;
   if (props.index > 0) {
-    styling += ' mt-2'
+    styling += ' mt-2';
   }
   if (props.currentLocale === props.locale) {
-    styling += ' bg-gray-300 dark:bg-gray-700 cursor-default'
-    selLink = '#'
+    styling += ' bg-gray-300 dark:bg-gray-700 cursor-default';
+    selLink = '#';
   } else {
-    styling += ' bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 transition'
+    styling += ' bg-gray-200 hover:bg-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 transition';
   }
   // @ts-ignore
-  const localeName = new Intl.DisplayNames([props.locale, 'en'], { type: 'language' })
-  let extraUrl = ''
+  const localeName = new Intl.DisplayNames([props.locale, 'en'], { type: 'language' });
+  let extraUrl = '';
   if (props.defaultLocale !== props.locale) {
-    extraUrl = '/' + props.locale
+    extraUrl = '/' + props.locale;
   }
 
-  let realLocaleName = localeName.of(props.locale)
+  let realLocaleName = localeName.of(props.locale);
   if (realLocaleName === props.locale) {
     realLocaleName = props.locale.toUpperCase();
   }
@@ -38,23 +38,19 @@ const LanguageKey = (props: LanguageKeyProps) => {
       {selLink === '#' ? (
         <span className="select-none font-semibold">{realLocaleName}</span>
       ) : (
-        <Link
-          href={props.route}
-          locale={props.locale}
-          passHref
-        >
+        <Link href={props.route} locale={props.locale} passHref>
           <a className="font-semibold block w-full" href={`${extraUrl}${props.route}`}>
             {realLocaleName}
           </a>
         </Link>
       )}
     </li>
-  )
-}
+  );
+};
 
 const LangSwitch = () => {
-  const [hovered, setHovered] = useState(false)
-  const router = useRouter()
+  const [hovered, setHovered] = useState(false);
+  const router = useRouter();
 
   return (
     <div className="inline-block relative align-top">
@@ -85,11 +81,11 @@ const LangSwitch = () => {
               defaultLocale={router.defaultLocale}
               route={router.asPath}
             />
-          )
+          );
         })}
       </ul>
     </div>
-  )
-}
+  );
+};
 
-export default LangSwitch
+export default LangSwitch;

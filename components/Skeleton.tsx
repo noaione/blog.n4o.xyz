@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 interface SkeletonLoader {
   count: number;
@@ -18,26 +18,26 @@ export default function Skeleton({
   style: customStyle,
   className: customClassName,
 }: SkeletonLoader) {
-  const elements = []
+  const elements = [];
 
   for (let i = 0; i < count; i++) {
-    const style: React.CSSProperties = {}
+    const style: React.CSSProperties = {};
 
     if (width !== null) {
-      style.width = width
+      style.width = width;
     }
 
     if (height !== null) {
-      style.height = height
+      style.height = height;
     }
 
     if (width !== null && height !== null && circle) {
-      style.borderRadius = '50%'
+      style.borderRadius = '50%';
     }
 
-    let className = 'react-loading-skeleton'
+    let className = 'react-loading-skeleton';
     if (customClassName) {
-      className += ' ' + customClassName
+      className += ' ' + customClassName;
     }
 
     elements.push(
@@ -51,14 +51,10 @@ export default function Skeleton({
       >
         &zwnj;
       </span>
-    )
+    );
   }
 
-  return (
-    <span>
-      {elements}
-    </span>
-  )
+  return <span>{elements}</span>;
 }
 
 Skeleton.defaultProps = {
@@ -70,4 +66,4 @@ Skeleton.defaultProps = {
   circle: false,
   style: {},
   className: '',
-}
+};

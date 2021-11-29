@@ -1,34 +1,36 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import remark from 'remark'
-import gemoji from 'remark-gemoji'
+import remarkGemoji from 'remark-gemoji';
+import remarkHtml from 'remark-html';
+import remarkParser from 'remark-parse';
+import { unified } from 'unified';
 
 function parseMarkdownSimple(text: string) {
-  const parsed = remark().use(gemoji).processSync(text)
-  return parsed.toString()
+  const parsed = unified().use(remarkParser).use(remarkGemoji).use(remarkHtml).processSync(text);
+  return parsed.toString();
 }
 
 async function get(url: string) {
-  const resp = await fetch(url)
+  const resp = await fetch(url);
   if (resp.status !== 200) {
-    throw new Error(`Got response ${resp.status} from the API while fetching ${url}`)
+    throw new Error(`Got response ${resp.status} from the API while fetching ${url}`);
   }
-  return resp.json()
+  return resp.json();
 }
 
 interface SimpleURLAnchorProps {
-  url: string
-  children?: React.ReactNode | string
+  url: string;
+  children?: React.ReactNode | string;
 }
 
 function SimpleURLAnchor(props: SimpleURLAnchorProps) {
-  const [hover, setHover] = useState(false)
+  const [hover, setHover] = useState(false);
 
-  const base = { color: '#58a6ff' }
-  const unhovered = { textDecoration: 'none' }
-  const hovered = { textDecoration: 'underline' }
-  const merged = Object.assign({}, base, hover ? hovered : unhovered)
+  const base = { color: '#58a6ff' };
+  const unhovered = { textDecoration: 'none' };
+  const hovered = { textDecoration: 'underline' };
+  const merged = Object.assign({}, base, hover ? hovered : unhovered);
 
   return (
     <a
@@ -41,56 +43,56 @@ function SimpleURLAnchor(props: SimpleURLAnchorProps) {
     >
       {props.children}
     </a>
-  )
+  );
 }
 
 SimpleURLAnchor.propTypes = {
   url: PropTypes.string.isRequired,
   children: PropTypes.any,
-}
+};
 
 interface RepoCardProps {
-  username: string
-  reponame: string
+  username: string;
+  reponame: string;
 }
 
 interface ColorData {
-  color: string
-  url: string
+  color: string;
+  url: string;
 }
 
 interface RepoCardState {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  loadedData?: any
-  colors: { [colorName: string]: ColorData }
+  loadedData?: any;
+  colors: { [colorName: string]: ColorData };
 }
 
 export default class RepoCard extends React.Component<RepoCardProps, RepoCardState> {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       loadedData: undefined,
       colors: {},
-    }
+    };
   }
 
   async componentDidMount() {
-    const { username, reponame } = this.props
+    const { username, reponame } = this.props;
     if (!username || !reponame) {
-      return
+      return;
     }
     const colors = (await get(
       'https://raw.githubusercontent.com/ozh/github-colors/master/colors.json'
-    )) as { [key: string]: ColorData }
+    )) as { [key: string]: ColorData };
     colors['Unknown'] = {
       color: '#565656',
       url: 'https://github.com/',
-    }
-    this.setState({ colors })
+    };
+    this.setState({ colors });
 
     try {
-      const data = await get(`https://api.github.com/repos/${username}/${reponame}`)
-      this.setState({ loadedData: data })
+      const data = await get(`https://api.github.com/repos/${username}/${reponame}`);
+      this.setState({ loadedData: data });
     } catch (e) {
       const data = {
         html_url: `https://github.com/${username}/${reponame}`,
@@ -102,15 +104,15 @@ export default class RepoCard extends React.Component<RepoCardProps, RepoCardSta
         stargazers_count: 0,
         forks: 0,
         language: 'Unknown',
-      }
-      this.setState({ loadedData: data })
+      };
+      this.setState({ loadedData: data });
     }
   }
 
   render() {
-    const { loadedData } = this.state
+    const { loadedData } = this.state;
     if (typeof loadedData === 'undefined') {
-      return null
+      return null;
     }
 
     return (
@@ -146,9 +148,10 @@ export default class RepoCard extends React.Component<RepoCardProps, RepoCardSta
             </SimpleURLAnchor>
           </div>
         )}
-        <div className="text-xs mb-4 mt-2 text-gray-500">
-          {parseMarkdownSimple(loadedData.description)}
-        </div>
+        <div
+          className="text-xs mb-4 mt-2 text-gray-500"
+          dangerouslySetInnerHTML={{ __html: parseMarkdownSimple(loadedData.description) }}
+        />
         <div className="text-xs text-gray-500 flex" style={{ marginRight: '0.75rem' }}>
           {loadedData.language && (
             <div className="mr-4 gap-2">
@@ -212,6 +215,6 @@ export default class RepoCard extends React.Component<RepoCardProps, RepoCardSta
           )}
         </div>
       </div>
-    )
+    );
   }
 }

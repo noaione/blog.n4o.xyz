@@ -1,23 +1,25 @@
-import siteMetadata from '@/data/siteMetadata.json'
-import projectsData from '@/data/projectsData'
-import Card from '@/components/Card'
-import { PageSeo } from '@/components/SEO'
+import siteMetadata from '@/data/siteMetadata.json';
+import projectsData from '@/data/projectsData';
+import Card from '@/components/Card';
+import { PageSeo } from '@/components/SEO';
 
-import { FormattedMessage, useIntl } from 'react-intl'
+import { FormattedMessage, useIntl } from 'react-intl';
 
-function selectDescription(description, locale) {
+type LocalizedString = { [locale: string]: string };
+
+function selectDescription(description: LocalizedString | string, locale: string) {
   if (typeof description === 'string') {
-    return description
+    return description;
   }
-  const allKeys = Object.keys(description)
+  const allKeys = Object.keys(description);
   if (!allKeys.includes(locale)) {
-    return description[allKeys[0]]
+    return description[allKeys[0]];
   }
-  return description[locale]
+  return description[locale];
 }
 
 export default function Projects() {
-  const intl = useIntl()
+  const intl = useIntl();
 
   return (
     <>
@@ -49,5 +51,5 @@ export default function Projects() {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -1,127 +1,128 @@
 /* eslint-disable no-prototype-builtins */
-const fs = require('fs')
-const path = require('path')
-const globby = require('globby')
-const prettier = require('prettier')
-const matter = require('gray-matter')
-const luxon = require('luxon')
+const fs = require('fs');
+const path = require('path');
+const matter = require('gray-matter');
 
-const remark = require('remark')
-const markdown = require('remark-parse')
-const html = require('remark-html')
+const siteMetadata = require('../data/siteMetadata');
+const localeData = require('../locale-data');
 
-const siteMetadata = require('../data/siteMetadata')
-const localeData = require('../locale-data')
-
-const LocaleEn = require('../locale/en')
-const LocaleId = require('../locale/id')
+const LocaleEn = require('../locale/en');
+const LocaleId = require('../locale/id');
 
 const LocaleLanguages = {
   id: LocaleId,
   en: LocaleEn,
+};
+
+async function markdownToHTML(contents) {
+  const unified = (await import('unified')).unified;
+  const parse = (await import('remark-parse')).default;
+  const stringify = (await import('remark-html')).default;
+  const result = await unified().use(parse).use(stringify).process(contents);
+  return result.toString();
 }
 
-function markdownToHTML(contents) {
-  const result = remark().use(markdown).use(html).processSync(contents)
-  return result.toString()
-}
-
-const convertStringToHTML = (string) =>
-  string.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/"/g, '&quot;')
+const convertStringToHTML = (string) => {
+  return string
+    .replace(/&/g, '&amp;')
+    .replace(/>/g, '&gt;')
+    .replace(/</g, '&lt;')
+    .replace(/"/g, '&quot;');
+};
 
 const kebabCase = (str) =>
   str &&
   str
     .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
     .map((x) => x.toLowerCase())
-    .join('-')
+    .join('-');
 
 function parseSlug(slugName) {
   // eslint-disable-next-line no-useless-escape
-  const re = /([0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2})?\-?(.*)/i
-  const parsed = slugName.match(re)
+  const re = /([0-9]{4}\-[0-9]{1,2}\-[0-9]{1,2})?\-?(.*)/i;
+  const parsed = slugName.match(re);
   if (parsed === null) {
-    return [undefined, slugName]
+    return [undefined, slugName];
   }
-  return [parsed[1], parsed[2]]
+  return [parsed[1], parsed[2]];
 }
 
 function findLocaleVersion(paths, locales = ['en', 'id']) {
   for (let i = 0; i < paths.length; i++) {
-    const path = paths[i]
+    const path = paths[i];
     if (locales.includes(path)) {
-      return path
+      return path;
     }
   }
-  return null
+  return null;
 }
 
 function tryToSplitPath(paths) {
-  let splitForward = paths.split('/')
+  let splitForward = paths.split('/');
   if (splitForward.length === 1) {
-    let splitBack = paths.split('\\')
+    let splitBack = paths.split('\\');
     if (splitBack.length > 1) {
-      return splitBack
+      return splitBack;
     }
   }
-  return splitForward
+  return splitForward;
 }
 
 function findFirstLine(textData) {
   for (let i = 0; i < textData.length; i++) {
-    const clean = textData[i].replace(/\r/, '')
+    const clean = textData[i].replace(/\r/, '');
     if (clean.replace(/\s/, '').length > 0) {
-      return clean
+      return clean;
     }
   }
-  return ''
+  return '';
 }
 
 function formatSeparators(textData, separators) {
   if (typeof separators !== 'string') {
-    return findFirstLine(textData)
+    return findFirstLine(textData);
   }
-  const joinedText = []
+  const joinedText = [];
   for (let i = 0; i < textData.length; i++) {
-    const clean = textData[i].replace(/\r/, '')
+    const clean = textData[i].replace(/\r/, '');
     if (clean === separators) {
-      break
+      break;
     }
-    joinedText.push(clean)
+    joinedText.push(clean);
   }
   // Bruh
   if (joinedText.length === textData.length) {
-    return findFirstLine(textData)
+    return findFirstLine(textData);
   }
-  return joinedText.join('\n')
+  return joinedText.join('\n');
 }
 
 function excerptFormatter(file, options) {
-  file.excerpt = formatSeparators(file.content.split('\n'), options.excerpt_separator)
+  file.excerpt = formatSeparators(file.content.split('\n'), options.excerpt_separator);
 }
 
 function dateSortDesc(a, b) {
-  if (a > b) return -1
-  if (a < b) return 1
-  return 0
+  if (a > b) return -1;
+  if (a < b) return 1;
+  return 0;
 }
 
-function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en') {
-  const postPath = basePath + 'posts/' + post.slug
-  let lbd
-  if (post.hasOwnProperty('lastmod')) {
-    lbd = new Date(post.lastmod).toUTCString()
-  } else if (post.hasOwnProperty('date')) {
-    lbd = new Date(post.date).toUTCString()
-  } else {
-    lbd = new Date().toUTCString()
-  }
-  const { images } = post
-  let featured
+async function generateRSSXMLItem(post, basePath) {
+  const postPath = basePath + 'posts/' + post.slug;
+  // let lbd;
+  // if (post.hasOwnProperty('lastmod')) {
+  //   lbd = new Date(post.lastmod).toUTCString();
+  // } else if (post.hasOwnProperty('date')) {
+  //   lbd = new Date(post.date).toUTCString();
+  // } else {
+  //   lbd = new Date().toUTCString();
+  // }
+  const { images } = post;
+  let featured;
   if (Array.isArray(images) && images.length > 0) {
-    featured = images[0]
+    featured = images[0];
     if (featured.startsWith('/')) {
-      featured = `${basePath.slice(0, basePath.length - 1)}${featured}`
+      featured = `${basePath.slice(0, basePath.length - 1)}${featured}`;
     }
   }
 
@@ -131,7 +132,7 @@ function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en')
       ${
         post.summary
           ? `<description><![CDATA[${convertStringToHTML(
-              markdownToHTML(post.summary)
+              await markdownToHTML(post.summary)
             ).trim()}]]></description>`
           : ''
       }
@@ -145,26 +146,32 @@ function generateRSSXMLItem(post, basePath, locale = 'en', defaultLocale = 'en')
       <guid>${postPath}</guid>
       ${post.tags
         .map((tag) => {
-          return `<category>${tag}</category>`
+          return `<category>${tag}</category>`;
         })
         .join('\n      ')}
-    </item>`
+    </item>`;
 }
 
-function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
-  let basePath = siteMetadata.siteUrl + '/'
+async function generateRSSXML(validPosts, locale = 'en') {
+  let basePath = siteMetadata.siteUrl + '/';
   if (locale !== localeData.defaultLocale) {
-    basePath += locale + '/'
+    basePath += locale + '/';
   }
 
-  const firstPost = validPosts[0]
-  let lbd
+  const firstPost = validPosts[0];
+  let lbd;
   if (firstPost.hasOwnProperty('lastmod')) {
-    lbd = new Date(firstPost.lastmod).toUTCString()
+    lbd = new Date(firstPost.lastmod).toUTCString();
   } else if (firstPost.hasOwnProperty('date')) {
-    lbd = new Date(firstPost.date).toUTCString()
+    lbd = new Date(firstPost.date).toUTCString();
   } else {
-    lbd = new Date().toUTCString()
+    lbd = new Date().toUTCString();
+  }
+
+  const mappedFiles = [];
+  for (let i = 0; i < validPosts.length; i++) {
+    const post = validPosts[i];
+    mappedFiles.push(await generateRSSXMLItem(post, basePath));
   }
 
   return `
@@ -181,53 +188,49 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
     <lastBuildDate>${lbd}</lastBuildDate>
     <generator>NextJS/Vercel</generator>
     <atom:link href="${basePath}index.xml" rel="self" type="application/rss+xml" />
-    ${validPosts
-      .map((post) => {
-        return generateRSSXMLItem(post, basePath, locale, defaultLocale)
-      })
-      .join('')}
+    ${mappedFiles.join('')}
   </channel>
 </rss>
-  `
+  `;
 }
 
-;(async () => {
-  const prettierConfig = await prettier.resolveConfig('./.prettierrc.js')
-  const pages = await globby(['data/**/*.mdx', 'data/**/*.md'])
+(async () => {
+  const globby = await import('globby');
+  const pages = await globby.globby(['data/**/*.mdx', 'data/**/*.md']);
 
-  const currentTime = luxon.DateTime.now().toUTC().toISO()
+  // const currentTime = luxon.DateTime.now().toUTC().toISO();
 
-  const allPosts = pages.filter((e) => e.startsWith('data/blog'))
-  const preparedPosts = []
+  const allPosts = pages.filter((e) => e.startsWith('data/blog'));
+  const preparedPosts = [];
   allPosts.forEach((post) => {
-    const fnSplit = tryToSplitPath(post)
-    const [dateFromFile, fileItself] = parseSlug(fnSplit[fnSplit.length - 1])
-    const slug = fileItself.replace(/\.(mdx|md)/, '')
-    const fileName = fnSplit[fnSplit.length - 1] || slug
-    const realLocale = findLocaleVersion(fnSplit, localeData.locales) || localeData.defaultLocale
-    const src = fs.readFileSync(path.join(process.cwd(), post))
+    const fnSplit = tryToSplitPath(post);
+    const [dateFromFile, fileItself] = parseSlug(fnSplit[fnSplit.length - 1]);
+    const slug = fileItself.replace(/\.(mdx|md)/, '');
+    const fileName = fnSplit[fnSplit.length - 1] || slug;
+    const realLocale = findLocaleVersion(fnSplit, localeData.locales) || localeData.defaultLocale;
+    const src = fs.readFileSync(path.join(process.cwd(), post));
     const { data, excerpt } = matter(src, {
       excerpt: excerptFormatter,
       excerpt_separator: '<!--more-->',
-    })
+    });
     // eslint-disable-next-line no-prototype-builtins
     if (!data.hasOwnProperty('date') && dateFromFile) {
-      data.date = dateFromFile
+      data.date = dateFromFile;
     }
     // eslint-disable-next-line no-prototype-builtins
     if (!data.hasOwnProperty('locale')) {
-      data.locale = realLocale
+      data.locale = realLocale;
     }
     // eslint-disable-next-line no-prototype-builtins
     if (!data.hasOwnProperty('summary')) {
-      data.summary = excerpt
+      data.summary = excerpt;
     }
-    const allTags = []
+    const allTags = [];
     if (Array.isArray(data.tags)) {
       data.tags.forEach((tag) => {
-        const formattedTags = kebabCase(tag)
-        allTags.push(formattedTags)
-      })
+        const formattedTags = kebabCase(tag);
+        allTags.push(formattedTags);
+      });
     }
     preparedPosts.push({
       ...data,
@@ -235,41 +238,36 @@ function generateRSSXML(validPosts, locale = 'en', defaultLocale = 'en') {
       locale: data.locale,
       tags: allTags,
       fileName,
-    })
-  })
+    });
+  });
 
-  const allRSSLocaleFormatted = {}
-  localeData.locales.forEach((locale) => {
-    let lastBuildDate
-    let validPosts = []
+  const allRSSLocaleFormatted = {};
+  for (const locale of localeData.locales) {
+    let validPosts = [];
     preparedPosts.forEach((post) => {
       if (locale === post.locale) {
-        validPosts.push(post)
+        validPosts.push(post);
       }
-    })
-    validPosts = validPosts.sort((a, b) => dateSortDesc(a.date, b.date))
+    });
+    validPosts = validPosts.sort((a, b) => dateSortDesc(a.date, b.date));
     if (validPosts.length < 1) {
-      return
+      return;
     }
     validPosts = validPosts.filter((post) => !post.draft);
-    const rssData = generateRSSXML(validPosts, locale, localeData.defaultLocale)
+    const rssData = await generateRSSXML(validPosts, locale);
 
-    // const formatted = prettier.format(rssData, {
-    //   ...prettierConfig,
-    //   parser: 'html',
-    // })
-    allRSSLocaleFormatted[locale] = rssData
-  })
+    allRSSLocaleFormatted[locale] = rssData;
+  }
 
   for (let [key, value] of Object.entries(allRSSLocaleFormatted)) {
-    let fullPath = `${key}/index.xml`
-    let useLocalePath = key
+    let fullPath = `${key}/index.xml`;
+    let useLocalePath = key;
     if (key === localeData.defaultLocale) {
-      fullPath = 'index.xml'
-      useLocalePath = ''
+      fullPath = 'index.xml';
+      useLocalePath = '';
     }
-    await fs.promises.mkdir(`public/${useLocalePath}`, { recursive: true })
-    console.info(`[RSSGen] Generating RSS data for locale \`${key}\``)
-    fs.writeFileSync(`public/${fullPath}`, value)
+    await fs.promises.mkdir(`public/${useLocalePath}`, { recursive: true });
+    console.info(`[RSSGen] Generating RSS data for locale \`${key}\``);
+    fs.writeFileSync(`public/${fullPath}`, value);
   }
-})()
+})();

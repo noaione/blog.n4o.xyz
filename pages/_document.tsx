@@ -1,7 +1,7 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, { Html, Head, Main, NextScript } from 'next/document';
 
-import LocaleData from '../locale-data'
-import { InlineJs } from '@kachkaev/react-inline-js'
+import LocaleData from '../locale-data';
+import { InlineJs } from '@kachkaev/react-inline-js';
 
 const THEME_CHECKER_JS = `
 // Helper
@@ -36,18 +36,18 @@ if (isNullified(userPreferDark)) {
         document.documentElement.classList.add("dark");
     }
 }
-`
+`;
 
 class BlogDocumentSection extends Document {
   constructor(props) {
-    super(props)
+    super(props);
   }
 
   render() {
-    const { locale } = this.props
-    let useLocale = '/' + locale
+    const { locale } = this.props;
+    let useLocale = '/' + locale;
     if (locale === LocaleData.defaultLocale) {
-      useLocale = ''
+      useLocale = '';
     }
     return (
       <Html lang={locale || 'en'} prefix="og: https://ogp.me/ns#">
@@ -89,8 +89,8 @@ class BlogDocumentSection extends Document {
           <NextScript />
         </body>
       </Html>
-    )
+    );
   }
 }
 
-export default BlogDocumentSection
+export default BlogDocumentSection;
