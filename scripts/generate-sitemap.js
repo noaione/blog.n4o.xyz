@@ -45,6 +45,14 @@ function tryToSplitPath(paths) {
 }
 
 (async () => {
+  const manifestPath = path.join(__dirname, '..', '.next', 'prerender-manifest.json');
+  if (!fs.existsSync(manifestPath)) {
+    console.error(
+      '[SiteMapGen] Unable to find prerender-manifest, please build your project first!'
+    );
+    return;
+  }
+  const buildManifest = JSON.parse(fs.readFileSync(manifestPath, 'utf-8'));
   const prettierConfig = await prettier.resolveConfig('./.prettierrc.js');
   const globby = await import('globby');
   const pages = await globby.globby([
@@ -65,6 +73,27 @@ function tryToSplitPath(paths) {
 
   const allPosts = pages.filter((e) => e.startsWith('data/blog'));
   const otherPages = pages.filter((e) => !allPosts.includes(e));
+  const paginatedRoutes = [];
+  for (const path of Object.keys(buildManifest.routes)) {
+    if (path.includes('/page/')) {
+      paginatedRoutes.push(path);
+    }
+  }
+  const paginatedRoutesPerLocale = {};
+  for (const route of paginatedRoutes) {
+    const routeSplit = route.split('/').filter((e) => e !== '');
+    const theLocale = routeSplit[0];
+    if (localeData.locales.includes(theLocale)) {
+      if (!(theLocale in paginatedRoutesPerLocale)) {
+        paginatedRoutesPerLocale[theLocale] = [];
+      }
+      if (theLocale === localeData.defaultLocale) {
+        paginatedRoutesPerLocale[theLocale].push('/' + routeSplit.slice(1).join('/'));
+      } else {
+        paginatedRoutesPerLocale[theLocale].push(route);
+      }
+    }
+  }
   const preparedPosts = [];
   allPosts.forEach((post) => {
     const fnSplit = tryToSplitPath(post);
@@ -137,6 +166,7 @@ function tryToSplitPath(paths) {
     if (!Array.isArray(allTagsLocale)) {
       allTagsLocale = [];
     }
+    const allPaginatedLocale = paginatedRoutesPerLocale[locale] || [];
     const sitemap = `
     <?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
@@ -154,10 +184,13 @@ function tryToSplitPath(paths) {
             .replace('.md', '')
             .replace('/index.xml', '');
           let route = path === '/index' ? '' : path;
-          if (!route.startsWith('/')) {
+          if (!route.startsWith('/') && route !== '') {
             route = `/${route}`;
           }
-          const baseRoute = '/' + locale;
+          let baseRoute = '/' + locale;
+          if (locale === localeData.defaultLocale) {
+            baseRoute = '';
+          }
           if (route.startsWith('/404') || route.startsWith('/500')) {
             return undefined;
           }
@@ -224,6 +257,30 @@ function tryToSplitPath(paths) {
         })
         .filter((e) => typeof e === 'string')
         .join('\n')}
+      ${allPaginatedLocale
+        .map((route) => {
+          const maxPriority = 0.65;
+          const lowestPriority = 0.25;
+          const step = (maxPriority - lowestPriority) / 10;
+          // Determine page priority
+          // check by how many slugs the route has
+          let priority = maxPriority;
+          const routeSplit = route.split('/').filter((e) => e !== '');
+          if (routeSplit.length > 1) {
+            for (let i = 0; i < routeSplit.length; i += 1) {
+              priority -= step;
+            }
+          }
+          // round to 2 decimals
+          priority = priority.toFixed(2);
+          return `<url>
+          <loc>${`${siteMetadata.siteUrl}${route}`}</loc>
+          <lastmod>${currentTime}</lastmod>
+          <changefreq>weekly</changefreq>
+          <priority>${priority}</priority>
+        </url>`;
+        })
+        .join('')}
       ${allTagsLocale
         .map((tag) => {
           let route = '/tags/' + tag;
