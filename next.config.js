@@ -1,27 +1,32 @@
-const localeData = require('./locale-data');
-
-const withPlugins = require('next-compose-plugins');
+const fs = require('fs');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
-const withTM = require('next-transpile-modules')(['unist-util-visit']);
+const localeData = require('./locale-data');
 
-const localeInformation = Object.assign({}, localeData, { localeDetection: false });
+// Monkeypatch preact package.json
+const preactConfig = __dirname + '/node_modules/preact/package.json';
+const preactPackage = JSON.parse(fs.readFileSync(preactConfig));
+preactPackage.exports = Object.assign({}, preactPackage.exports, {
+  './compat/jsx-runtime.js': preactPackage.exports['./jsx-runtime'],
+});
+console.info('Monkeypatching preact');
+fs.writeFileSync(preactConfig, JSON.stringify(preactPackage, null, 4));
+const internationalizationConfig = Object.assign({}, localeData, { localeDetection: false });
 
-const nextConfig = {
+module.exports = withBundleAnalyzer({
   reactStrictMode: true,
-  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'tsx', 'ts'],
   eslint: {
     dirs: ['pages', 'components', 'lib', 'layouts'],
   },
-  i18n: localeInformation,
+  i18n: internationalizationConfig,
   images: {
-    domains: ['cdn.discordapp.com'],
+    domains: ['cdn.discordapp.com', 'p.ihateani.me'],
   },
   productionBrowserSourceMaps: true,
   swcLoader: true,
   swcMinify: true,
-  esmExternals: true,
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
@@ -47,8 +52,11 @@ const nextConfig = {
         react: 'preact/compat',
         'react-dom/test-utils': 'preact/test-utils',
         'react-dom': 'preact/compat',
+        'react/jsx-runtime': 'preact/jsx-runtime',
       });
     }
+
+    // console.info(config);
 
     return config;
   },
@@ -78,6 +86,4 @@ const nextConfig = {
       ],
     };
   },
-};
-
-module.exports = withPlugins([[withBundleAnalyzer], [withTM]], nextConfig);
+});
