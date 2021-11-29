@@ -9,7 +9,6 @@ import readingTime from 'reading-time';
 import { FrontMatterData } from '@/components/SEO';
 
 import ImageToJSX from './img-to-jsx';
-import Twemoji from './twemoji';
 import DisEmoteRemark from './disemote';
 import RemarkCodeTitles from './remark-code-titles';
 import CustomHeading from './custom-heading';
@@ -23,6 +22,7 @@ import remarkFootnotes from 'remark-footnotes';
 import remarkMath from 'remark-math';
 
 import rehypeKatex from 'rehype-katex';
+import rehypeTwemojify from 'rehype-twemojify';
 import rehypePrism from 'rehype-prism-plus';
 
 const root = process.cwd();
@@ -233,7 +233,6 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
         remarkGemoji,
         remarkGFM,
         RemarkCodeTitles,
-        Twemoji,
         DisEmoteRemark,
         [remarkFootnotes, { inlineNotes: true }],
         remarkMath,
@@ -241,16 +240,21 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
       ]),
         (options.rehypePlugins = [
           ...(options.rehypePlugins || []),
+          [rehypeTwemojify, { className: 'twemoji-inline' }],
           rehypeKatex,
           [rehypePrism, { ignoreMissing: true, showLineNumbers: false }],
           () => {
             return (tree) => {
               visit(tree, 'element', (node: Node) => {
                 // @ts-ignore
-                const [token, type] = node.properties.className || [];
-                if (token === 'token') {
+                const { properties } = node;
+                if (properties) {
                   // @ts-ignore
-                  node.properties.className = [tokenClassNames[type]];
+                  const [token, type] = properties.className || [];
+                  if (token === 'token') {
+                    // @ts-ignore
+                    node.properties.className = [tokenClassNames[type]];
+                  }
                 }
               });
             };

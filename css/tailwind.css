@@ -308,4 +308,9 @@ code.hljs::-webkit-scrollbar {
   @apply flex flex-col items-center justify-center;
 }
 
+.twemoji-inline {
+  display: inline-block;
+  @apply w-6 h-6 !my-0;
+}
+
 @tailwind utilities;
