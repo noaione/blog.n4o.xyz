@@ -10,7 +10,10 @@ const localeInformation = Object.assign({}, localeData, { localeDetection: false
 
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  pageExtensions: ['js', 'jsx', 'md', 'mdx'],
+  eslint: {
+    dirs: ['pages', 'components', 'lib', 'layouts'],
+  },
   i18n: localeInformation,
   images: {
     domains: ['cdn.discordapp.com'],
@@ -20,10 +23,6 @@ const nextConfig = {
   swcMinify: true,
   esmExternals: true,
   webpack: (config, { dev, isServer }) => {
-    config.module.rules.push({
-      test: /\.mdx$/,
-      use: [{ loader: 'xdm/webpack.cjs', options: {} }],
-    });
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
@@ -36,10 +35,6 @@ const nextConfig = {
         },
       ],
     });
-
-    if (!isServer) {
-      config.resolve.fallback.fs = false;
-    }
 
     config.module.rules.push({
       test: /\.svg$/,
