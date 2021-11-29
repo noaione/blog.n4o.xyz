@@ -257,30 +257,6 @@ function tryToSplitPath(paths) {
         })
         .filter((e) => typeof e === 'string')
         .join('\n')}
-      ${allPaginatedLocale
-        .map((route) => {
-          const maxPriority = 0.65;
-          const lowestPriority = 0.25;
-          const step = (maxPriority - lowestPriority) / 10;
-          // Determine page priority
-          // check by how many slugs the route has
-          let priority = maxPriority;
-          const routeSplit = route.split('/').filter((e) => e !== '');
-          if (routeSplit.length > 1) {
-            for (let i = 0; i < routeSplit.length; i += 1) {
-              priority -= step;
-            }
-          }
-          // round to 2 decimals
-          priority = priority.toFixed(2);
-          return `<url>
-          <loc>${`${siteMetadata.siteUrl}${route}`}</loc>
-          <lastmod>${currentTime}</lastmod>
-          <changefreq>weekly</changefreq>
-          <priority>${priority}</priority>
-        </url>`;
-        })
-        .join('')}
       ${allTagsLocale
         .map((tag) => {
           let route = '/tags/' + tag;
@@ -310,6 +286,34 @@ function tryToSplitPath(paths) {
           </url>
           `;
         })
+        .join('')}
+      ${allPaginatedLocale
+        .map((route) => {
+          if (route.endsWith('/1')) {
+            return null;
+          }
+          const maxPriority = 0.65;
+          const lowestPriority = 0.25;
+          const step = (maxPriority - lowestPriority) / 10;
+          // Determine page priority
+          // check by how many slugs the route has
+          let priority = maxPriority;
+          const routeSplit = route.split('/').filter((e) => e !== '');
+          if (routeSplit.length > 1) {
+            for (let i = 0; i < routeSplit.length; i += 1) {
+              priority -= step;
+            }
+          }
+          // round to 2 decimals
+          priority = priority.toFixed(2);
+          return `<url>
+            <loc>${`${siteMetadata.siteUrl}${route}`}</loc>
+            <lastmod>${currentTime}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>${priority}</priority>
+          </url>`;
+        })
+        .filter((e) => typeof e === 'string')
         .join('')}
     </urlset>
     `;
