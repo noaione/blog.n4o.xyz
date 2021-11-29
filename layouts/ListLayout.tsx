@@ -1,37 +1,37 @@
 /* eslint-disable @next/next/no-img-element */
-import Link from '@/components/Link'
-import Tag from '@/components/Tag'
-import Pagination, { PaginationProps } from '@/components/Pagination'
-import { FrontMatterData } from '@/components/SEO'
-import { LegacyDisEmote } from '@/lib/disemote'
+import Link from '@/components/Link';
+import Tag from '@/components/Tag';
+import Pagination, { PaginationProps } from '@/components/Pagination';
+import { FrontMatterData } from '@/components/SEO';
 
-import remark from 'remark'
-import markdown from 'remark-parse'
-import html from 'remark-html'
+import markdown from 'remark-parse';
+import html from 'remark-html';
 
-import { useState } from 'react'
-import { useIntl } from 'react-intl'
+import { useState } from 'react';
+import { useIntl } from 'react-intl';
+import { unified } from 'unified';
+import { DisEmoteSimpleTransformer } from '@/lib/disemote';
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
-}
+};
 
 function summaryFormatter(textData: string) {
   if (textData.replace(/\s/g, '') === '') {
-    return ''
+    return '';
   }
-  const result = remark().use(markdown).use(LegacyDisEmote).use(html).processSync(textData)
-  return result.toString()
+  const result = unified().use(markdown).use(html).processSync(textData);
+  return DisEmoteSimpleTransformer(result.toString());
 }
 
 interface ListLayoutProps {
-  posts: FrontMatterData[]
-  title: string
-  pagination: PaginationProps
-  initialDisplayPosts?: FrontMatterData[]
-  isPosts?: boolean
+  posts: FrontMatterData[];
+  title: string;
+  pagination: PaginationProps;
+  initialDisplayPosts?: FrontMatterData[];
+  isPosts?: boolean;
 }
 
 export default function ListLayout({
@@ -41,12 +41,12 @@ export default function ListLayout({
   initialDisplayPosts = [],
   isPosts,
 }: ListLayoutProps) {
-  const [searchValue, setSearchValue] = useState('')
-  const intl = useIntl()
+  const [searchValue, setSearchValue] = useState('');
+  const intl = useIntl();
   const filteredBlogPosts = posts.filter((frontMatter) => {
-    const searchContent = frontMatter.title + frontMatter.summary + frontMatter.tags.join(' ')
-    return searchContent.toLowerCase().includes(searchValue.toLowerCase())
-  })
+    const searchContent = frontMatter.title + frontMatter.summary + frontMatter.tags.join(' ');
+    return searchContent.toLowerCase().includes(searchValue.toLowerCase());
+  });
 
   const descriptors = {
     searchArticle: {
@@ -69,16 +69,16 @@ export default function ListLayout({
       description: undefined,
       defaultMessage: undefined,
     },
-  }
+  };
 
-  let usedNoData = descriptors.noArticle
+  let usedNoData = descriptors.noArticle;
   if (searchValue !== '') {
-    usedNoData = descriptors.searchNoResult
+    usedNoData = descriptors.searchNoResult;
   }
 
   // If initialDisplayPosts exist, display it if no searchValue is specified
   const displayPosts =
-    initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts
+    initialDisplayPosts.length > 0 && !searchValue ? initialDisplayPosts : filteredBlogPosts;
 
   return (
     <>
@@ -123,10 +123,10 @@ export default function ListLayout({
         <ul>
           {!filteredBlogPosts.length && <p className="mt-2">{intl.formatMessage(usedNoData)}</p>}
           {displayPosts.map((frontMatter) => {
-            const { slug, date, title, summary, tags, images, draft } = frontMatter
-            let selectedImages: string
+            const { slug, date, title, summary, tags, images, draft } = frontMatter;
+            let selectedImages: string;
             if (Array.isArray(images) && images.length > 0) {
-              selectedImages = images[0]
+              selectedImages = images[0];
             }
             return (
               <li key={slug} className="py-4">
@@ -184,7 +184,7 @@ export default function ListLayout({
                   </div>
                 </article>
               </li>
-            )
+            );
           })}
         </ul>
       </div>
@@ -196,5 +196,5 @@ export default function ListLayout({
         />
       )}
     </>
-  )
+  );
 }

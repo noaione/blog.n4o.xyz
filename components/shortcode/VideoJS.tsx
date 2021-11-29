@@ -1,30 +1,30 @@
 /* eslint-disable jsx-a11y/media-has-caption */
-import { string } from 'prop-types'
-import { Component } from 'react'
-import videojs, { VideoJsPlayer } from 'video.js'
-import 'video.js/dist/video-js.css'
+import { string } from 'prop-types';
+import { Component } from 'react';
+import videojs, { VideoJsPlayer } from 'video.js';
+import 'video.js/dist/video-js.css';
 
 interface VideoProps {
-  src: string
-  caption?: string
+  src: string;
+  caption?: string;
 }
 
 export default class VideoPlayer extends Component<VideoProps> {
-  player?: VideoJsPlayer
-  videoNode?: HTMLVideoElement
+  player?: VideoJsPlayer;
+  videoNode?: HTMLVideoElement;
 
   static propTypes = {
     src: string.isRequired,
     caption: string,
-  }
+  };
 
   componentDidMount() {
-    this.player = videojs(this.videoNode, { fluid: true, controls: true, preload: 'no' })
+    this.player = videojs(this.videoNode, { fluid: true, controls: true, preload: 'no' });
   }
 
   componentWillUnmount() {
     if (this.player) {
-      this.player.dispose()
+      this.player.dispose();
     }
   }
 
@@ -53,6 +53,6 @@ export default class VideoPlayer extends Component<VideoProps> {
           <figcaption style={{ alignSelf: 'center' }}>{this.props.caption}</figcaption>
         )}
       </div>
-    )
+    );
   }
 }

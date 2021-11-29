@@ -1,16 +1,16 @@
-import siteMetadata from '@/data/siteMetadata.json'
-import headerNavLinks from '@/data/headerNavLinks'
-import Link from './Link'
-import SectionContainer from './SectionContainer'
-import Footer from './Footer'
-import LangSwitch from './LangSwitch'
-import MobileNav from './MobileNav'
-import ThemeSwitch from './ThemeSwitch'
+import siteMetadata from '@/data/siteMetadata.json';
+import headerNavLinks from '@/data/headerNavLinks';
+import Link from './Link';
+import SectionContainer from './SectionContainer';
+import Footer from './Footer';
+import LangSwitch from './LangSwitch';
+import MobileNav from './MobileNav';
+import ThemeSwitch from './ThemeSwitch';
 
-import { useIntl } from 'react-intl'
+import { useIntl } from 'react-intl';
 
 const LayoutWrapper = ({ children }) => {
-  const intl = useIntl()
+  const intl = useIntl();
   return (
     <SectionContainer>
       <div className="flex flex-col justify-between h-screen">
@@ -50,7 +50,7 @@ const LayoutWrapper = ({ children }) => {
         <Footer />
       </div>
     </SectionContainer>
-  )
-}
+  );
+};
 
-export default LayoutWrapper
+export default LayoutWrapper;

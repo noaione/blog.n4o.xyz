@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import { kebabCase } from '@/lib/utils'
+import Link from 'next/link';
+import { kebabCase } from '@/lib/utils';
 
 interface TagProps {
   text: string;
@@ -12,7 +12,7 @@ const Tag = ({ text }: TagProps) => {
         {'#' + text.split(' ').join('-')}
       </a>
     </Link>
-  )
-}
+  );
+};
 
-export default Tag
+export default Tag;

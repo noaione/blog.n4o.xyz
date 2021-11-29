@@ -1,23 +1,29 @@
-const localeData = require('./locale-data')
+const localeData = require('./locale-data');
 
-const withPlugins = require('next-compose-plugins')
+const withPlugins = require('next-compose-plugins');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
-})
-const withTM = require('next-transpile-modules')(['unist-util-visit'])
+});
+const withTM = require('next-transpile-modules')(['unist-util-visit']);
+
+const localeInformation = Object.assign({}, localeData, { localeDetection: false });
 
 const nextConfig = {
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  i18n: Object.assign({}, localeData, { localeDetection: false }),
+  i18n: localeInformation,
   images: {
     domains: ['cdn.discordapp.com'],
   },
+  productionBrowserSourceMaps: true,
+  swcLoader: true,
+  swcMinify: true,
+  esmExternals: true,
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({
       test: /\.mdx$/,
       use: [{ loader: 'xdm/webpack.cjs', options: {} }],
-    })
+    });
     config.module.rules.push({
       test: /\.(png|jpe?g|gif|mp4)$/i,
       use: [
@@ -29,16 +35,16 @@ const nextConfig = {
           },
         },
       ],
-    })
+    });
 
     if (!isServer) {
-      config.resolve.fallback.fs = false
+      config.resolve.fallback.fs = false;
     }
 
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
+    });
 
     if (!dev && !isServer) {
       // Replace React with Preact only in client production build
@@ -46,10 +52,10 @@ const nextConfig = {
         react: 'preact/compat',
         'react-dom/test-utils': 'preact/test-utils',
         'react-dom': 'preact/compat',
-      })
+      });
     }
 
-    return config
+    return config;
   },
   async rewrites() {
     return {
@@ -75,8 +81,8 @@ const nextConfig = {
           destination: '/api/oldredir/release/:slug',
         },
       ],
-    }
+    };
   },
-}
+};
 
-module.exports = withPlugins([[withBundleAnalyzer], [withTM]], nextConfig)
+module.exports = withPlugins([[withBundleAnalyzer], [withTM]], nextConfig);

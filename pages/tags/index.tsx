@@ -1,24 +1,24 @@
-import { kebabCase } from '@/lib/utils'
-import { TagCount } from '@/lib/tags'
-import Tag from '@/components/Tag'
-import Link from '@/components/Link'
-import { PageSeo } from '@/components/SEO'
+import { kebabCase } from '@/lib/utils';
+import { TagCount } from '@/lib/tags';
+import Tag from '@/components/Tag';
+import Link from '@/components/Link';
+import { PageSeo } from '@/components/SEO';
 
-import { FormattedMessage, useIntl } from 'react-intl'
-import { GetStaticPropsContext } from 'next'
+import { FormattedMessage, useIntl } from 'react-intl';
+import { GetStaticPropsContext } from 'next';
 
-type TagDatas = { [key: string]: TagCount }
+type TagDatas = { [key: string]: TagCount };
 
 export async function getStaticProps({ locale, locales, defaultLocale }: GetStaticPropsContext) {
-  const { getAllTags } = await import('@/lib/tags')
-  const tags = await getAllTags('blog', locale, locales, defaultLocale)
+  const { getAllTags } = await import('@/lib/tags');
+  const tags = await getAllTags('blog', locale, locales, defaultLocale);
 
-  return { props: { tags } }
+  return { props: { tags } };
 }
 
 export default function Tags({ tags }: { tags: TagDatas }) {
-  const sortedTags = Object.keys(tags).sort((a, b) => tags[b].count - tags[a].count)
-  const intl = useIntl()
+  const sortedTags = Object.keys(tags).sort((a, b) => tags[b].count - tags[a].count);
+  const intl = useIntl();
 
   return (
     <>
@@ -46,10 +46,10 @@ export default function Tags({ tags }: { tags: TagDatas }) {
                   {` (${tags[t]['count']})`}
                 </Link>
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </>
-  )
+  );
 }

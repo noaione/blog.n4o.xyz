@@ -1,19 +1,19 @@
-import Image from '@/components/Image'
-import Link from '@/components/Link'
+import Image from '@/components/Image';
+import Link from '@/components/Link';
 
-import { useIntl } from 'react-intl'
+import { useIntl } from 'react-intl';
 
-type LocalizedString = { [locale: string]: string }
+type LocalizedString = { [locale: string]: string };
 
 export interface ProjectCardsProps {
-  title: string
-  description: LocalizedString | string
-  imgSrc: string
-  href: string
+  title: string;
+  description: LocalizedString | string;
+  imgSrc: string;
+  href: string;
 }
 
 const Card = ({ title, description, imgSrc, href }: ProjectCardsProps) => {
-  const intl = useIntl()
+  const intl = useIntl();
 
   return (
     <div className="p-4 md:w-1/2 md" style={{ maxWidth: '544px' }}>
@@ -61,7 +61,7 @@ const Card = ({ title, description, imgSrc, href }: ProjectCardsProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Card
+export default Card;

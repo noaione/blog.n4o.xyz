@@ -1,24 +1,24 @@
-import { useState } from 'react'
-import Link from './Link'
-import headerNavLinks from '@/data/headerNavLinks'
+import { useState } from 'react';
+import Link from './Link';
+import headerNavLinks from '@/data/headerNavLinks';
 
-import { useIntl } from 'react-intl'
+import { useIntl } from 'react-intl';
 
 const MobileNav = () => {
-  const [navShow, setNavShow] = useState(false)
-  const intl = useIntl()
+  const [navShow, setNavShow] = useState(false);
+  const intl = useIntl();
 
   const onToggleNav = () => {
     setNavShow((status) => {
       if (status) {
-        document.body.style.overflow = 'auto'
+        document.body.style.overflow = 'auto';
       } else {
         // Prevent scrolling
-        document.body.style.overflow = 'hidden'
+        document.body.style.overflow = 'hidden';
       }
-      return !status
-    })
-  }
+      return !status;
+    });
+  };
 
   return (
     <div className="sm:hidden">
@@ -78,7 +78,7 @@ const MobileNav = () => {
                 className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
                 onClick={onToggleNav}
                 locale={intl.locale}
-                >
+              >
                 {intl.formatMessage({ id: link.title.toLowerCase(), defaultMessage: link.title })}
               </Link>
             </div>
@@ -86,7 +86,7 @@ const MobileNav = () => {
         </nav>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MobileNav
+export default MobileNav;

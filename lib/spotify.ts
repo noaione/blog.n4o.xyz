@@ -1,26 +1,26 @@
-import querystring from 'querystring'
+import { URLSearchParams } from 'url';
 
-const clientId = process.env.SPOTIFY_CLIENT_ID
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET
-const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 
-const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64')
-const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`
-const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`
+const basic = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
+const TOKEN_ENDPOINT = `https://accounts.spotify.com/api/token`;
+const NOW_PLAYING_ENDPOINT = `https://api.spotify.com/v1/me/player/currently-playing`;
 
 async function getAccessToken() {
+  const params = new URLSearchParams();
+  params.append('grant_type', 'refresh_token');
+  params.append('refresh_token', refreshToken);
   const response = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
     headers: {
       Authorization: `Basic ${basic}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: querystring.stringify({
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-    }),
-  })
-  return await response.json()
+    body: params,
+  });
+  return await response.json();
 }
 
 const mockedNowPlayingData = {
@@ -119,33 +119,33 @@ const mockedNowPlayingData = {
     },
   },
   is_playing: true,
-}
+};
 
 export async function getNowPlaying(mock = false) {
-  let jsonData: typeof mockedNowPlayingData
+  let jsonData: typeof mockedNowPlayingData;
   if (mock) {
-    jsonData = mockedNowPlayingData
+    jsonData = mockedNowPlayingData;
   } else {
-    const { access_token } = await getAccessToken()
+    const { access_token } = await getAccessToken();
     const response = await fetch(NOW_PLAYING_ENDPOINT, {
       headers: {
         Authorization: `Bearer ${access_token}`,
       },
-    })
-    console.info('Spotify.getNowPlaying:', response.status, response.statusText)
+    });
+    console.info('Spotify.getNowPlaying:', response.status, response.statusText);
     if (response.status !== 200) {
       return {
         playing: false,
-      }
+      };
     }
-    jsonData = await response.json()
+    jsonData = await response.json();
   }
 
-  const { is_playing, progress_ms, item, currently_playing_type } = jsonData
+  const { is_playing, progress_ms, item, currently_playing_type } = jsonData;
   if (currently_playing_type !== 'track') {
     return {
       playing: false,
-    }
+    };
   }
   const data = {
     url: item['album']['external_urls']['spotify'],
@@ -158,10 +158,10 @@ export async function getNowPlaying(mock = false) {
     artist: item['artists'].map((p) => p.name),
     progress: progress_ms,
     duration: item['duration_ms'],
-  }
+  };
 
   return {
     playing: is_playing,
     data,
-  }
+  };
 }

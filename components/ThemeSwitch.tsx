@@ -1,77 +1,77 @@
-import { useEffect, useState } from 'react'
-import { isNone } from '@/lib/utils'
+import { useEffect, useState } from 'react';
+import { isNone } from '@/lib/utils';
 
 function ThemeChangeCallback(theme: string) {
   if (typeof window !== 'undefined' && typeof document !== 'undefined') {
     const utteranceMessage = {
       type: 'set-theme',
       theme: theme === 'dark' ? 'github-dark' : 'github-light',
-    }
+    };
     const giscusMessage = {
       giscus: {
         setConfig: {
           theme: theme === 'dark' ? 'transparent_dark' : 'light',
         },
       },
-    }
-    const utteranceFrame = document.querySelector<HTMLIFrameElement>('.utterances-frame')
-    const giscusFrame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame')
+    };
+    const utteranceFrame = document.querySelector<HTMLIFrameElement>('.utterances-frame');
+    const giscusFrame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
     if (utteranceFrame !== null) {
-      utteranceFrame.contentWindow.postMessage(utteranceMessage, 'https://utteranc.es')
+      utteranceFrame.contentWindow.postMessage(utteranceMessage, 'https://utteranc.es');
     }
     if (giscusFrame !== null) {
-      giscusFrame.contentWindow.postMessage(giscusMessage, 'https://giscus.app')
+      giscusFrame.contentWindow.postMessage(giscusMessage, 'https://giscus.app');
     }
   }
 }
 
 function useThemeToggler() {
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState('light');
 
   useEffect(() => {
-    const storage = localStorage.getItem('theme')
-    let resolvedTheme: string
-    let preferDark = false
+    const storage = localStorage.getItem('theme');
+    let resolvedTheme: string;
+    let preferDark = false;
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      preferDark = true
+      preferDark = true;
     }
     if (isNone(storage)) {
-      resolvedTheme = preferDark ? 'dark' : 'light'
-      localStorage.setItem('theme', resolvedTheme)
+      resolvedTheme = preferDark ? 'dark' : 'light';
+      localStorage.setItem('theme', resolvedTheme);
     } else {
       if (['dark', 'light'].includes(storage)) {
-        resolvedTheme = storage
+        resolvedTheme = storage;
       } else {
-        resolvedTheme = preferDark ? 'dark' : 'light'
-        localStorage.setItem('theme', resolvedTheme)
+        resolvedTheme = preferDark ? 'dark' : 'light';
+        localStorage.setItem('theme', resolvedTheme);
       }
     }
-    setTheme(resolvedTheme)
-  }, [])
+    setTheme(resolvedTheme);
+  }, []);
 
   const realSetTheme = (theme: string) => {
     if (['dark', 'light'].includes(theme)) {
-      setTheme(theme)
-      localStorage.setItem('theme', theme)
-      const isDark = document.documentElement.classList.contains('dark')
+      setTheme(theme);
+      localStorage.setItem('theme', theme);
+      const isDark = document.documentElement.classList.contains('dark');
       isDark
         ? document.documentElement.classList.remove('dark')
-        : document.documentElement.classList.add('dark')
+        : document.documentElement.classList.add('dark');
     }
-  }
+  };
 
   return {
     theme,
     setTheme: realSetTheme,
-  }
+  };
 }
 
 const ThemeSwitch = () => {
-  const { theme, setTheme } = useThemeToggler()
+  const { theme, setTheme } = useThemeToggler();
 
   useEffect(() => {
-    ThemeChangeCallback(theme)
-  }, [theme])
+    ThemeChangeCallback(theme);
+  }, [theme]);
 
   return (
     <button
@@ -97,7 +97,7 @@ const ThemeSwitch = () => {
         )}
       </svg>
     </button>
-  )
-}
+  );
+};
 
-export default ThemeSwitch
+export default ThemeSwitch;

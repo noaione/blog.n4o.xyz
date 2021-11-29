@@ -1,26 +1,26 @@
-import PostLayout from '@/layouts/PostLayout'
-import MDXRenderer from '@/components/MDXComponents'
-import PageTitle from '@/components/PageTitle'
-import { FrontMatterData } from '@/components/SEO'
+import PostLayout from '@/layouts/PostLayout';
+import MDXRenderer from '@/components/MDXComponents';
+import PageTitle from '@/components/PageTitle';
+import { FrontMatterData } from '@/components/SEO';
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 // import { useRouter } from 'next/router'
-import { GetStaticPathsContext, GetStaticPropsContext } from 'next'
+import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
 
 export async function getStaticPaths({ locales, defaultLocale }: GetStaticPathsContext) {
-  const { getFiles, formatSlug } = await import('@/lib/mdx')
-  const posts = await getFiles('blog', '*', locales, defaultLocale)
+  const { getFiles, formatSlug } = await import('@/lib/mdx');
+  const posts = await getFiles('blog', '*', locales, defaultLocale);
   const allPaths = posts.map((p) => ({
     params: {
       slug: formatSlug(p.slug),
     },
     locale: p.locale,
-  }))
+  }));
 
   return {
     paths: allPaths,
     fallback: false,
-  }
+  };
 }
 
 export async function getStaticProps({
@@ -29,36 +29,36 @@ export async function getStaticProps({
   locales,
   defaultLocale,
 }: GetStaticPropsContext) {
-  const { getFileBySlug, getAllFilesFrontMatter } = await import('@/lib/mdx')
-  const allPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale)
-  const postIndex = allPosts.findIndex((post) => post.slug === params.slug)
+  const { getFileBySlug, getAllFilesFrontMatter } = await import('@/lib/mdx');
+  const allPosts = await getAllFilesFrontMatter('blog', locale, locales, defaultLocale);
+  const postIndex = allPosts.findIndex((post) => post.slug === params.slug);
   if (postIndex < 0) {
     return {
       notFound: true,
-    }
+    };
   }
-  const prev = allPosts[postIndex + 1] || null
-  const next = allPosts[postIndex - 1] || null
-  const post = await getFileBySlug(allPosts[postIndex])
+  const prev = allPosts[postIndex + 1] || null;
+  const next = allPosts[postIndex - 1] || null;
+  const post = await getFileBySlug(allPosts[postIndex]);
 
-  return { props: { post, prev, next } }
+  return { props: { post, prev, next } };
 }
 
 interface BlogPostData {
-  mdxSource: string
-  frontMatter: FrontMatterData
+  mdxSource: string;
+  frontMatter: FrontMatterData;
 }
 
 interface BlogsPosts {
-  post: BlogPostData
-  prev: FrontMatterData
-  next: FrontMatterData
+  post: BlogPostData;
+  prev: FrontMatterData;
+  next: FrontMatterData;
 }
 
 export default function Blog({ post, prev, next }: BlogsPosts) {
-  const [reportedView, setReported] = useState(false)
+  const [reportedView, setReported] = useState(false);
   // const router = useRouter()
-  const { mdxSource, frontMatter } = post
+  const { mdxSource, frontMatter } = post;
   // let fullSlug = router.asPath
   // if (typeof router.locale === 'string' && router.locale !== router.defaultLocale) {
   //   fullSlug = `/${router.locale}${fullSlug}`
@@ -77,18 +77,18 @@ export default function Blog({ post, prev, next }: BlogsPosts) {
 
   useEffect(() => {
     if (reportedView) {
-      return
+      return;
     }
 
     postHits()
       .then(() => {
-        setReported(true)
+        setReported(true);
       })
       .catch(() => {
-        setReported(true)
-      })
+        setReported(true);
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   return (
     <>
@@ -113,5 +113,5 @@ export default function Blog({ post, prev, next }: BlogsPosts) {
         </div>
       )}
     </>
-  )
+  );
 }

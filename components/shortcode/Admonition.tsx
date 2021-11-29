@@ -1,25 +1,25 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import remark from 'remark'
-import markdown from 'remark-parse'
-import html from 'remark-html'
+import markdown from 'remark-parse';
+import html from 'remark-html';
+import { unified } from 'unified';
 
 function renderTitle(title: string) {
-  const result = remark().use(markdown).use(html).processSync(title)
-  return result.toString()
+  const result = unified().use(markdown).use(html).processSync(title);
+  return result.toString();
 }
 
-type InfoType = 'info' | 'note'
-type WarningType = 'warning' | 'important'
-type ErrorType = 'error' | 'danger' | 'caution'
-type QuestionType = 'question'
-type SuccessType = 'tip' | 'success'
-export type AdmonitionType = InfoType | WarningType | ErrorType | QuestionType | SuccessType
+type InfoType = 'info' | 'note';
+type WarningType = 'warning' | 'important';
+type ErrorType = 'error' | 'danger' | 'caution';
+type QuestionType = 'question';
+type SuccessType = 'tip' | 'success';
+export type AdmonitionType = InfoType | WarningType | ErrorType | QuestionType | SuccessType;
 
 export interface AdmonitionProps {
-  type?: AdmonitionType
-  title?: string
+  type?: AdmonitionType;
+  title?: string;
 }
 
 const emojisMap = {
@@ -28,7 +28,7 @@ const emojisMap = {
   tip: '💡',
   note: 'ℹ️',
   question: '?',
-}
+};
 
 const colorMap = {
   warning: 'bg-yellow-700 border-yellow-600 text-white',
@@ -36,42 +36,42 @@ const colorMap = {
   tip: 'bg-green-700 border-green-600 text-white',
   note: 'bg-blue-700 border-blue-600 text-white',
   question: 'bg-blue-700 border-blue-600 text-white',
-}
+};
 
 function remapType(type: AdmonitionType): AdmonitionType {
   if (typeof type !== 'string') {
-    return 'tip'
+    return 'tip';
   }
   if (['info', 'note'].includes(type)) {
-    return 'note'
+    return 'note';
   }
   if (['warning', 'important'].includes(type)) {
-    return 'warning'
+    return 'warning';
   }
   if (['error', 'danger', 'caution'].includes(type)) {
-    return 'caution'
+    return 'caution';
   }
   if (['tip', 'success'].includes(type)) {
-    return 'tip'
+    return 'tip';
   }
   if (type === 'question') {
-    return type
+    return type;
   }
-  return 'tip'
+  return 'tip';
 }
 
 export default class Admonition extends React.Component<AdmonitionProps> {
   static propTypes = {
     type: PropTypes.string,
     title: PropTypes.string,
-  }
+  };
 
   render() {
-    const { type, title } = this.props
+    const { type, title } = this.props;
 
-    const realType = remapType(type)
-    const colorDiv = colorMap[realType]
-    const iconData = emojisMap[realType]
+    const realType = remapType(type);
+    const colorDiv = colorMap[realType];
+    const iconData = emojisMap[realType];
 
     return (
       <div
@@ -102,6 +102,6 @@ export default class Admonition extends React.Component<AdmonitionProps> {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }

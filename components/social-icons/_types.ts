@@ -1,3 +1,3 @@
-import React from 'react'
+import React from 'react';
 
-export type IconProps = React.SVGProps<SVGSVGElement>
+export type IconProps = React.SVGProps<SVGSVGElement>;

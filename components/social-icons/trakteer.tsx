@@ -1,5 +1,5 @@
-import React from 'react'
-import { IconProps } from './_types'
+import React from 'react';
+import { IconProps } from './_types';
 
 export default function TrakteerIcon(props: IconProps) {
   return (
@@ -14,5 +14,5 @@ export default function TrakteerIcon(props: IconProps) {
         transform="translate(-0.18 -0.11)"
       />
     </svg>
-  )
+  );
 }

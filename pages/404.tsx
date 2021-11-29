@@ -1,10 +1,10 @@
-import Link from '@/components/Link'
-import { PageSeo } from '@/components/SEO'
+import Link from '@/components/Link';
+import { PageSeo } from '@/components/SEO';
 
-import { useIntl } from 'react-intl'
+import { useIntl } from 'react-intl';
 
 export default function FourZeroFour() {
-  const intl = useIntl()
+  const intl = useIntl();
 
   return (
     <>
@@ -28,5 +28,5 @@ export default function FourZeroFour() {
         </div>
       </div>
     </>
-  )
+  );
 }

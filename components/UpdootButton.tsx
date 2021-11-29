@@ -1,24 +1,24 @@
-import React from 'react'
-import Image from 'next/image'
-import PropType from 'prop-types'
-import { useIntl } from 'react-intl'
+import React from 'react';
+import Image from 'next/image';
+import PropType from 'prop-types';
+import { useIntl } from 'react-intl';
 
 interface UpdootTLProps {
   id: string;
-  sub?: {[key: string]: unknown};
+  sub?: { [key: string]: unknown };
 }
 
 function Translated(props: UpdootTLProps) {
-  const intl = useIntl()
+  const intl = useIntl();
 
   const translated = intl.formatMessage(
     {
       id: props.id,
     },
     props.sub
-  )
+  );
 
-  return <span>{translated}</span>
+  return <span>{translated}</span>;
 }
 
 interface UpdootButtonProps {
@@ -39,23 +39,23 @@ class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState>
   static propTypes = {
     namespace: PropType.string.isRequired,
     id: PropType.string.isRequired,
-  }
+  };
 
   constructor(props: UpdootButtonProps) {
-    super(props)
-    this.API_KEY = 'b5ab6e16ddf58617e2c7dea3abe6b8'
-    this.requestAPI = this.requestAPI.bind(this)
-    this.updoot = this.updoot.bind(this)
+    super(props);
+    this.API_KEY = 'b5ab6e16ddf58617e2c7dea3abe6b8';
+    this.requestAPI = this.requestAPI.bind(this);
+    this.updoot = this.updoot.bind(this);
     this.state = {
       loading: true,
       total_score: 0,
       user_vote_direction: 0,
       total_votes: 0,
-    }
+    };
   }
 
   async requestAPI(method, path = '', data = null) {
-    const { id, namespace } = this.props
+    const { id, namespace } = this.props;
     const fetched = await fetch(
       `https://api.lyket.dev/v1/updown-buttons/${namespace}/${id}${path}`,
       {
@@ -66,65 +66,65 @@ class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState>
           Authorization: `Bearer ${this.API_KEY}`,
         },
       }
-    )
+    );
 
-    return await fetched.json()
+    return await fetched.json();
   }
 
   async componentDidMount() {
-    const fetched = await this.requestAPI('GET')
+    const fetched = await this.requestAPI('GET');
 
     this.setState({
       total_score: fetched.data.attributes.total_score,
       user_vote_direction: fetched.data.attributes.user_vote_direction,
       total_votes: fetched.data.attributes.total_votes,
       loading: false,
-    })
+    });
   }
 
-  async updoot(type: "UP" | "DOWN") {
+  async updoot(type: 'UP' | 'DOWN') {
     if (this.state.loading) {
-      return
+      return;
     }
-    this.setState({ loading: true })
+    this.setState({ loading: true });
     if (type === 'UP') {
       // Upvote
-      const fetched = await this.requestAPI('PUT', '/press-up')
+      const fetched = await this.requestAPI('PUT', '/press-up');
       this.setState({
         total_score: fetched.data.attributes.total_score,
         user_vote_direction: fetched.data.attributes.user_vote_direction,
         total_votes: fetched.data.attributes.total_votes,
-      })
+      });
     } else if (type === 'DOWN') {
       // Downvote
-      const fetched = await this.requestAPI('PUT', '/press-down')
+      const fetched = await this.requestAPI('PUT', '/press-down');
       this.setState({
         total_score: fetched.data.attributes.total_score,
         user_vote_direction: fetched.data.attributes.user_vote_direction,
         total_votes: fetched.data.attributes.total_votes,
-      })
+      });
     }
-    this.setState({ loading: false })
+    this.setState({ loading: false });
   }
 
   render() {
-    const { loading, total_score, total_votes, user_vote_direction } = this.state
-    let positive_vote = 0
-    let negative_vote = 0
+    const { loading, total_score, total_votes, user_vote_direction } = this.state;
+    let positive_vote = 0;
+    let negative_vote = 0;
     if (total_score < 0) {
-      negative_vote = Math.abs(total_score)
-      positive_vote = total_votes + total_score
+      negative_vote = Math.abs(total_score);
+      positive_vote = total_votes + total_score;
     } else {
-      negative_vote = total_score - total_votes
-      positive_vote = total_score
+      negative_vote = total_score - total_votes;
+      positive_vote = total_score;
     }
 
-    const pos_vote_txt = positive_vote > 1 ? 'voteTextMultiple' : 'voteTextSingle'
-    const neg_vote_txt = positive_vote > 1 ? 'voteTextMultiple' : 'voteTextSingle'
+    const pos_vote_txt = positive_vote > 1 ? 'voteTextMultiple' : 'voteTextSingle';
+    const neg_vote_txt = positive_vote > 1 ? 'voteTextMultiple' : 'voteTextSingle';
 
     const selectedStyles = {
       backgroundColor: '#bb7d0d66',
-    }
+    };
     return (
       <div className="flex flex-col justify-center">
         <div className="text-center mb-2">
@@ -169,8 +169,8 @@ class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState>
           </button>
         </div>
       </div>
-    )
+    );
   }
 }
 
-export default UpdootButton
+export default UpdootButton;
