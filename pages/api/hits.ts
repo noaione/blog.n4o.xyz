@@ -22,12 +22,13 @@ export default async function ViewCountAPI(req: NextApiRequest, res: NextApiResp
     if (pageView === -1) {
       res.json({ hits: 0 });
     } else {
-      res.json({ hits: apiRes[pageView].pageviews });
+      const views = apiRes[pageView].count ?? apiRes[pageView].pageviews;
+      res.json({ hits: views });
     }
   } else {
     let totalViews = 0;
     apiRes.forEach((e) => {
-      totalViews += e.pageviews;
+      totalViews += e.count ?? e.pageviews;
     });
     res.json({ hits: totalViews });
   }

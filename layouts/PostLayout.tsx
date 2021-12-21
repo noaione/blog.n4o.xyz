@@ -280,7 +280,7 @@ export default function PostLayout({ children, frontMatter, next, prev }: PostLa
   useEffect(() => {
     requestHits(router)
       .then((hits) => {
-        setViewState(hits.hits);
+        setViewState(hits.hits ?? 0);
       })
       .catch((a) => {
         console.error(a);
