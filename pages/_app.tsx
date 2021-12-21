@@ -1,5 +1,5 @@
-import '../css/tailwind.css';
 import 'preact/debug';
+import '../css/tailwind.css';
 
 import ProgressBar from '@badrap/bar-of-progress';
 import Head from 'next/head';
