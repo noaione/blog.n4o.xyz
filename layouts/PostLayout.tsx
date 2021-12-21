@@ -257,10 +257,24 @@ export default function PostLayout({ children, frontMatter, next, prev }: PostLa
     const url = new URLSearchParams();
     url.append('slug', slug);
     console.info(`[PageHit] ${slug}`);
-    const response = await fetch(`/api/hits?${url.toString()}`);
-    console.info(`[PageHit] ${slug} ${response.status}`);
-    const jsonResponse = await response.json();
-    return jsonResponse;
+    let response: Response = null;
+    try {
+      response = await fetch(`/api/hits?${url.toString()}`);
+      console.info(`[PageHit] ${slug} ${response.status}`);
+    } catch (e) {
+      console.error(`[PageHit] ${slug} Unable to get hits!`, e);
+      return { hits: 0 };
+    }
+    try {
+      if (response === null) {
+        return { hits: 0 };
+      }
+      const jsonResponse = await response.json();
+      return jsonResponse;
+    } catch (e) {
+      console.error(`[PageHit] ${slug} Unable to parse hits!`, e);
+      return { hits: 0 };
+    }
   }
 
   useEffect(() => {
