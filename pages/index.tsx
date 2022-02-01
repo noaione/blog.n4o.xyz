@@ -5,6 +5,7 @@ import Tag from '@/components/Tag';
 import SpotifyHubSkeleton from '@/components/SpotifyHubSkeleton';
 import TimerLoader from '@/components/TimerLoader';
 import siteMetadata from '@/data/siteMetadata.json';
+import type { SpotifyNowResult, SpotifyNowResultData } from '@/lib/spotify';
 
 import { unified } from 'unified';
 import markdown from 'remark-parse';
@@ -45,8 +46,7 @@ interface SpotifyLocalesString {
 }
 
 interface SpotifyNowState {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: SpotifyNowResult;
   loading: boolean;
   firstTime: boolean;
   error: boolean;
@@ -64,6 +64,7 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
     super(props);
     this.refreshData = this.refreshData.bind(this);
     this.state = {
+      // @ts-ignore
       data: {},
       loading: true,
       firstTime: true,
@@ -111,7 +112,7 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
     if (error) {
       return null;
     }
-    const mainData = data.data || {};
+    const mainData = (data.data || {}) as SpotifyNowResultData;
     const { playing } = data;
 
     return (
@@ -139,7 +140,7 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
               {playing ? (
                 <div className="flex flex-col items-center md:flex-row md:items-start gap-4">
                   <div className="relative">
-                    <a href={mainData.url} rel="noopener noreferrer" target="_blank">
+                    <a href={mainData.album.url} rel="noopener noreferrer" target="_blank">
                       <div
                         className="absolute top-0 bottom-0 right-0 left-0 rounded-lg border-4 duration-[10s]"
                         style={{
@@ -149,7 +150,7 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
                       />
                       <img
                         className="w-96 rounded-lg !shadow-lg"
-                        src={mainData.album.url}
+                        src={mainData.album.cover}
                         alt={`${mainData.album.name} Album Art`}
                       />
                     </a>
@@ -165,7 +166,31 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
                       </Link>
                     </div>
                     <div className="font-semibold text-gray-600 dark:text-gray-500 text-xl md:text-2xl">
-                      {mainData.album.name} {localesData.by} {mainData.artist.join(', ')}
+                      <span className="mr-1">
+                        <Link
+                          href={mainData.album.url}
+                          locale={currentLocale}
+                          className="hover:underline"
+                        >
+                          {mainData.album.name}
+                        </Link>
+                      </span>
+                      <span className="mr-1">{localesData.by}</span>
+                      {mainData.artist.map((artist, index) => {
+                        return (
+                          <span key={'spartist:' + artist.id}>
+                            <Link
+                              href={artist.url}
+                              locale={currentLocale}
+                              className="hover:underline"
+                            >
+                              {artist.name}
+                            </Link>
+                            {index !== mainData.artist.length - 1 && <span>, </span>}
+                          </span>
+                        );
+                      })}
+                      {/* {mainData.album.name} {localesData.by} {mainData.artist.join(', ')} */}
                     </div>
                     <div className="font-light text-gray-400 dark:text-gray-500">
                       {DateTime.fromSQL(mainData.album.date)
@@ -317,7 +342,7 @@ export default function Home({ posts }) {
                             )}
                             <Link
                               href={`/posts/${slug}`}
-                              className="text-gray-900 dark:text-gray-100"
+                              className="text-gray-900 dark:text-gray-100 hover:underline"
                               locale={intl.locale}
                             >
                               {draft && (

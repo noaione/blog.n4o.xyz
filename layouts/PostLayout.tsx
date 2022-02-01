@@ -13,6 +13,7 @@ import EyeIcon from '@heroicons/react/solid/EyeIcon';
 
 import { useIntl } from 'react-intl';
 import { NextRouter, useRouter } from 'next/router';
+import type { SpotifyNowResult } from '@/lib/spotify';
 
 const editUrl = (fileName: string, locale = 'en') =>
   `${siteMetadata.siteRepo}/blob/master/data/blog/${locale}/${fileName}`;
@@ -34,7 +35,7 @@ interface SpotifyLocalesString {
 
 interface SpotifyNowState {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data: any;
+  data: SpotifyNowResult;
   loading: boolean;
   firstTime: boolean;
   error: boolean;
@@ -52,6 +53,7 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
     super(props);
     this.refreshData = this.refreshData.bind(this);
     this.state = {
+      // @ts-ignore
       data: {},
       loading: true,
       firstTime: true,
@@ -127,7 +129,7 @@ class SpotifyNow extends React.Component<SpotifyNowProps, SpotifyNowState> {
                         className="text-blue-500 hover:text-blue-600 dark:hover:text-blue-400"
                         locale={currentLocale}
                       >
-                        {data.data.artist.join(', ')} – {data.data.title}
+                        {data.data.artist.map((r) => r.name).join(', ')} - {data.data.title}
                       </Link>
                     ) : (
                       <p className="text-gray-800 dark:text-gray-200 font-medium">
