@@ -1,3 +1,6 @@
+export type Nullable<T> = T | null;
+export type NoneType = null | undefined;
+
 export const kebabCase = (str: string) =>
   str &&
   str
@@ -5,7 +8,7 @@ export const kebabCase = (str: string) =>
     .map((x) => x.toLowerCase())
     .join('-');
 
-export function isNone(data: unknown): data is null | undefined {
+export function isNone(data: unknown): data is NoneType {
   return data === null || typeof data === 'undefined';
 }
 

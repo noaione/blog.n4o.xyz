@@ -61,10 +61,10 @@ export default function About() {
               {intl.formatMessage({ id: 'tagLine' })}
             </div>
             <div className="flex pt-6 space-x-3">
-              <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} />
-              <SocialIcon kind="github" href={siteMetadata.github} />
-              <SocialIcon kind="twitter" href={siteMetadata.twitter} />
-              <SocialIcon kind="trakteer" href={siteMetadata.trakteer} />
+              <SocialIcon kind="mail" href={`mailto:${siteMetadata?.email}`} />
+              <SocialIcon kind="github" href={siteMetadata?.github} />
+              <SocialIcon kind="twitter" href={siteMetadata?.twitter} />
+              <SocialIcon kind="donate" href={siteMetadata?.donate} />
             </div>
           </div>
           <div className="pt-8 pb-8 prose dark:prose-dark max-w-none xl:col-span-2">

@@ -1,9 +1,11 @@
+import Donate from './donate';
 import Mail from './mail';
 import Github from './github';
 import Facebook from './facebook';
 import Twitter from './twitter';
 import Trakteer from './trakteer';
 import { IconProps } from './_types';
+import { isNone, Nullable } from '@/lib/utils';
 
 // Icons taken from: https://simpleicons.org/
 
@@ -13,17 +15,18 @@ const Components = {
   facebook: Facebook,
   twitter: Twitter,
   trakteer: Trakteer,
+  donate: Donate,
 };
 
 interface SocialIconProps {
   kind: keyof typeof Components;
-  href: string;
+  href?: Nullable<string>;
   size?: number;
   iconProps?: IconProps;
 }
 
 const SocialIcon = ({ kind, href, size = 8, iconProps = {} }: SocialIconProps) => {
-  if (!href) return null;
+  if (isNone(href)) return null;
 
   const SocialSvg = Components[kind];
 
