@@ -31,6 +31,7 @@ interface UpdootButtonState {
   total_score: number;
   user_vote_direction: number;
   total_votes: number;
+  failure: boolean;
 }
 
 class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState> {
@@ -51,6 +52,7 @@ class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState>
       total_score: 0,
       user_vote_direction: 0,
       total_votes: 0,
+      failure: false,
     };
   }
 
@@ -74,12 +76,19 @@ class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState>
   async componentDidMount() {
     const fetched = await this.requestAPI('GET');
 
-    this.setState({
-      total_score: fetched.data.attributes.total_score,
-      user_vote_direction: fetched.data.attributes.user_vote_direction,
-      total_votes: fetched.data.attributes.total_votes,
-      loading: false,
-    });
+    let updootData;
+    try {
+      updootData = {
+        total_score: fetched.data.attributes.total_score,
+        user_vote_direction: fetched.data.attributes.user_vote_direction,
+        total_votes: fetched.data.attributes.total_votes,
+        loading: false,
+      };
+    } catch (e) {
+      updootData = { failure: true };
+    }
+
+    this.setState(updootData);
   }
 
   async updoot(type: 'UP' | 'DOWN') {
@@ -108,7 +117,10 @@ class UpdootButton extends React.Component<UpdootButtonProps, UpdootButtonState>
   }
 
   render() {
-    const { loading, total_score, total_votes, user_vote_direction } = this.state;
+    const { loading, total_score, total_votes, user_vote_direction, failure } = this.state;
+    if (loading || failure) {
+      return null;
+    }
     let positive_vote = 0;
     let negative_vote = 0;
     if (total_score < 0) {
