@@ -8,10 +8,11 @@ import readingTime from 'reading-time';
 
 import { FrontMatterData } from '@/components/SEO';
 
-import ImageToJSX from './img-to-jsx';
-import DisEmoteRemark from './disemote';
-import RemarkCodeTitles from './remark-code-titles';
-import CustomHeading from './custom-heading';
+import ImageToJSX from './mdplugins/img-to-jsx';
+import DisEmoteRemark from './mdplugins/disemote';
+import RemarkCodeTitles from './mdplugins/remark-code-titles';
+import CustomHeading from './mdplugins/custom-heading';
+import RehypeTwemojify from './mdplugins/rehype-twemoji';
 
 // import everything
 import remarkSlug from 'remark-slug';
@@ -22,7 +23,6 @@ import remarkFootnotes from 'remark-footnotes';
 import remarkMath from 'remark-math';
 
 import rehypeKatex from 'rehype-katex';
-import rehypeTwemojify from 'rehype-twemojify';
 import rehypePrism from 'rehype-prism-plus';
 
 const root = process.cwd();
@@ -240,7 +240,7 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
       ]),
         (options.rehypePlugins = [
           ...(options.rehypePlugins || []),
-          [rehypeTwemojify, { className: 'twemoji-inline' }],
+          [RehypeTwemojify, { className: 'twemoji-inline', twemoji: { size: 'svg' } }],
           rehypeKatex,
           [rehypePrism, { ignoreMissing: true, showLineNumbers: false }],
           () => {

@@ -10,7 +10,7 @@ import html from 'remark-html';
 import { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { unified } from 'unified';
-import { DisEmoteSimpleTransformer } from '@/lib/disemote';
+import { DisEmoteSimpleTransformer } from '@/lib/mdplugins/disemote';
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   year: 'numeric',

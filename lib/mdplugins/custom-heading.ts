@@ -4,7 +4,7 @@
  */
 
 import { Node, Parent, visit } from 'unist-util-visit';
-import { kebabCase } from './utils';
+import { kebabCase } from '../utils';
 
 export default function CustomHeadingID() {
   function transformer(tree: Node) {
