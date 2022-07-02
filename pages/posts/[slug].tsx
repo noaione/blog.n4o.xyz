@@ -41,7 +41,7 @@ export async function getStaticProps({
   const next = allPosts[postIndex - 1] || null;
   const post = await getFileBySlug(allPosts[postIndex]);
 
-  return { props: { post, prev, next } };
+  return { props: { post, prev, next, enableReadingBar: true } };
 }
 
 interface BlogPostData {
