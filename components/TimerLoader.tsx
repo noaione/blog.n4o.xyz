@@ -1,10 +1,18 @@
 import { durationToText } from '@/lib/utils';
 import React from 'react';
 
+export interface TimerLoaderCallback {
+  pause: () => void;
+  resume: () => void;
+  stop: () => void;
+  start: () => void;
+  set: (duration: number) => void;
+}
 interface TimerProps {
   current: number;
   total: number;
   onFinished?: () => void;
+  onMounted?: (callback: TimerLoaderCallback) => void;
 }
 
 interface TimerState {
@@ -16,13 +24,21 @@ export default class TimerLoader extends React.Component<TimerProps, TimerState>
 
   constructor(props: TimerProps) {
     super(props);
+    this.createTimerState = this.createTimerState.bind(this);
+    this.stopTimerState = this.stopTimerState.bind(this);
     const { current } = props;
     this.state = {
       current,
     };
   }
 
-  componentDidMount() {
+  stopTimerState() {
+    if (this.timerState) {
+      clearInterval(this.timerState);
+    }
+  }
+
+  createTimerState() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const outerThis = this;
     this.timerState = setInterval(() => {
@@ -42,10 +58,33 @@ export default class TimerLoader extends React.Component<TimerProps, TimerState>
     }, 1000);
   }
 
-  componentWillUnmount() {
-    if (this.timerState) {
-      clearInterval(this.timerState);
+  componentDidMount() {
+    if (this.props.onMounted) {
+      this.props.onMounted({
+        resume: () => {
+          this.createTimerState();
+        },
+        stop: () => {
+          this.stopTimerState();
+          this.setState({ current: this.props.total });
+        },
+        pause: () => {
+          this.stopTimerState();
+        },
+        start: () => {
+          this.setState({ current: 0 });
+          this.createTimerState();
+        },
+        set: (duration: number) => {
+          this.setState({ current: duration });
+        },
+      });
     }
+    this.createTimerState();
+  }
+
+  componentWillUnmount() {
+    this.stopTimerState();
   }
 
   render() {

@@ -314,3 +314,17 @@ code.hljs::-webkit-scrollbar {
 }
 
 @tailwind utilities;
+
+.spotify-wave {
+  @apply border-4;
+  animation: spotify-wave-ani 5s linear alternate infinite;
+}
+
+@keyframes spotify-wave-ani {
+  from {
+    border-color: #4c98af;
+  }
+  to {
+    border-color: #009688;
+  }
+}
