@@ -290,7 +290,7 @@ export default class SpotifyNowPlaying extends React.Component<NowPlayingProps, 
           <h2 className="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-10 md:text-4xl md:leading-14 mb-1">
             Spotify
           </h2>
-          {!loading && playing && (
+          {playing && (
             <div className="!-mt-0.5 flex flex-row items-center gap-2">
               <img
                 className="w-6 h-6"
