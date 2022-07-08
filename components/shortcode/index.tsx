@@ -1,4 +1,5 @@
 import Admonition from './Admonition';
+import Asciinema from './Asciinema';
 import Gist from './gist';
 import GitHubCode from './ghcode';
 import DEmote from './DiscordEmote';
@@ -9,6 +10,7 @@ import Video from './VideoJS';
 
 const ShortCodeComponents = {
   Admonition,
+  Asciinema,
   DEmote,
   Gist,
   GitHubCode,

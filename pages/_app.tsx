@@ -1,5 +1,6 @@
 import 'preact/debug';
 import '../css/tailwind.css';
+import 'asciinema-player/dist/bundle/asciinema-player.css';
 
 import ProgressBar from '@badrap/bar-of-progress';
 import ReadingBar from '@/components/ReadingBar';

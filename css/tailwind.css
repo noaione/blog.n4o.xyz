@@ -328,3 +328,7 @@ code.hljs::-webkit-scrollbar {
     border-color: #009688;
   }
 }
+
+.asciinema-player .start-prompt .play-button {
+  left: 4rem !important;
+}
