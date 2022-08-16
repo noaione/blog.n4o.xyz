@@ -35,7 +35,6 @@ export default function BlogApp({ Component, pageProps, router }) {
   const { locale, defaultLocale } = router;
   const messages = languages[locale];
   const enableReadingBar = mapBoolean(pageProps.enableReadingBar);
-  console.info(`[Blog] Reading bar enabled? ${enableReadingBar}`);
 
   return (
     <IntlProvider messages={messages} locale={locale} defaultFormats={defaultLocale}>
