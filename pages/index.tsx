@@ -13,6 +13,7 @@ import html from 'remark-html';
 import React from 'react';
 import { useIntl } from 'react-intl';
 import { GetStaticPropsContext } from 'next';
+import LiteralIcon from '@/components/Literal/Icon';
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   year: 'numeric',
@@ -212,7 +213,8 @@ export default function Home({ posts }) {
         <h2 className="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-10 md:text-4xl md:leading-14 mb-1">
           {intl.formatMessage(descriptors.literalReading)}
         </h2>
-        <div className="flex flex-row" style={{ paddingBottom: '1rem' }}>
+        <div className="flex flex-row align-middle" style={{ paddingBottom: '1rem' }}>
+          <LiteralIcon className="h-5 w-5 mr-1 select-none" />
           <p className="mr-1">{intl.formatMessage(descriptors.literalOutgoing)}</p>
           <a
             href="https://literal.club/noaione"

@@ -101,15 +101,15 @@ export default class LiteralClubEmbed extends React.Component<LiteralClubProps, 
 
     return (
       <Carousel
-        swipeable
-        draggable
+        draggable={false}
         showDots={false}
         responsive={responsive}
-        infinite
-        autoPlay
         autoPlaySpeed={5000}
         keyBoardControl={false}
         partialVisbile
+        swipeable
+        autoPlay
+        infinite
       >
         {books.map((book) => {
           return <LiteralBook key={book.id} book={book} handle={handle} />;
