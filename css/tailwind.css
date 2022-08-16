@@ -332,3 +332,43 @@ code.hljs::-webkit-scrollbar {
 .asciinema-player .start-prompt .play-button {
   left: 4rem !important;
 }
+
+.literal-separator {
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 360px) {
+  .literal-separator {
+    padding-bottom: 8rem;
+  }
+}
+
+@media (min-width: 420px) {
+  .literal-separator {
+    padding-bottom: 12rem;
+  }
+}
+
+@media (min-width: 480px) {
+  .literal-separator {
+    padding-bottom: 14rem;
+  }
+}
+
+@media (min-width: 540px) {
+  .literal-separator {
+    padding-bottom: 17rem;
+  }
+}
+
+@media (min-width: 610px) {
+  .literal-separator {
+    padding-bottom: 20rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .literal-separator {
+    padding-bottom: 14rem;
+  }
+}

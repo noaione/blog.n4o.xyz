@@ -15,19 +15,22 @@ interface LiteralClubState {
 
 const responsive = {
   desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+    breakpoint: { max: 3000, min: 1280 },
     items: 4,
     slidesToSlide: 4, // optional, default to 1.
+    partialVisibilityGutter: 40,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1280, min: 768 },
     items: 3,
     slidesToSlide: 3, // optional, default to 1.
+    partialVisibilityGutter: 30,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 768, min: 0 },
     items: 2,
     slidesToSlide: 2, // optional, default to 1.
+    partialVisibilityGutter: 30,
   },
 };
 
@@ -38,7 +41,7 @@ function LiteralCover(props: { url: string; title: string; authors: string }) {
     return (
       <div className="flex flex-col p-4 bg-gray-200 dark:bg-gray-600 text-gray-900 dark:text-gray-100 w-full rounded-md">
         <div className="text-base font-semibold">{title}</div>
-        <div style={{ paddingBottom: '17rem' }}></div>
+        <div className="literal-separator"></div>
         <div className="text-sm font-medium" style={{ textAlign: 'right' }}>
           {authors}
         </div>
@@ -106,6 +109,7 @@ export default class LiteralClubEmbed extends React.Component<LiteralClubProps, 
         autoPlay
         autoPlaySpeed={5000}
         keyBoardControl={false}
+        partialVisbile
       >
         {books.map((book) => {
           return <LiteralBook key={book.id} book={book} handle={handle} />;
