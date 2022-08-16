@@ -2,8 +2,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  mode: 'jit',
-  purge: [
+  content: [
     './pages/**/*.tsx',
     './pages/**/*.ts',
     './components/**/*.tsx',
@@ -29,7 +28,7 @@ module.exports = {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        gray: colors.trueGray,
+        gray: colors.neutral,
         blue: colors.sky,
         code: {
           green: '#b5f4a5',

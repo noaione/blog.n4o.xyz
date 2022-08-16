@@ -25,7 +25,6 @@ module.exports = withBundleAnalyzer({
     domains: ['cdn.discordapp.com', 'p.ihateani.me'],
   },
   productionBrowserSourceMaps: true,
-  swcLoader: true,
   swcMinify: true,
   webpack: (config, { dev, isServer }) => {
     config.module.rules.push({
