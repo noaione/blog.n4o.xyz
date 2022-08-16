@@ -3,6 +3,7 @@ import Link from '@/components/Link';
 import { PageSeo } from '@/components/SEO';
 import Tag from '@/components/Tag';
 import SpotifyNowPlaying from '@/components/SpotifyNowPlaying';
+import LiteralClubEmbed from '@/components/Literal';
 import siteMetadata from '@/data/siteMetadata.json';
 
 import { unified } from 'unified';
@@ -79,6 +80,15 @@ export default function Home({ posts }) {
     },
     spotifyAlbumBy: {
       id: 'spotifyAlbumBy',
+    },
+    literalReading: {
+      id: 'literalReading',
+    },
+    literalNoBooks: {
+      id: 'literalNoBooks',
+    },
+    literalOutgoing: {
+      id: 'literalOutgoing',
     },
   };
 
@@ -198,6 +208,21 @@ export default function Home({ posts }) {
         </div>
       )}
       <SpotifyNowPlaying currentLocale={intl.locale} localesData={spotifyDataLocales} />
+      <div className="flex flex-col w-full mt-6" style={{ paddingTop: '1rem' }}>
+        <h2 className="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-10 md:text-4xl md:leading-14 mb-1">
+          {intl.formatMessage(descriptors.literalReading)}
+        </h2>
+        <div className="flex flex-row" style={{ paddingBottom: '1rem' }}>
+          <p className="mr-1">{intl.formatMessage(descriptors.literalOutgoing)}</p>
+          <a
+            href="https://literal.club/noaione"
+            className="text-blue-500 hover:text-blue-600 hover:underline transition"
+          >
+            Literal.club
+          </a>
+        </div>
+        <LiteralClubEmbed handle="noaione" readingState="IS_READING" />
+      </div>
     </>
   );
 }

@@ -53,5 +53,9 @@
 
   "voteInfo": "Bagaimana menurutmu postingannya?",
   "voteTextSingle": "{count} vote",
-  "voteTextMultiple": "{count} votes"
+  "voteTextMultiple": "{count} votes",
+
+  "literalReading": "Sedang Membaca",
+  "literalNoBooks": "Tidak ada buku yang sedang dibaca",
+  "literalOutgoing": "Lihat di"
 }

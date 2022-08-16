@@ -53,5 +53,9 @@
 
   "voteInfo": "What do you think?",
   "voteTextSingle": "{count} vote",
-  "voteTextMultiple": "{count} votes"
+  "voteTextMultiple": "{count} votes",
+
+  "literalReading": "Currently Reading",
+  "literalNoBooks": "No books being read right now",
+  "literalOutgoing": "View at"
 }
