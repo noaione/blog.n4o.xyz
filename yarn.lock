@@ -1242,12 +1242,12 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
-"@kachkaev/react-inline-js@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@kachkaev/react-inline-js/-/react-inline-js-0.2.0.tgz#e48245e39e15c3cf1f1ef0e184f8dc2b5abfc557"
-  integrity sha512-4Lr32ExW8C1kHKECCaYxsOk2fsajBRkT7EMV5+/GxaK/tpFWePYfxIXaIvQz/OIOebBMLaa0gN06VwbPsd9hfg==
+"@kachkaev/react-inline-js@0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@kachkaev/react-inline-js/-/react-inline-js-0.4.0.tgz#92a93e797ef4797bcd873b49479c3e9d69c082e1"
+  integrity sha512-n1z5KbfvCdSfo1P8/4LbxkHBJzK+aCnIIhE5lqlU7WYHUwOO8dWaCbyly0cLlMGrRW06yijVIHLWOH2Q2RcUsQ==
   dependencies:
-    mem "^8.0.0"
+    mem "^9.0.1"
     terser "^4.8.0"
 
 "@next/bundle-analyzer@12.0.1":
@@ -4441,13 +4441,13 @@ mdx-bundler@8.0.0:
     uuid "^8.3.2"
     xdm "^3.3.0"
 
-mem@^8.0.0:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/mem/-/mem-8.1.1.tgz#cf118b357c65ab7b7e0817bdf00c8062297c0122"
-  integrity sha512-qFCFUDs7U3b8mBDPyz5EToEKoAkgCzqquIgi9nkkR9bixxOVOre+09lbuH7+9Kn2NFpm56M3GUWVbU2hQgdACA==
+mem@^9.0.1:
+  version "9.0.2"
+  resolved "https://registry.yarnpkg.com/mem/-/mem-9.0.2.tgz#bbc2d40be045afe30749681e8f5d554cee0c0354"
+  integrity sha512-F2t4YIv9XQUBHt6AOJ0y7lSmP1+cY7Fm1DRh9GClTGzKST7UWLMx6ly9WZdLH/G/ppM5RL4MlQfRT71ri9t19A==
   dependencies:
     map-age-cleaner "^0.1.3"
-    mimic-fn "^3.1.0"
+    mimic-fn "^4.0.0"
 
 merge2@^1.3.0, merge2@^1.4.1:
   version "1.4.1"
@@ -4878,10 +4878,10 @@ mime@^2.3.1:
   resolved "https://registry.yarnpkg.com/mime/-/mime-2.5.2.tgz#6e3dc6cc2b9510643830e5f19d5cb753da5eeabe"
   integrity sha512-tqkh47FzKeCPD2PUiPB6pkbMzsCasjxAfC62/Wap5qrUWcb+sFasXUC5I3gYM5iBM8v/Qpn4UK0x+j0iHyFPDg==
 
-mimic-fn@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-3.1.0.tgz#65755145bbf3e36954b949c16450427451d5ca74"
-  integrity sha512-Ysbi9uYW9hFyfrThdDEQuykN4Ey6BuwPD2kpI5ES/nFTDn/98yxYNLZJcgUAKPT/mcrLLKaGzJR9YVxJrIdASQ==
+mimic-fn@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-4.0.0.tgz#60a90550d5cb0b239cca65d893b1a53b29871ecc"
+  integrity sha512-vqiC06CuhBTUdZH+RYl8sFrL096vA45Ok5ISO6sE/Mr1jRbGH4Csnhi8f3wKVl7x8mO4Au7Ir9D3Oyv1VYMFJw==
 
 mimic-response@^1.0.0:
   version "1.0.1"

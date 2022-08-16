@@ -15,7 +15,7 @@
   "dependencies": {
     "@badrap/bar-of-progress": "0.1.2",
     "@heroicons/react": "1.0.5",
-    "@kachkaev/react-inline-js": "0.2.0",
+    "@kachkaev/react-inline-js": "0.4.0",
     "asciinema-player": "^3.0.1",
     "axios": "^0.27.2",
     "emoji-regex": "^10.1.0",
