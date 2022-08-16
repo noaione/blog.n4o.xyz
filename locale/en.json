@@ -57,5 +57,8 @@
 
   "literalReading": "Currently Reading",
   "literalNoBooks": "No books being read right now",
-  "literalOutgoing": "View at"
+  "literalOutgoing": "View at",
+
+  "underConstruct": "Under Construction",
+  "underConstructSub": "This post is still being written"
 }

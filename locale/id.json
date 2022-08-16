@@ -57,5 +57,8 @@
 
   "literalReading": "Sedang Membaca",
   "literalNoBooks": "Tidak ada buku yang sedang dibaca",
-  "literalOutgoing": "Lihat di"
+  "literalOutgoing": "Lihat di",
+
+  "underConstruct": "Sedang Dibangun",
+  "underConstructSub": "Postingan ini sedang ditulis"
 }

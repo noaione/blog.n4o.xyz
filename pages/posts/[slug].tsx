@@ -6,6 +6,7 @@ import { FrontMatterData } from '@/components/SEO';
 import { useEffect, useState } from 'react';
 // import { useRouter } from 'next/router'
 import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
+import { useIntl } from 'react-intl';
 
 export async function getStaticPaths({ locales, defaultLocale }: GetStaticPathsContext) {
   const { getFiles, formatSlug } = await import('@/lib/mdx');
@@ -57,6 +58,7 @@ interface BlogsPosts {
 
 export default function Blog({ post, prev, next }: BlogsPosts) {
   const [reportedView, setReported] = useState(false);
+  const intl = useIntl();
   // const router = useRouter()
   const { mdxSource, frontMatter } = post;
   // let fullSlug = router.asPath
@@ -100,12 +102,12 @@ export default function Blog({ post, prev, next }: BlogsPosts) {
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <div className="text-center" style={{ marginTop: '1.5rem', marginBottom: '1.5rem' }}>
             <PageTitle>
-              Under Construction{' '}
+              {intl.formatMessage({ id: 'underConstruct' })}{' '}
               <span role="img" aria-label="roadwork sign">
                 🚧
               </span>
             </PageTitle>
-            <p className="text-gray-400 mt-2">This post is still under writing</p>
+            <p className="text-gray-400 mt-2">{intl.formatMessage({ id: 'underConstructSub' })}</p>
           </div>
           <PostLayout frontMatter={frontMatter} prev={prev} next={next}>
             <MDXRenderer mdxSource={mdxSource} />
