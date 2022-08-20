@@ -208,7 +208,7 @@ export default function Home({ posts }) {
           </Link>
         </div>
       )}
-      <SpotifyNowPlaying currentLocale={intl.locale} localesData={spotifyDataLocales} />
+      {/* <SpotifyNowPlaying currentLocale={intl.locale} localesData={spotifyDataLocales} /> */}
       <div className="flex flex-col w-full mt-6" style={{ paddingTop: '1rem' }}>
         <h2 className="text-xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-2xl sm:leading-10 md:text-4xl md:leading-14 mb-1">
           {intl.formatMessage(descriptors.literalReading)}
