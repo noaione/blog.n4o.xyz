@@ -15,6 +15,10 @@ export interface ProjectCardsProps {
 const Card = ({ title, description, imgSrc, href }: ProjectCardsProps) => {
   const intl = useIntl();
 
+  if (typeof description !== 'string') {
+    description = description[intl.locale] || description[intl.defaultLocale];
+  }
+
   return (
     <div className="p-4 md:w-1/2 md" style={{ maxWidth: '544px' }}>
       <div className="h-full border-2 border-gray-200 border-opacity-60 dark:border-gray-700 rounded-md overflow-hidden">

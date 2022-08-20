@@ -11,12 +11,9 @@ interface UpdootTLProps {
 function Translated(props: UpdootTLProps) {
   const intl = useIntl();
 
-  const translated = intl.formatMessage(
-    {
-      id: props.id,
-    },
-    props.sub
-  );
+  const translated = intl.formatMessage({
+    id: props.id,
+  });
 
   return <span>{translated}</span>;
 }

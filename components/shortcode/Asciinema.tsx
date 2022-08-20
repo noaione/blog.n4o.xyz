@@ -21,7 +21,9 @@ interface AsciinemaPlayerProps extends AsciinemaOptions {
   src: string;
 }
 
-export default class Asciinema extends React.Component<AsciinemaPlayerProps> {
+export default class Asciinema extends React.Component<
+  React.PropsWithChildren<AsciinemaPlayerProps>
+> {
   ref: React.RefObject<HTMLDivElement>;
   static defaultOptions: AsciinemaOptions = {
     preload: true,

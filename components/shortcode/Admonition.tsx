@@ -60,7 +60,7 @@ function remapType(type: AdmonitionType): AdmonitionType {
   return 'tip';
 }
 
-export default class Admonition extends React.Component<AdmonitionProps> {
+export default class Admonition extends React.Component<React.PropsWithChildren<AdmonitionProps>> {
   static propTypes = {
     type: PropTypes.string,
     title: PropTypes.string,
