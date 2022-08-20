@@ -2,6 +2,7 @@ import 'preact/debug';
 import '../css/tailwind.css';
 import 'asciinema-player/dist/bundle/asciinema-player.css';
 import 'react-multi-carousel/lib/styles.css';
+import 'react-medium-image-zoom/dist/styles.css';
 
 import ProgressBar from '@badrap/bar-of-progress';
 import ReadingBar from '@/components/ReadingBar';

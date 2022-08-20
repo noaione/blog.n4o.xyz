@@ -23,12 +23,12 @@ export default function Image(props: ImageProps) {
       isZoomed={isZoomed}
       onZoomChange={handleZoomChange}
       zoomMargin={50}
-      wrapStyle={{
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-      }}
+      // wrapStyle={{
+      //   marginLeft: 'auto',
+      //   marginRight: 'auto',
+      //   display: 'flex',
+      //   flexDirection: 'column',
+      // }}
     >
       <img
         src={props.src}

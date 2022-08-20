@@ -223,7 +223,7 @@ export default function Home({ posts }) {
             Literal
           </a>
         </div>
-        {/* <LiteralClubEmbed handle="noaione" readingState="IS_READING" /> */}
+        <LiteralClubEmbed handle="noaione" readingState="IS_READING" />
       </div>
     </>
   );

@@ -1,17 +1,16 @@
-const fs = require('fs');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 const localeData = require('./locale-data');
 
 // Monkeypatch preact package.json
-const preactConfig = __dirname + '/node_modules/preact/package.json';
-const preactPackage = JSON.parse(fs.readFileSync(preactConfig));
-preactPackage.exports = Object.assign({}, preactPackage.exports, {
-  './compat/jsx-runtime.js': preactPackage.exports['./jsx-runtime'],
-});
-console.info('Monkeypatching preact');
-fs.writeFileSync(preactConfig, JSON.stringify(preactPackage, null, 4));
+// const preactConfig = __dirname + '/node_modules/preact/package.json';
+// const preactPackage = JSON.parse(fs.readFileSync(preactConfig));
+// preactPackage.exports = Object.assign({}, preactPackage.exports, {
+//   './compat/jsx-runtime.js': preactPackage.exports['./jsx-runtime'],
+// });
+// console.info('Monkeypatching preact');
+// fs.writeFileSync(preactConfig, JSON.stringify(preactPackage, null, 4));
 const internationalizationConfig = Object.assign({}, localeData, { localeDetection: false });
 
 module.exports = withBundleAnalyzer({

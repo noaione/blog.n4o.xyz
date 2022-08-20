@@ -15,7 +15,6 @@ import CustomHeading from './mdplugins/custom-heading';
 import RehypeTwemojify from './mdplugins/rehype-twemoji';
 
 // import everything
-import remarkSlug from 'remark-slug';
 import remarkAutolinkHeadings from 'remark-autolink-headings';
 import remarkGemoji from 'remark-gemoji';
 import remarkGFM from 'remark-gfm';
@@ -24,6 +23,7 @@ import remarkMath from 'remark-math';
 
 import rehypeKatex from 'rehype-katex';
 import rehypePrism from 'rehype-prism-plus';
+import rehypeSlug from 'rehype-slug';
 
 const root = process.cwd();
 
@@ -213,10 +213,9 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
 
   const { code } = await bundleMDX({
     source: realContent,
-    xdmOptions(options) {
+    mdxOptions(options) {
       (options.remarkPlugins = [
         ...(options.remarkPlugins ?? []),
-        remarkSlug,
         CustomHeading,
         [
           remarkAutolinkHeadings,
@@ -240,6 +239,7 @@ export async function getFileBySlug(postData: FrontMatterExtended): Promise<RawB
       ]),
         (options.rehypePlugins = [
           ...(options.rehypePlugins || []),
+          rehypeSlug,
           [RehypeTwemojify, { className: 'twemoji-inline', twemoji: { size: 'svg' } }],
           rehypeKatex,
           [rehypePrism, { ignoreMissing: true, showLineNumbers: false }],
