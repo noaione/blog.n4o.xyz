@@ -320,3 +320,11 @@ code.hljs::-webkit-scrollbar {
     padding-bottom: 14rem;
   }
 }
+
+/*
+  Override some darkening
+*/
+
+.prose :where(pre):not(:where([class~='not-prose'] *)) {
+  background-color: #262626 !important;
+}
