@@ -86,7 +86,7 @@ function SpotifyPlayerCompact(props: SpotifyRenderProps & RenderProps) {
   if (!data.playing) {
     return (
       <Wrapper>
-        <p className="text-gray-800 dark:text-gray-200 font-medium">{localesData.stop}</p>;
+        <p className="text-gray-800 dark:text-gray-200 font-medium">{localesData.stop}</p>
       </Wrapper>
     );
   }
