@@ -220,7 +220,7 @@ export default function Home({ posts }) {
             href="https://literal.club/noaione"
             className="text-blue-500 hover:text-blue-600 hover:underline transition"
           >
-            Literal.club
+            Literal
           </a>
         </div>
         <LiteralClubEmbed handle="noaione" readingState="IS_READING" />
