@@ -44,15 +44,15 @@ module.exports = withBundleAnalyzer({
       use: ['@svgr/webpack'],
     });
 
-    if (!dev && !isServer) {
-      // Replace React with Preact only in client production build
-      Object.assign(config.resolve.alias, {
-        react: 'preact/compat',
-        'react-dom/test-utils': 'preact/test-utils',
-        'react-dom': 'preact/compat',
-        'react/jsx-runtime': 'preact/jsx-runtime',
-      });
-    }
+    // if (!dev && !isServer) {
+    //   // Replace React with Preact only in client production build
+    //   Object.assign(config.resolve.alias, {
+    //     react: 'preact/compat',
+    //     'react-dom/test-utils': 'preact/test-utils',
+    //     'react-dom': 'preact/compat',
+    //     'react/jsx-runtime': 'preact/jsx-runtime',
+    //   });
+    // }
 
     // console.info(config);
 
