@@ -212,9 +212,9 @@ export default function PostLayout({ children, frontMatter, next, prev }: PostLa
                 </dd>
               </dl>
               <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:pb-0 xl:col-span-3 xl:row-span-2">
-                <div className="pt-10 pb-8 prose dark:prose-dark max-w-none">
+                <div className="pt-10 pb-8 prose dark:prose-invert dark:prose-dark max-w-none">
                   {selectedImages && (
-                    <div className="prose dark:prose-dark flex flex-col mx-auto">
+                    <div className="prose dark:prose-invert dark:prose-dark flex flex-col mx-auto">
                       <img className="w-full" src={selectedImages} alt="Featured Images" />
                     </div>
                   )}
