@@ -173,6 +173,15 @@ export default class LineNumbers {
 
     this.async(() => {
       element.innerHTML = this.lineNumbersInternal(element, options);
+      // strip the first element inside <tbody> > <tr>
+      const tbody = element.querySelector('table tbody tr');
+      if (tbody && tbody.children && tbody.children.length === 2) {
+        const lastCihld = tbody.children[1];
+        const lastChildChild = lastCihld.firstChild;
+        if (lastChildChild && lastChildChild.nodeName === 'TABLE') {
+          tbody.removeChild(tbody.children[0]);
+        }
+      }
     });
   }
 

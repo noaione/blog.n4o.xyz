@@ -88,10 +88,16 @@ class GHCodeEmbed extends React.Component<GHCodeEmbedProps, GHCodeEmbedState> {
     fileUrl += `#L${startLine}${endLineText}`;
     const hashedURL = hash(fileUrl);
 
-    const slicedText = codeTextSplit.slice(startLine - 1, endLine).join('\n');
-    const htmlWrapped = `<pre><code class="language-${this.props.lang}">${slicedText}</code></pre>`;
+    const actualStartLine = startLine === -1 ? 0 : startLine - 1;
 
-    const rendered = await renderCodeContents(htmlWrapped);
+    const slicedText = codeTextSplit.slice(actualStartLine, endLine).join('\n');
+    const htmlPreWrap = document.createElement('pre');
+    const htmlCodeWrap = document.createElement('code');
+    htmlCodeWrap.classList.add(`language-${this.props.lang}`);
+    htmlCodeWrap.innerText = slicedText;
+    htmlPreWrap.appendChild(htmlCodeWrap);
+
+    const rendered = await renderCodeContents(htmlPreWrap.outerHTML);
     const parsedRendered = new DOMParser().parseFromString(rendered, 'text/html');
     const preCodeBlocks = parsedRendered.querySelector('pre') as HTMLElement;
     preCodeBlocks.firstElementChild.id = `hljs-${hashedURL}`;
