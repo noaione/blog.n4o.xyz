@@ -212,7 +212,7 @@ class GHCodeEmbed extends React.Component<GHCodeEmbedProps, GHCodeEmbedState> {
             }}
           >
             <code
-              className="p-4 flex ghcode-embed-contents"
+              className="flex ghcode-embed-contents max-h-screen"
               style={{
                 backgroundColor: '#262626',
                 borderRadius: '0.375rem 0.375rem 0 0',
