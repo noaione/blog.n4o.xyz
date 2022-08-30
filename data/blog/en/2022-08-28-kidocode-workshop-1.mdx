@@ -522,23 +522,6 @@ app.use('/api', apiRouter);
 - The second one is to basically bind our `apiRouter` with the base route of `/api`
   - Everything will turn from `/logout` to `/api/logout`
 
-**Then, we can create a custom `/dashboard` route to protect it if user is not logged in**
-
-```ts:src/index.ts
-// Add our dashboard route
-app.get('/dashboard', (req, res) => {
-  // Check if the user is logged in
-  // @ts-ignore
-  if (req.session && req.session.userId) {
-    res.sendFile(path.join(publicPath, 'dashboard.html'));
-  } else {
-    res.redirect('/');
-  }
-});
-```
-
-Would basically just check if user has session, if yes send our dashboard view, if not just redirect to login page.
-
 **After that, let's start our database and server**
 
 ```ts:src/index.ts
@@ -673,6 +656,72 @@ We also need to add scripts to our `package.json` so our tailwind will be compil
 ```
 
 You can then run `build:css` or `watch:css` to compile your tailwind styles.
+
+### The Webpage View
+
+In this section we will now create our html so we can display and modify our API/Database data.
+
+We will need to create the following file inside the `public` folder:
+- `index.html`
+- `register.html`
+- `dashboard.html`
+
+And then, let's open our `src/index.ts` file again and atfer the `app.use("/api", apiRouter);` line, let's add the following code
+
+```ts:src/index.ts
+// Add custom register route
+app.get("/register", (req, res) => {
+    res.sendFile(path.join(publicPath, "register.html"));
+})
+
+// Add our dashboard route
+app.get("/dashboard", (req, res) => {
+    // Check if the user is logged in
+    // @ts-ignore
+    if (req.session && req.session.userId) {
+        res.sendFile(path.join(publicPath, "dashboard.html"));
+    } else {
+        res.redirect("/");
+    }
+})
+```
+
+**Explanation!**
+
+- `/register` route need to be overriden or it will throw an error (or you need to add `.html` to the link)
+- `/dashboard` would protect our dashboard route by checking if the user has logged session or not.
+
+Then you can add all the following code to each of your html files.
+
+**`public/index.html`** as our login page
+
+<GitHubCode
+  user="noaione"
+  repo="express-sql-workshop"
+  filepath="public/index.html"
+  branch="1a3020cb1eef39bb7afe0f93e2d51449e3f2b944"
+  noLineNumbers
+/>
+
+**`public/register.html`** as our registration page
+
+<GitHubCode
+  user="noaione"
+  repo="express-sql-workshop"
+  filepath="public/register.html"
+  branch="1a3020cb1eef39bb7afe0f93e2d51449e3f2b944"
+  noLineNumbers
+/>
+
+**`public/register.html`** as our dashboard page
+
+<GitHubCode
+  user="noaione"
+  repo="express-sql-workshop"
+  filepath="public/dashboard.html"
+  branch="1a3020cb1eef39bb7afe0f93e2d51449e3f2b944"
+  noLineNumbers
+/>
 
 ## Package Explanation
 

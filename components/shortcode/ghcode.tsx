@@ -50,6 +50,7 @@ interface GHCodeEmbedProps {
   startLine?: number;
   endLine?: number;
   tabSize: number;
+  noLineNumbers?: boolean;
 }
 
 interface GHCodeEmbedState {
@@ -67,7 +68,7 @@ class GHCodeEmbed extends React.Component<GHCodeEmbedProps, GHCodeEmbedState> {
   }
 
   async componentDidMount() {
-    const { codeContents } = this.props;
+    const { codeContents, noLineNumbers } = this.props;
     let { startLine, endLine, fileUrl } = this.props;
     const codeTextSplit = codeContents.split('\n');
     let endLineText = '';
@@ -102,32 +103,36 @@ class GHCodeEmbed extends React.Component<GHCodeEmbedProps, GHCodeEmbedState> {
     const preCodeBlocks = parsedRendered.querySelector('pre') as HTMLElement;
     preCodeBlocks.firstElementChild.id = `hljs-${hashedURL}`;
 
-    const HLJSNum = new LineNumbers(document);
-    this.setState({ finalUrl: fileUrl, rendered: preCodeBlocks.outerHTML }, () => {
-      const codeSelector = document.getElementById(`hljs-${hashedURL}`) as HTMLElement;
-      if (codeSelector) {
-        if (!HLJSNum.isPluginDisabledForBlock(codeSelector)) {
-          HLJSNum.lineNumbersBlock(codeSelector, {
-            startFrom: startLine > 0 ? Number.parseInt(startLine as unknown as string) : 1,
-            singleLine: true,
-          });
+    if (!noLineNumbers) {
+      const HLJSNum = new LineNumbers(document);
+      this.setState({ finalUrl: fileUrl, rendered: preCodeBlocks.outerHTML }, () => {
+        const codeSelector = document.getElementById(`hljs-${hashedURL}`) as HTMLElement;
+        if (codeSelector) {
+          if (!HLJSNum.isPluginDisabledForBlock(codeSelector)) {
+            HLJSNum.lineNumbersBlock(codeSelector, {
+              startFrom: startLine > 0 ? Number.parseInt(startLine as unknown as string) : 1,
+              singleLine: true,
+            });
+          }
         }
-      }
-    });
+      });
 
-    document.addEventListener('copy', (ev) => {
-      const selection = window.getSelection();
-      if (HLJSNum.isHljsLnCodeDescendant(selection.anchorNode)) {
-        let selText: string;
-        if (window.navigator.userAgent.indexOf('Edge') !== -1) {
-          selText = HLJSNum.edgeGetSelectedCodeLines(selection);
-        } else {
-          selText = selection.toString();
+      document.addEventListener('copy', (ev) => {
+        const selection = window.getSelection();
+        if (HLJSNum.isHljsLnCodeDescendant(selection.anchorNode)) {
+          let selText: string;
+          if (window.navigator.userAgent.indexOf('Edge') !== -1) {
+            selText = HLJSNum.edgeGetSelectedCodeLines(selection);
+          } else {
+            selText = selection.toString();
+          }
+          ev.clipboardData.setData('text/plain', selText);
+          ev.preventDefault();
         }
-        ev.clipboardData.setData('text/plain', selText);
-        ev.preventDefault();
-      }
-    });
+      });
+    } else {
+      this.setState({ finalUrl: fileUrl, rendered: preCodeBlocks.outerHTML });
+    }
   }
 
   render() {
@@ -258,6 +263,7 @@ interface GHCodeProps {
   lineStart?: number;
   lineEnd?: number;
   tabsize?: number;
+  noLineNumbers?: boolean;
 }
 
 interface GHCodeState {
@@ -359,6 +365,7 @@ export default class GitHubCode extends React.Component<GHCodeProps, GHCodeState
             startLine={lineStart}
             endLine={lineEnd}
             tabSize={tabSize}
+            noLineNumbers={this.props.noLineNumbers}
           />
         </div>
       </>
