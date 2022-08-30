@@ -18,6 +18,9 @@ tags: ['coding', 'workshop', 'kidocode']
     - [`src/index.ts`](#srcindexts)
   - [Running our Server](#running-our-server)
 - [Frontend Section](#frontend-section)
+  - [Tailwind CSS](#tailwind-css)
+  - [The Webpage View](#the-webpage-view)
+  - [The JavaScript Magic](#the-javascript-magic)
 - [Package Explanation](#package-explanation)
 
 ### QoL Extension for VSCode
@@ -713,7 +716,7 @@ Then you can add all the following code to each of your html files.
   noLineNumbers
 />
 
-**`public/register.html`** as our dashboard page
+**`public/dashboard.html`** as our dashboard page
 
 <GitHubCode
   user="noaione"
@@ -722,6 +725,35 @@ Then you can add all the following code to each of your html files.
   branch="1a3020cb1eef39bb7afe0f93e2d51449e3f2b944"
   noLineNumbers
 />
+
+You can just copy paste the contents to your own files.
+
+**Explanation!**
+- `/public/index.html` contents `(Login Page)`
+  - This document only includes some simple form data that are does not have any action route since we will override it on our own JS later.
+  - We only have 2 forms box, which is our email and password input box and also a submit button.
+- `/public/register.html` contents
+  - Mostly the same as our login page, which make our JS content similar too.
+- `/public/dashboard.html` contents
+  - In here, we will use `<table>` to render our password list, we are making our table body empty since we will dynamically add our contents to the pages.
+  - We also have several modal that are hidden until displayed, this modal will be controlled manually using our JS file.
+    - `#modalDelete` will be our confirmation modal if we want to delete our data
+    - `#modalError` will be our modal to show any error occurred to our pages (JS file mainly)
+    - `#modalAdd` will be our modal to add new password including a custom password generator which the result can be modified
+      - `genPassLower` is a checkbox to enable lowercase letter (default: on)
+      - `genPassUpper` is a checkbox to enable uppercase letter (default: off)
+      - `genPassNum` is a checkbox to enable numbers (default: off)
+      - `genPassSym` is a checkbox to enable symbols (default: off)
+      - `genPassLength` is a number input to change our password length (minimum of 6, maximum of 100, and default of 8)
+      - `btnRegenPass` is a button that allows us to regenerate the results
+    - `#modalEdit` instead of adding a new password, this one will be for editing our existing password
+      - A special feature later that we will add is to automatically check the password content and automatically check the checkbox and modify the number value on the go.
+
+### The JavaScript Magic
+
+Our JavaScript file will be written with ES6 in minds, which will only support modern browser only and not older version of a browser.
+
+We will create our JS file inside the `public/static/js` folder, if you haven't created that folder yet, please create it first.
 
 ## Package Explanation
 
