@@ -86,7 +86,9 @@ class GHCodeEmbed extends React.Component<GHCodeEmbedProps, GHCodeEmbedState> {
       endLineText = '';
     }
 
-    fileUrl += `#L${startLine}${endLineText}`;
+    if (startLine !== -1 && endLineText !== '') {
+      fileUrl += `#L${startLine}${endLineText}`;
+    }
     const hashedURL = hash(fileUrl);
 
     const actualStartLine = startLine === -1 ? 0 : startLine - 1;
@@ -243,7 +245,7 @@ class GHCodeEmbed extends React.Component<GHCodeEmbedProps, GHCodeEmbedState> {
             <a
               className="font-semibold no-underline border-0 text-gray-600 dark:text-white"
               target="_blank"
-              href="github.com"
+              href="https://github.com"
               rel="noopener noreferrer"
             >
               GitHub
