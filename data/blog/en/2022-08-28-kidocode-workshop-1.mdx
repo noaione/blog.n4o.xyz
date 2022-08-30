@@ -696,33 +696,30 @@ app.get("/dashboard", (req, res) => {
 
 Then you can add all the following code to each of your html files.
 
-**`public/index.html`** as our login page
+**`public/index.html` as our login page**
 
 <GitHubCode
   user="noaione"
   repo="express-sql-workshop"
   filepath="public/index.html"
-  branch="1a3020cb1eef39bb7afe0f93e2d51449e3f2b944"
   noLineNumbers
 />
 
-**`public/register.html`** as our registration page
+**`public/register.html` as our registration page**
 
 <GitHubCode
   user="noaione"
   repo="express-sql-workshop"
   filepath="public/register.html"
-  branch="1a3020cb1eef39bb7afe0f93e2d51449e3f2b944"
   noLineNumbers
 />
 
-**`public/dashboard.html`** as our dashboard page
+**`public/dashboard.html` as our dashboard page**
 
 <GitHubCode
   user="noaione"
   repo="express-sql-workshop"
   filepath="public/dashboard.html"
-  branch="1a3020cb1eef39bb7afe0f93e2d51449e3f2b944"
   noLineNumbers
 />
 
@@ -754,6 +751,91 @@ You can just copy paste the contents to your own files.
 Our JavaScript file will be written with ES6 in minds, which will only support modern browser only and not older version of a browser.
 
 We will create our JS file inside the `public/static/js` folder, if you haven't created that folder yet, please create it first.
+
+**`public/static/js/loginApp.js` as our login page JS.**
+
+<GitHubCode
+  user="noaione"
+  repo="express-sql-workshop"
+  filepath="public/static/js/loginApp.js"
+  noLineNumbers
+/>
+
+**`public/static/js/registerApp.js` as our register page JS.**
+
+<GitHubCode
+  user="noaione"
+  repo="express-sql-workshop"
+  filepath="public/static/js/registerApp.js"
+  noLineNumbers
+/>
+
+**Explanation!**<br />
+Both code above are mostly the same except some variable and ID change since there's still some difference between login and register page.
+- `document.readyState === "complete"` is a check if our whole page is ready to be modified by DOM, if not we will wait using `DOMContentLoaded` listener.
+- We also overridden our `submit` event listener for both pages
+  - `ev.preventDefault();` will prevent the default submit behavior to work, since we want to override it.
+  - `POSTJson` is a function to basically send our data using `POST` method to our API.
+  - `logError` is a way to add error data to our hidden `<div>` in our HTML
+  - `isEmpty` is an extension of our `isNone` function which will also check if our string is empty, ignoring andy whitespaces
+
+We also have this fucntion wrapper:
+```js
+(function(){
+  // code here
+})();
+```
+
+The above wrapper will basically execute all of our JS code without revealing it to the window DOM, example are showed in this video below.
+
+<Video src="https://p.ihateani.me/zrayqnku.mp4" caption="Safeguard example" />
+
+The reason is because we do not want outside user to access our function and make it stop working properly by fiddling with it.
+
+**`public/static/js/dashboardApp.js` as our dashboard page JS.**
+
+This JS will be the most complex one and has some function since we might repeat what we do.
+
+<GitHubCode
+  user="noaione"
+  repo="express-sql-workshop"
+  filepath="public/static/js/dashboardApp.js"
+  noLineNumbers
+/>
+
+**Explanation!**
+- `generatePassword` is a function that we will use to generate our random password, it accepts some parameters allowing us to modify the results.
+- `DashboardState` is a state holder for our program, emulating how React State works.
+- `GETJson` and `SENDJson` is a wrapper for JS `fetch` function and for `SENDJson` we can also change the HTTP method we are using (since we have to use `PUT`, `POST`, and `DELETE`)
+- `handlePasswordDelete` is a custom function to handle password deletion.
+  - We first fetch our table row using querySelector that use our custom data attribute
+  - And then we get our deletion button to disable it since we don't want user to spam click it
+  - After that we send `DELETE` request to our API
+  - We then enable our again button and make our state null again, then we check if we should delete our table row if the deletion success or not
+- `showModal` and `hideModal` is self-explanatory, it allows us to hide/show our modal, the function accept single parameter which is the element ID
+- `generateTableRow` a function to generate our table row data
+  - It basically just try to create a "complex" child of element with the `<tr>` element at the top
+  - In button edit click handler
+    - We set our password ID to the state
+    - Then we check our password content for lowercase, capital, symbols, and numbers
+    - Then we enable checkbox depending on the above result and also adjust the number value according to our password length
+    - Then we can show our edit modal
+  - We then set our button edit with custom attribute
+  - In button delete click handler
+    - We set the state to our password ID, then show the modal
+  - We then set our button delete with custom attribute
+  - We then start appending our element to the top element one by one
+  - We then return the final table row element with all the relevant child
+- `isAllGenModifierOff` is a function to check if our password generator modifier checkbox are all unchecked, it's used when we are cycling/regenerating password.
+- `enablePassModBtn` and `disablePassModBtn` is a function to disable/enable our modifier button
+- `shouldCloseOrNot` is a function to check if we should close our modal or not (used if user click outside the modal area)
+- `displayError` is a simple function to show the error modal
+- `hasAnyXXXXXXXXX` is a function to check if letter have `x`
+- `cycleGeneratedPassword` is a function to regenerate our password and display it to the user
+  - We first get some of our element
+  - Then we check if all modifier button are unchecked or not, since we don't want to regenerate if all are off
+  - Then we check all our checkbox state to determine how our generated password will looks like
+  - Then we can display the result to the user.
 
 ## Package Explanation
 
