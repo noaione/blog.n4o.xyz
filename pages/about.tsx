@@ -64,6 +64,7 @@ export default function About() {
               <SocialIcon kind="mail" href={`mailto:${siteMetadata?.email}`} />
               <SocialIcon kind="github" href={siteMetadata?.github} />
               <SocialIcon kind="twitter" href={siteMetadata?.twitter} />
+              <SocialIcon kind="mastodon" href={siteMetadata?.mastodon} />
               <SocialIcon kind="donate" href={siteMetadata?.donate} />
             </div>
           </div>
