@@ -4,7 +4,7 @@ import { IconProps } from './_types';
 export default function MastodonIcon(props: IconProps) {
   return (
     <svg role="img" viewBox="0 0 216.4 232" xmlns="http://www.w3.org/2000/svg" {...props}>
-      <title>Mastodon icon</title>
+      <title>Mastodon</title>
       <path
         xmlns="http://www.w3.org/2000/svg"
         fill="currentColor"
