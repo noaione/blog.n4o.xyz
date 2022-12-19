@@ -3,6 +3,7 @@ import Mail from './mail';
 import Github from './github';
 import Facebook from './facebook';
 import Twitter from './twitter';
+import Mastodon from './mastodon';
 import Trakteer from './trakteer';
 import { IconProps } from './_types';
 import { isNone, Nullable } from '@/lib/utils';
@@ -16,6 +17,7 @@ const Components = {
   twitter: Twitter,
   trakteer: Trakteer,
   donate: Donate,
+  mastodon: Mastodon,
 };
 
 interface SocialIconProps {
@@ -34,7 +36,7 @@ const SocialIcon = ({ kind, href, size = 8, iconProps = {} }: SocialIconProps) =
     <a
       className="text-sm text-gray-500 transition hover:text-gray-600"
       target="_blank"
-      rel="noopener noreferrer"
+      rel="me noopener noreferrer"
       href={href}
     >
       <span className="sr-only">{kind}</span>

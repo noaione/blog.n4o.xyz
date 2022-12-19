@@ -14,6 +14,7 @@ export default function Footer() {
           <SocialIcon kind="mail" href={`mailto:${siteMetadata.email}`} size={6} />
           <SocialIcon kind="github" href={siteMetadata.github} size={6} />
           <SocialIcon kind="twitter" href={siteMetadata?.twitter} size={6} />
+          <SocialIcon kind="mastodon" href={siteMetadata?.mastodon} size={6} />
           <SocialIcon kind="donate" href={siteMetadata?.donate} size={6} />
         </div>
         <div className="flex mb-2 space-x-2 text-sm text-gray-500 dark:text-gray-400">
