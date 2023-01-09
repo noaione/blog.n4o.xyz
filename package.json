@@ -21,7 +21,7 @@
     "emoji-regex": "10.1.0",
     "gray-matter": "4.0.3",
     "image-size": "1.0.2",
-    "luxon": "3.0.1",
+    "luxon": "3.2.1",
     "mdx-bundler": "9.0.1",
     "next": "12.2.5",
     "preact": "10.10.6",
