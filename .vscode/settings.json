@@ -2,5 +2,8 @@
   "editor.formatOnSave": true,
   "files.associations": {
     "*.mdx": "markdown"
-  }
+  },
+  "i18n-ally.localesPaths": [
+    "locale"
+  ]
 }

@@ -113,6 +113,7 @@ async function getAccessToken() {
       Authorization: `Basic ${basic}`,
       'Content-Type': 'application/x-www-form-urlencoded',
     },
+    // @ts-ignore
     body: params,
   });
   return await response.json();

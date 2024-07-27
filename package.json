@@ -91,5 +91,6 @@
     "*.+(js|jsx|ts|tsx|json|css|md|mdx)": [
       "prettier --write"
     ]
-  }
+  },
+  "packageManager": "yarn@4.3.1"
 }
