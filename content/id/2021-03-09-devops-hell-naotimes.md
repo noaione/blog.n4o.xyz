@@ -151,4 +151,3 @@ Dan PR-nya:
 Semuanya bisa, sekarang gak usah ribet SSH ke server, cukup commit dengan pesan khusus untuk deploy ulang atau sync.
 
 Productivity :rocket:
-

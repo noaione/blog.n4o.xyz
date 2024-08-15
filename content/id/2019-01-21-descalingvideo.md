@@ -87,8 +87,8 @@ v = descale.Debicubic(src, width=1440, height=810, b=1/3, c=1/3, yuv444=True)
 v.set_output()
 ```
 
-![Source 1080p](/assets/images/manaria01-1080p.png)
-![Descaled 810p](/assets/images/manaria01-810p.png)
+![Source 1080p](/assets/images/manaria01-1080p.png){skipOptimize=true}
+![Descaled 810p](/assets/images/manaria01-810p.png){skipOptimize=true}
 
 Silakan gambarnya di buka di Tab baru agar lebih enak.
 
@@ -120,7 +120,7 @@ resizer = core.resize.Bicubic(src, width=1440, height=810, format=vs.YUV444P16) 
 mask.set_output()
 ```
 
-![Hasil mask](/assets/images/manaria01-810pmask.png)
+![Hasil mask](/assets/images/manaria01-810pmask.png){skipOptimize=true}
 
 ## Penutup
 
@@ -128,4 +128,3 @@ Selamat! sekarang anda tinggal encode dan nikmati hasilnya \:D
 
 **Anime yang digunakan**: Manaria Friends - 01<br />
 **Source**: AbemaTV
-

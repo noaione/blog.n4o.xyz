@@ -115,4 +115,3 @@ Sebelum mulai ngetik command untuk OCR di Cygwin, ubah nama file sebelumnya agar
 Gabungin kedua file bisa pake Aegisub
 
 _Selamat mencoba_
-

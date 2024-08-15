@@ -1,73 +1,73 @@
 {
-  "error": {
-    "missing": "申し訳ございませんが、お探しのページはご利用いただけません。"
-  },
-  "languages": {
-    "en": "英語",
-    "id": "インドネシア語",
-    "ja": "日本語"
-  },
-  "nav": {
-    "home": "ホーム",
-    "about": "について",
-    "blog": "ポスト",
-    "tags": "タグ",
-    "goBack": "戻る",
-    "blogPaged": "投稿 - ページ {0}",
-    "tagsPaged": "タグ - ページ {0}"
-  },
-  "blog": {
-    "noPosts": "投稿はありません",
-    "backHome": "戻る",
-    "viewCount": "{0}回閲覧",
-    "authorTitle": "著者",
-    "author": {
-      "name": "名前",
-      "social": {
-        "twitter": "ツイッター",
-        "github": "GitHub"
-      },
-      "title": "著者"
+    "error": {
+        "missing": "申し訳ございませんが、お探しのページはご利用いただけません。"
     },
-    "publishAt": "掲載場所",
-    "readTime": "{0}で読む",
-    "draft": "下書き",
-    "draftNotice": "この投稿はまだ執筆中です",
-    "prevPost": "前の記事",
-    "nextPost": "次の記事",
-    "missing": "投稿が見つかりません",
-    "missingNotice": "アクセスしようとしている投稿は利用できませんが、別の言語の代替バージョンがあります",
-    "noTags": "登録されたタグが見つかりません",
-    "latest": "最新",
-    "postGithub": "GitHub で確認してください"
-  },
-  "navigation": {
-    "pageOf": "中"
-  },
-  "pagination": {
-    "prev": "前",
-    "next": "次"
-  },
-  "desc": {
-    "post": "{name} のすべてのブログ投稿が 1 か所にまとめられています。",
-    "tagsHome": "ブログで利用できるタグのコレクション。",
-    "tag": "#{tag} でタグ付けされたすべての投稿",
-    "about": "このブログについての簡単な情報",
-    "latest": "{name} の最新のブログ投稿"
-  },
-  "spotify": {
-    "loading": "データのロード...",
-    "noData": "データなし",
-    "idle": "曲を再生しない",
-    "byArtist": "から",
-    "playing": "現在聴いているもの"
-  },
-  "literal": {
-    "reading": "現在読んでいる本",
-    "wantToRead": "読む予定のもの",
-    "finished": "読み終えた",
-    "dropped": "読むのをやめました",
-    "unknown": "Literal",
-    "viewAt": "表示:"
-  }
+    "languages": {
+        "en": "英語",
+        "id": "インドネシア語",
+        "ja": "日本語"
+    },
+    "nav": {
+        "home": "ホーム",
+        "about": "について",
+        "blog": "ポスト",
+        "tags": "タグ",
+        "goBack": "戻る",
+        "blogPaged": "投稿 - ページ {0}",
+        "tagsPaged": "タグ - ページ {0}"
+    },
+    "blog": {
+        "noPosts": "投稿はありません",
+        "backHome": "戻る",
+        "viewCount": "{0}回閲覧",
+        "authorTitle": "著者",
+        "author": {
+            "name": "名前",
+            "social": {
+                "twitter": "ツイッター",
+                "github": "GitHub"
+            },
+            "title": "著者"
+        },
+        "publishAt": "掲載場所",
+        "readTime": "{0}で読む",
+        "draft": "下書き",
+        "draftNotice": "この投稿はまだ執筆中です",
+        "prevPost": "前の記事",
+        "nextPost": "次の記事",
+        "missing": "投稿が見つかりません",
+        "missingNotice": "アクセスしようとしている投稿は利用できませんが、別の言語の代替バージョンがあります",
+        "noTags": "登録されたタグが見つかりません",
+        "latest": "最新",
+        "postGithub": "GitHub で確認してください"
+    },
+    "navigation": {
+        "pageOf": "中"
+    },
+    "pagination": {
+        "prev": "前",
+        "next": "次"
+    },
+    "desc": {
+        "post": "{name} のすべてのブログ投稿が 1 か所にまとめられています。",
+        "tagsHome": "ブログで利用できるタグのコレクション。",
+        "tag": "#{tag} でタグ付けされたすべての投稿",
+        "about": "このブログについての簡単な情報",
+        "latest": "{name} の最新のブログ投稿"
+    },
+    "spotify": {
+        "loading": "データのロード...",
+        "noData": "データなし",
+        "idle": "曲を再生しない",
+        "byArtist": "から",
+        "playing": "現在聴いているもの"
+    },
+    "literal": {
+        "reading": "現在読んでいる本",
+        "wantToRead": "読む予定のもの",
+        "finished": "読み終えた",
+        "dropped": "読むのをやめました",
+        "unknown": "Literal",
+        "viewAt": "表示:"
+    }
 }

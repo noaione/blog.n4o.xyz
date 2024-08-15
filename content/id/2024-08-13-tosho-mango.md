@@ -123,7 +123,7 @@ atau tidak bisa di-_merge_ secara otomatis karena RegEx yang dipakai oleh kita b
 
 Berikut adalah [RegEx](https://github.com/noaione/tosho-mango/blob/master/tosho/src/impl/tools/merger.rs#L18) yang digunakan untuk mencocokkan judul chapter:
 
-```rs [tosho/src/impl/tools/merger.rs] lineNumbers startLine=17
+```rust [tosho/src/impl/tools/merger.rs] lineNumbers startLine=17
 /// Regex to match chapter title
 static TITLE_REGEX: LazyLock<regex::Regex> = LazyLock::new(|| {
     regex::Regex::new(

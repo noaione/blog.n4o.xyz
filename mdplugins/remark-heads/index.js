@@ -32,6 +32,6 @@ export default function remarkHeads() {
           ...(node.data || {}),
         };
       }
-    })
-  }
+    });
+  };
 }

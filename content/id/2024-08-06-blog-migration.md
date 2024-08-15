@@ -72,4 +72,3 @@ Beberapa hal baru:
 
 - _Support_ untuk penulis lebih dari satu
 - Perbaikan typography/penulisan seperti _title case_ dan lain-lain
-

@@ -162,4 +162,3 @@ Pastikan folder WSL yang dibuat ada akses yang sesuai, cara aturnya adalah:
 8. Klik Apply, terus Ok
 
 ![Permission Fix](https://p.ihateani.me/kqvujoqr.gif)
-

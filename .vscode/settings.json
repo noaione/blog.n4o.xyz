@@ -1,7 +1,8 @@
 {
     "[javascript]": {
         "editor.formatOnSave": true,
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[typescript]": {
         "editor.formatOnSave": true,
@@ -56,7 +57,8 @@
     },
     "files.associations": {
         "*.css": "tailwindcss",
-        "*.webmanifest": "json"
+        "*.webmanifest": "json",
+        "*.mjs": "javascript"
     },
     "editor.quickSuggestions": {
         "strings": true

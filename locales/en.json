@@ -1,75 +1,75 @@
 {
-  "error": {
-    "missing": "We're sorry, the page you are looking for is not available."
-  },
-  "languages": {
-    "en": "English",
-    "id": "Indonesian",
-    "ja": "Japanese"
-  },
-  "nav": {
-    "home": "Home",
-    "about": "About",
-    "blog": "Post",
-    "tags": "Tags",
-    "goBack": "Go back",
-    "blogPaged": "Post - Page {0}",
-    "tagsPaged": "Tags - Laman {0}"
-  },
-  "blog": {
-    "noPosts": "No posts",
-    "backHome": "Go home",
-    "viewCount": "Viewed {0}x",
-    "authorTitle": "Author",
-    "author": {
-      "name": "Name",
-      "social": {
-        "twitter": "Twitter",
-        "github": "GitHub"
-      },
-      "title": "Author"
+    "error": {
+        "missing": "We're sorry, the page you are looking for is not available."
     },
-    "publishAt": "Published at",
-    "readTime": "Read in {0}",
-    "draftNotice": "This post is still being written",
-    "prevPost": "Previous Article",
-    "nextPost": "Next Article",
-    "missing": "Content not found",
-    "missingNotice": "The content you're trying to access is unavailable, but there is an alternative version in another languages",
-    "noTags": "No registered tags found",
-    "draft": "Draft",
-    "latest": "Latest",
-    "viewAll": "All posts",
-    "readMore": "Read more",
-    "postGithub": "View at GitHub"
-  },
-  "pagination": {
-    "prev": "Previous",
-    "next": "Next"
-  },
-  "navigation": {
-    "pageOf": "of"
-  },
-  "desc": {
-    "post": "All {name} blog posts in one place!",
-    "tagsHome": "The tags collection available in the blog.",
-    "tag": "All post tagged with #{tag}",
-    "about": "A simple information about this blog",
-    "latest": "The latest blog post from {name}"
-  },
-  "spotify": {
-    "loading": "Loading data...",
-    "noData": "No data",
-    "idle": "Not playing anything",
-    "byArtist": "by",
-    "playing": "Currently jamming to"
-  },
-  "literal": {
-    "reading": "Currently reading",
-    "wantToRead": "Will be reading",
-    "finished": "Finished reading",
-    "dropped": "Stopped reading",
-    "unknown": "Literal",
-    "viewAt": "View at"
-  }
+    "languages": {
+        "en": "English",
+        "id": "Indonesian",
+        "ja": "Japanese"
+    },
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "blog": "Post",
+        "tags": "Tags",
+        "goBack": "Go back",
+        "blogPaged": "Post - Page {0}",
+        "tagsPaged": "Tags - Laman {0}"
+    },
+    "blog": {
+        "noPosts": "No posts",
+        "backHome": "Go home",
+        "viewCount": "Viewed {0}x",
+        "authorTitle": "Author",
+        "author": {
+            "name": "Name",
+            "social": {
+                "twitter": "Twitter",
+                "github": "GitHub"
+            },
+            "title": "Author"
+        },
+        "publishAt": "Published at",
+        "readTime": "Read in {0}",
+        "draftNotice": "This post is still being written",
+        "prevPost": "Previous Article",
+        "nextPost": "Next Article",
+        "missing": "Content not found",
+        "missingNotice": "The content you're trying to access is unavailable, but there is an alternative version in another languages",
+        "noTags": "No registered tags found",
+        "draft": "Draft",
+        "latest": "Latest",
+        "viewAll": "All posts",
+        "readMore": "Read more",
+        "postGithub": "View at GitHub"
+    },
+    "pagination": {
+        "prev": "Previous",
+        "next": "Next"
+    },
+    "navigation": {
+        "pageOf": "of"
+    },
+    "desc": {
+        "post": "All {name} blog posts in one place!",
+        "tagsHome": "The tags collection available in the blog.",
+        "tag": "All post tagged with #{tag}",
+        "about": "A simple information about this blog",
+        "latest": "The latest blog post from {name}"
+    },
+    "spotify": {
+        "loading": "Loading data...",
+        "noData": "No data",
+        "idle": "Not playing anything",
+        "byArtist": "by",
+        "playing": "Currently jamming to"
+    },
+    "literal": {
+        "reading": "Currently reading",
+        "wantToRead": "Will be reading",
+        "finished": "Finished reading",
+        "dropped": "Stopped reading",
+        "unknown": "Literal",
+        "viewAt": "View at"
+    }
 }

@@ -136,7 +136,7 @@ or can't be merged automatically because the RegEx we use is different from the 
 
 The following is the [RegEx](https://github.com/noaione/tosho-mango/blob/master/tosho/src/impl/tools/merger.rs#L18) we use to match the chapter title:
 
-```rs [tosho/src/impl/tools/merger.rs] lineNumbers startLine=17
+```rust [tosho/src/impl/tools/merger.rs] lineNumbers startLine=17
 /// Regex to match chapter title
 static TITLE_REGEX: LazyLock<regex::Regex> = LazyLock::new(|| {
     regex::Regex::new(

@@ -14,4 +14,3 @@ tags:
 
 Sementara, artikel ini hanya tersedia dalam Bahasa Inggris.<br />
 Silakan baca di sini jika mau: [The Adventure of Creating VTuber API](/en/posts/adventure-of-ihaapi)
-
