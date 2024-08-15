@@ -1,0 +1,75 @@
+{
+  "error": {
+    "missing": "Maaf, halaman yang Anda cari tidak tersedia."
+  },
+  "languages": {
+    "en": "Inggris",
+    "id": "Indonesia",
+    "ja": "Jepang"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "Tentang",
+    "blog": "Post",
+    "tags": "Tagar",
+    "goBack": "Kembali",
+    "blogPaged": "Post - Laman {0}",
+    "tagsPaged": "Tagar - Laman {0}"
+  },
+  "blog": {
+    "noPosts": "Tidak ada postingan",
+    "backHome": "Kembali",
+    "viewCount": "Dilihat {0}x",
+    "authorTitle": "Penulis",
+    "author": {
+      "name": "Nama",
+      "social": {
+        "twitter": "Twitter",
+        "github": "GitHub"
+      },
+      "title": "Penulis"
+    },
+    "publishAt": "Publikasi pada",
+    "readTime": "Durasi baca {0}",
+    "draft": "Draft",
+    "draftNotice": "Postingan ini masih dalam proses penulisan",
+    "prevPost": "Artikel Sebelumnya",
+    "nextPost": "Artikel Selanjutnya",
+    "missing": "Konten tidak ditemukan",
+    "missingNotice": "Konten yang anda akses tidak dapat ditemukan, tetapi ada variasi pada Bahasa lain",
+    "noTags": "Tidak ada tagar yang terdaftar",
+    "latest": "Terbaru",
+    "viewAll": "Semua postingan",
+    "readMore": "Lihat lebih lanjut",
+    "postGithub": "Lihat di GitHub"
+  },
+  "pagination": {
+    "prev": "Sebelumnya",
+    "next": "Selanjutnya"
+  },
+  "navigation": {
+    "pageOf": "dari"
+  },
+  "desc": {
+    "post": "Semua postingan blog {name} dalam satu tempat!",
+    "tagsHome": "Semua koleksi tagar yang tersedia di blog ini.",
+    "tag": "Semua postingan dengan tagar #{tag}",
+    "about": "Sebuah informasi sederhana tentang blog ini\\",
+    "latest": "Postingan terbaru dari blog {name}"
+  },
+  "spotify": {
+    "loading": "Memuat data...",
+    "noData": "Tidak ada data",
+    "idle": "Tak ada putaran lagu",
+    "byArtist": "oleh",
+    "playing": "Sedang mendengarkan"
+  },
+  "literal": {
+    "reading": "Sedang membaca",
+    "wantToRead": "Ingin membaca",
+    "finished": "Selesai membaca",
+    "dropped": "Berhenti membaca",
+    "unknown": "Literal",
+    "viewAt": "Lihat di"
+  }
+}

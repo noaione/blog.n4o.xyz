@@ -1,0 +1,31 @@
+{
+    "name": "remark-heads",
+    "version": "0.0.1",
+    "type": "module",
+    "description": "A simple remark plugin to inject custom ID to headers",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "markdown",
+        "remark",
+        "plugin"
+    ],
+    "author": "noaione",
+    "license": "MIT",
+    "dependencies": {
+        "unist-util-visit": "^5.0.0",
+        "unist-builder": "^4.0.0"
+    },
+    "devDependencies": {
+        "@types/hast": "^3.0.4",
+        "unified": "11.0.5"
+    },
+    "exports": {
+        ".": {
+            "import": "./index.js",
+            "types": "./index.d.ts"
+        }
+    }
+}

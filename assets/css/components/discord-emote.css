@@ -1,0 +1,9 @@
+@layer components {
+  .discord-emote {
+    @apply !my-2 h-8 w-8;
+  }
+
+  .discord-emote-inline {
+    @apply !my-0 inline-block;
+  }
+}

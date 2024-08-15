@@ -1,0 +1,16 @@
+[
+    {
+        "id": "noaione",
+        "name": "N4O",
+        "bio": {
+            "en": "A weeb and a software engineer",
+            "id": "Wibu dan software engineer",
+            "ja": "オタクとソフトウェアエンジニア"
+        },
+        "avatar": "/assets/images/_author/noaione.png",
+        "socialMedia": {
+            "github": "https://github.com/noaione",
+            "twitter": "https://twitter.com/nao0809_"
+        }
+    }
+]

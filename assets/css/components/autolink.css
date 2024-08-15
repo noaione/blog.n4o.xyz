@@ -1,0 +1,65 @@
+@layer components {
+  .h-autolink {
+    @apply relative glow-text glow-shadow;
+  }
+
+  .normal-link {
+    @apply decoration-dashed glow-text hover:underline;
+  }
+
+  .normal-link-dotted {
+    @apply normal-link decoration-dotted;
+  }
+
+  .h-autolink::before {
+    content: "# ";
+    position: absolute;
+    top: -0.3rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  /* on hover, show the # using */
+  .h-autolink:hover::before {
+    opacity: 1;
+  }
+
+  h1 a.h-autolink {
+    @apply glow-text-xl;
+  }
+
+  h2 a.h-autolink {
+    @apply glow-text-lg;
+  }
+
+  h3 a.h-autolink {
+    @apply glow-text-md;
+  }
+
+  h1 a.h-autolink::before {
+    left: -1.85rem;
+    top: -0.25rem;
+  }
+
+  h2 a.h-autolink::before {
+    left: -1.45rem;
+  }
+
+  h3 a.h-autolink::before {
+    left: -1.2rem;
+    top: -0.45rem;
+  }
+
+  h4 a.h-autolink::before {
+    left: -1.1rem;
+    top: -0.45rem;
+  }
+
+  h5 a.h-autolink::before {
+    left: -1rem;
+  }
+
+  h6 a.h-autolink::before {
+    left: -1rem;
+  }
+}

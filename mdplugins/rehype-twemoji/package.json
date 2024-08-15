@@ -1,0 +1,27 @@
+{
+    "name": "rehype-twemoji",
+    "version": "0.0.6.2",
+    "type": "module",
+    "description": "A fork of a fork to use Twemoji with Rehype.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "markdown",
+        "remark",
+        "plugin"
+    ],
+    "author": "noaione & NekoChan",
+    "license": "MIT",
+    "dependencies": {
+        "@twemoji/api": "^15.1.0",
+        "emoji-regex": "^10.3.0",
+        "hast-util-find-and-replace": "^5.0.1",
+        "hastscript": "^9.0.0"
+    },
+    "devDependencies": {
+        "@types/hast": "^3.0.4",
+        "unified": "^11.0.4"
+    }
+}
