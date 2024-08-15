@@ -527,4 +527,3 @@ export default defineNuxtConfig({
     },
   },
 });
-

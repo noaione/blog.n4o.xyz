@@ -11,7 +11,7 @@
     <Icon v-else-if="kind === 'email'" name="simple-icons:maildotru" class="social-icon" />
     <Icon v-else-if="kind === 'mastodon'" name="simple-icons:mastodon" class="social-icon" />
     <Icon v-else-if="kind === 'matrix'" name="simple-icons:matrix" class="social-icon" />
-    <Icon v-else-if="kind === 'donation'" name="simple-icons:kofi" class="social-icon" />
+    <IconDonation v-else-if="kind === 'donation'" :url="link" />
     <Icon v-else-if="kind === 'rss'" name="simple-icons:rss" class="social-icon" />
   </NuxtLink>
 </template>

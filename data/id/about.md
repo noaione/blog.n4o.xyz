@@ -14,7 +14,7 @@ socialMedia:
   - kind: matrix
     link: https://matrix.to/#/@noaione:matrix.org
   - kind: donation
-    link: https://ko-fi.com/noaione
+    link: https://trakteer.id/noaione
 ---
 
 Halo, nama saya N4O. Seorang _junior software developer_ dari Indonesia yang suka media dari Jepang. Di waktu luang, saya biasanya melakukan hal-hal random seperti main gim, baca manga atau novel, dan terkadang melakukan _coding_.
