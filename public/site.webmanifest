@@ -1,0 +1,20 @@
+{
+    "name": "N4O Blog",
+    "short_name": "N4O Blog",
+    "icons": [
+        {
+            "src": "/assets/favicons/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "/assets/favicons/android-chrome-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#425675",
+    "background_color": "#171717",
+    "start_url": "https://blog.n4o.xyz/",
+    "display": "standalone"
+}

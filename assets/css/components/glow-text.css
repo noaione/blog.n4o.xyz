@@ -1,0 +1,45 @@
+@layer utilities {
+  .glow-text {
+    text-shadow: 0 0 4px var(--tw-shadow-color);
+  }
+
+  .glow-text-sm {
+    text-shadow: 0 0 2px var(--tw-shadow-color);
+  }
+
+  .glow-text-md {
+    text-shadow: 0 0 6px var(--tw-shadow-color);
+  }
+
+  .glow-text-lg {
+    text-shadow: 0 0 10px var(--tw-shadow-color);
+  }
+
+  .glow-text-xl {
+    text-shadow: 0 0 14px var(--tw-shadow-color);
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 2px var(--tw-shadow-color);
+  }
+
+  .text-shadow-sm {
+    text-shadow: 1px 1px 1px var(--tw-shadow-color);
+  }
+
+  .text-shadow-md {
+    text-shadow: 4px 4px 2px var(--tw-shadow-color);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 6px 6px 2px var(--tw-shadow-color);
+  }
+
+  .text-shadow-xl {
+    text-shadow: 8px 8px 2px var(--tw-shadow-color);
+  }
+
+  .glow-shadow {
+    @apply shadow-gray-400 dark:shadow-gray-200;
+  }
+}

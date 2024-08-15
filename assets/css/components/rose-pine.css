@@ -1,0 +1,34 @@
+@layer components {
+  .rose-pine-related {
+    background-color: #faf4ed;
+  }
+
+  .dark .rose-pine-related {
+    background-color: #191724;
+  }
+
+  .rose-pine-related-lighter {
+    background-color: #cecacd;
+  }
+
+  .dark .rose-pine-related-lighter {
+    background-color: #524f67;
+  }
+
+  .rose-pine-surface {
+    background-color: #fffaf3;
+  }
+
+  .dark .rose-pine-surface {
+    background-color: #1f1d2e;
+  }
+
+  /* Highlighted lines */
+  .rose-pine-related .line.highlight {
+    background-color: #f2e9e1;
+  }
+
+  .dark .rose-pine-related .line.highlight {
+    background-color: #26233a;
+  }
+}
