@@ -1581,25 +1581,6 @@ __metadata:
   linkType: hard
 
 "@nuxt/icon@npm:^1.4.0":
-  version: 1.4.4
-  resolution: "@nuxt/icon@npm:1.4.4"
-  dependencies:
-    "@iconify/collections": "npm:^1.0.443"
-    "@iconify/types": "npm:^2.0.0"
-    "@iconify/utils": "npm:^2.1.25"
-    "@iconify/vue": "npm:4.1.3-beta.1"
-    "@nuxt/devtools-kit": "npm:^1.3.9"
-    "@nuxt/kit": "npm:^3.12.4"
-    consola: "npm:^3.2.3"
-    fast-glob: "npm:^3.3.2"
-    local-pkg: "npm:^0.5.0"
-    mlly: "npm:^1.7.1"
-    pathe: "npm:^1.1.2"
-  checksum: 10c0/3b71f5ce5be2231f771a49d07a660dca90e7839913afa446637476b612b00c29977e04230c65ae9263790a8deae84aa4d8461d7dd07cade53471282f231a7097
-  languageName: node
-  linkType: hard
-
-"@nuxt/icon@npm:^1.4.5":
   version: 1.4.5
   resolution: "@nuxt/icon@npm:1.4.5"
   dependencies:
@@ -8809,7 +8790,6 @@ __metadata:
     "@iconify-json/simple-icons": "npm:^1.1.113"
     "@nuxt/content": "npm:^2.13.2"
     "@nuxt/fonts": "npm:^0.7.2"
-    "@nuxt/icon": "npm:^1.4.5"
     "@nuxt/image": "npm:^1.7.0"
     "@nuxt/ui": "npm:^2.18.4"
     "@nuxtjs/color-mode": "npm:^3.4.2"
@@ -10591,34 +10571,34 @@ __metadata:
 
 "rehype-styling@file:./mdplugins/rehype-styling#./mdplugins/rehype-styling::hash=10aa7a&locator=n4o-blog-nuxt%40workspace%3A.":
   version: 0.0.1
-  resolution: "rehype-styling@file:./mdplugins/rehype-styling#./mdplugins/rehype-styling::hash=9a6e8d&locator=n4o-blog-nuxt%40workspace%3A."
+  resolution: "rehype-styling@file:./mdplugins/rehype-styling#./mdplugins/rehype-styling::hash=bf85e4&locator=n4o-blog-nuxt%40workspace%3A."
   dependencies:
     ap-style-title-case: "npm:^2.0.0"
     hast-util-find-and-replace: "npm:^5.0.1"
     unist-builder: "npm:^4.0.0"
     unist-util-visit: "npm:^5.0.0"
-  checksum: 10c0/2a4bb94308cadd06ae75f9c8bae668ac4b0e0a44a351b61bbdb9ae21c9c952b0cccd56fa94f98516d63201148d2489a8f327e9daac647168d087bb09a90466aa
+  checksum: 10c0/fc3774d6479ba33974a8e1486fc7be5af867f6ec3775adf735e7c170b1af62ac9fdf10e9edcbbf5aece6c6bd8893c2df6e104feaa23e7ddb82d6286dbd0ea8cd
   languageName: node
   linkType: hard
 
 "rehype-twemoji@file:./mdplugins/rehype-twemoji#./mdplugins/rehype-twemoji::hash=44c5c7&locator=n4o-blog-nuxt%40workspace%3A.":
   version: 0.0.6.2
-  resolution: "rehype-twemoji@file:./mdplugins/rehype-twemoji#./mdplugins/rehype-twemoji::hash=021c63&locator=n4o-blog-nuxt%40workspace%3A."
+  resolution: "rehype-twemoji@file:./mdplugins/rehype-twemoji#./mdplugins/rehype-twemoji::hash=c00ce0&locator=n4o-blog-nuxt%40workspace%3A."
   dependencies:
     "@twemoji/api": "npm:^15.1.0"
     emoji-regex: "npm:^10.3.0"
     hast-util-find-and-replace: "npm:^5.0.1"
     hastscript: "npm:^9.0.0"
-  checksum: 10c0/e64ad861f48a55ce21ea007f364276586cfe5f2d394cb2476839c3f878b644e348eccfc9b742d4eb47612e3ccf82407da52619fc43be4b2bbc6bbc94f3d79369
+  checksum: 10c0/12b4fe97d88e1ea21f62cb5ad78f5f2c61eb3cdd0ac8a5ae50e3dd26ad99fcf938488d3779fffcdbeaeff87e55bb1cacead0e63a70c62d3b5aa5ec13c78a5f53
   languageName: node
   linkType: hard
 
 "remark-disemote@file:./mdplugins/remark-disemote#./mdplugins/remark-disemote::hash=308e6c&locator=n4o-blog-nuxt%40workspace%3A.":
   version: 0.0.1
-  resolution: "remark-disemote@file:./mdplugins/remark-disemote#./mdplugins/remark-disemote::hash=2b6365&locator=n4o-blog-nuxt%40workspace%3A."
+  resolution: "remark-disemote@file:./mdplugins/remark-disemote#./mdplugins/remark-disemote::hash=7de05e&locator=n4o-blog-nuxt%40workspace%3A."
   dependencies:
     unist-util-visit: "npm:^5.0.0"
-  checksum: 10c0/65b1abb718db4afabce920ba2dfdb45f289be0247d79b93ee69037ff2a856bf2227183d215274925a553b419311343fdce75ef6cbabac5cdb9f90f59e5591088
+  checksum: 10c0/0dee5e01b88003b7f49d6c1b157c83bd574e913fb834b23430b07e4d18181003d9f7b78ddad2257d5c519a7ef67b134bd750a536624612fef059c344e21a28d8
   languageName: node
   linkType: hard
 
@@ -10651,11 +10631,11 @@ __metadata:
 
 "remark-heads@file:./mdplugins/remark-heads#./mdplugins/remark-heads::hash=464743&locator=n4o-blog-nuxt%40workspace%3A.":
   version: 0.0.1
-  resolution: "remark-heads@file:./mdplugins/remark-heads#./mdplugins/remark-heads::hash=46d9d8&locator=n4o-blog-nuxt%40workspace%3A."
+  resolution: "remark-heads@file:./mdplugins/remark-heads#./mdplugins/remark-heads::hash=da3049&locator=n4o-blog-nuxt%40workspace%3A."
   dependencies:
     unist-builder: "npm:^4.0.0"
     unist-util-visit: "npm:^5.0.0"
-  checksum: 10c0/0bc7c6e6c33ea2342558128337c983f28a9bf7dad99b62867be3d5fe2f1c5a3883daa238230f8c4e4c2fbb338858cea9f67dfb52fd1fce5beec5976fa098ee4c
+  checksum: 10c0/e067ed567e1e55763830867435ac6215c6675cdd233937cbd2f194da328ed618e4902a29d856844ddf49013df97ea66029d6e705f85fbfaf535131006bd9535b
   languageName: node
   linkType: hard
 
@@ -10735,11 +10715,11 @@ __metadata:
 
 "remark-subsup@file:./mdplugins/remark-subsup#./mdplugins/remark-subsup::hash=9b0e09&locator=n4o-blog-nuxt%40workspace%3A.":
   version: 0.0.2
-  resolution: "remark-subsup@file:./mdplugins/remark-subsup#./mdplugins/remark-subsup::hash=b8a092&locator=n4o-blog-nuxt%40workspace%3A."
+  resolution: "remark-subsup@file:./mdplugins/remark-subsup#./mdplugins/remark-subsup::hash=38cd6b&locator=n4o-blog-nuxt%40workspace%3A."
   dependencies:
     mdast-util-find-and-replace: "npm:^3.0.1"
     unist-builder: "npm:^4.0.0"
-  checksum: 10c0/518c8ead43f45e1515200d760ae0cdae122a2cadfa8100c2dd53598bc38d76e806d3e8bf32bdd0d2a7138ef24af584c02ef65a1eb350b860834c9b25782ba074
+  checksum: 10c0/a896bebbaee394aea231e7eea78d82395607d28a1dfa539a822f7d00a6ade6ba85934c19dec679bcabac6b5654816e0f76af7ed3b7b7f7e7b76128418696d01b
   languageName: node
   linkType: hard
 
