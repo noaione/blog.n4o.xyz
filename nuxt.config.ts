@@ -224,6 +224,7 @@ export default defineNuxtConfig({
   routeRules: {
     "/": { prerender: true },
     "/about": { prerender: true },
+    "/_ipx/**": { prerender: true },
   },
   nitro: {
     prerender: {
