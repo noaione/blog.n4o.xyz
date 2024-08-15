@@ -1,8 +1,21 @@
 <template>
-  <component :is="imgComponent" v-if="isStandardEmote" :src="refinedSrc" :alt="alt" :width="width" :height="height" />
+  <template v-if="isStandardEmote">
+    <img v-if="isSkipOptimize" :src="refinedSrc" :alt="alt" :width="width" :height="height" loading="lazy" />
+    <NuxtImg v-else :src="refinedSrc" :alt="alt" :width="width" :height="height" />
+  </template>
   <div v-else class="group relative [&>pre]:!my-0">
-    <component
-      :is="imgComponent"
+    <img
+      v-if="isSkipOptimize"
+      :src="refinedSrc"
+      :alt="alt"
+      :width="width"
+      :height="height"
+      :class="`w-full ${alt ? 'mb-1' : ''}`"
+      data-zoomable="1"
+      loading="lazy"
+    />
+    <NuxtImg
+      v-else
       :src="refinedSrc"
       :alt="alt"
       :width="width"
@@ -21,7 +34,7 @@
 
 <script setup lang="ts">
 import { joinURL, withLeadingSlash, withTrailingSlash } from "ufo";
-import { resolveComponent, useRuntimeConfig } from "#imports";
+import { useRuntimeConfig } from "#imports";
 
 const props = withDefaults(
   defineProps<{
@@ -30,6 +43,7 @@ const props = withDefaults(
     width?: string | number;
     height?: string | number;
     ariaLabel?: string;
+    skipOptimize?: string;
   }>(),
   {
     src: "",
@@ -37,9 +51,13 @@ const props = withDefaults(
     width: undefined,
     height: undefined,
     ariaLabel: undefined,
+    skipOptimize: "false",
   }
 );
 
+const isSkipOptimize = computed(() => {
+  return castBooleanNull(props.skipOptimize) ?? false;
+});
 const isTwemoji = computed(() => {
   return props.src?.includes("gh/jdecked/twemoji");
 });
@@ -54,7 +72,6 @@ const isStandardEmote = computed(() => {
 
   return isTwemoji.value;
 });
-const imgComponent = useRuntimeConfig().public.mdc.useNuxtImage ? resolveComponent("NuxtImg") : "img";
 
 const refinedSrc = computed(() => {
   if (props.src?.startsWith("/") && !props.src.startsWith("//")) {
