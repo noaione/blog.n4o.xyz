@@ -16,44 +16,11 @@
         </div>
         <div class="font-variable py-1 pl-1 pr-4 text-sm tracking-tight variation-weight-[550]">{{ filename }}</div>
       </div>
-      <button
-        class="invisible mr-2 flex h-8 w-8 flex-row items-center rounded-sm border-2 py-0.5 opacity-0 transition group-hover:visible group-hover:opacity-100"
-        :class="{
-          'border-[#8c8c8c] dark:border-[#e0def4]': !clickedClipboard,
-          'border-green-500': clickedClipboard,
-        }"
-        @click="copyToClipboard"
-      >
-        <Icon
-          name="heroicons:clipboard"
-          class="m-auto h-5 w-5 transition"
-          :class="{
-            'text-[#8c8c8c] dark:text-[#e0def4]': !clickedClipboard,
-            'text-green-500': clickedClipboard,
-          }"
-        />
-      </button>
+      <CopyToClipboard unpin @copy="copyToClipboard" />
     </div>
     <pre
       :class="`font-monaspace-neon shiki-wrapper !rose-pine-related font-variable tracking-normal ${filename ? 'mt-0 rounded-t-none' : 'rounded-t-md'} ${$props.class ?? ''}`"
-    ><button
-        v-if="!filename"
-        class="invisible absolute right-2 top-2 flex h-8 w-8 flex-row items-center rounded-sm border-2 py-0.5 opacity-0 transition group-hover:visible group-hover:opacity-100"
-        :class="{
-          'border-[#8c8c8c] dark:border-[#e0def4]': !clickedClipboard,
-          'border-green-500': clickedClipboard,
-        }"
-        @click="copyToClipboard"
-      >
-      <Icon
-        name="heroicons:clipboard"
-        class="m-auto h-5 w-5 transition"
-        :class="{
-          '!bg-[#8c8c8c] dark:!bg-[#e0def4]': !clickedClipboard,
-          '!bg-green-500': clickedClipboard,
-        }"
-      />
-      </button><slot /></pre>
+    ><CopyToClipboard v-if="!filename" @copy="copyToClipboard" /><slot /></pre>
   </div>
 </template>
 

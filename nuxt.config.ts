@@ -429,7 +429,9 @@ export default defineNuxtConfig({
     markdown: {
       remarkPlugins: ["remark-math"],
       rehypePlugins: {
-        "rehype-katex": {},
+        "rehype-katex": {
+          output: "mathml",
+        },
       },
       anchorLinks: true,
       toc: {
@@ -497,7 +499,7 @@ export default defineNuxtConfig({
   mdc: {
     components: {
       map: {
-        video: "Video",
+        video: "ProseVideo",
         admonition: "Admonition",
         "repo-card": "RepoCard",
         gist: "Gist",

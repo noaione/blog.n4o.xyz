@@ -1,7 +1,14 @@
 <template>
-  <template v-if="isStandardEmote">
-    <img :src="refinedSrc" :alt="alt" :width="width" :height="height" loading="lazy" :aria-label="ariaLabel" />
-  </template>
+  <img
+    v-if="isStandardEmote"
+    :src="refinedSrc"
+    :alt="alt"
+    :width="width"
+    :height="height"
+    loading="lazy"
+    class="discord-emote discord-emote-inline"
+    :aria-label="ariaLabel"
+  />
   <div v-else class="group relative [&>pre]:!my-0">
     <img
       v-if="isSkipOptimize"

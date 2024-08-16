@@ -96,3 +96,14 @@ But WHY!?
 10-20
 
 This is with complete number 10-20
+
+## Katex Test
+
+$$\sum_{i=1}^n(x_i^2 - \overline{x}^2)$$
+
+Lift($$L$$) can be determined by Lift Coefficient ($$C_L$$) like the following
+equation.
+
+$$
+L = \frac{1}{2} \rho v^2 S C_L
+$$
