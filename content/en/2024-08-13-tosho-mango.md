@@ -59,7 +59,7 @@ Or, you can create your own build from the source code:
 2. Run `cargo build --release --locked --all`{lang=bash}
 3. Binary will be provided at `target/release/tosho`{lang=bash} or `.\target\release\tosho.exe`{lang=powershell}
 
-### Supported platforms |#platforms|
+### Supported platforms${platforms}
 
 The following are the supported websites (with redacted names):
 

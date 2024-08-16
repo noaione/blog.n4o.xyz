@@ -16,7 +16,7 @@ Jika anda tidak tahu, blog ini sudah melewati 3x iterasi sejak pertama kali dibu
 Blog ini awalnya dibuat menggunakan tema Jekyll dan di hosting di GitHub.<br />
 Saya sendiri lupa sih pakai tema apaan untuk Blog awal itu, tapi blog itu lumayan enak untuk dipakai.
 
-## Blog v1
+## Blog v1${noCase}
 
 ![Tampilan lama blog](/assets/images/blog-migration/blog-v1.png)
 
@@ -24,7 +24,7 @@ Blog itu dipakai dari 2019, dengan modifikasi oleh saya sendiri untuk nambah beb
 
 Setelah itu sekitar awal tahun 2021, saya pindah atau lebih tempatnya coba-coba Hugo, nemu theme yang lumayan enak yaitu [uBlogger](https://github.com/uPagge/uBlogger).
 
-## Blog v2
+## Blog v2${noCase}
 
 ![Tampilan blog dengan uBlogger dan Hugo](/assets/images/blog-migration/blog-v2.png)
 
@@ -32,7 +32,7 @@ Menurut saya sendiri, uBlogger dan Hugo punya fitur yang lumayan enak. Tapi terl
 
 Perubahannya rata-rata cuma penyesuaian untuk penggunaan pribadi.
 
-## Blog v3
+## Blog v3${noCase}
 
 ![Tampilan blog dengan Next.js](/assets/images/blog-migration/blog-v3.png)
 
@@ -45,7 +45,7 @@ Pas awal-awal coba pake blog itu, banyak sekali fitur yang tak pakai dari web Hu
 
 Jadilah blog baru ini, dibuat dengan menggunakan framework Next.JS + ReactJS dan dengan bantuan TailwindCSS.
 
-## Blog v4
+## Blog v4${noCase}
 
 ![Tampilan blog dengan Nuxt](/assets/images/blog-migration/blog-v4.png)
 

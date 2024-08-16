@@ -54,7 +54,7 @@ Atau coba build sendiri dari source code:
 2. Jalankan `cargo build --release --locked --all`{lang=bash}
 3. _Binary_ akan ada di `target/release/tosho`{lang=bash} atau `.\target\release\tosho.exe`{lang=powershell}
 
-### Platform yang didukung |#platforms|
+### Platform yang didukung${platforms}
 
 Berikut adalah berbagai macam website yang didukung (dengan redaksi):
 

@@ -27,7 +27,7 @@ The API consists of VTuber API and many more, and all of the backend (VTuber API
 
 :repo-card{username="ihateani-me" repo="vtscheduler-ts"}
 
-## The Beginning of the Despair |#journey01-python|
+## The Beginning of the Despair${#journey01-python}
 
 It's a bright sunny day outside, I was just watching a VTuber on--
 
@@ -56,12 +56,12 @@ So I was having some hard time actually maintaining my private used API and the 
 
 Fast-forward to October, I decided to try out JavaScript or more specifically TypeScript.<br />
 
-## Another Language to Learn = More Despair |#journey02-typescript-port|
+## Another Language to Learn = More Despair${journey02-typescript-port}
 
 Moving from Python to TypeScript is like riding a bike with only one wheel going fast on downhill (and maybe the bike is on fire too).<br />
 It was pure hell since how different it is, and especially my first implementation of the `async/await` stuff which use `Promises` which is hard to understand because it just doesn't work as I wanted :AyameDespair:
 
-### Backend |#journey02-typescript-port-backend|
+### Backend${journey02-typescript-port-backend}
 
 Not-so-fun-fact, the Backend actually ported later to TypeScript when I decided to actually utilize properly the MongoDB Schema design.
 
@@ -86,7 +86,7 @@ I also introduced some new Collection like `ViewersData` that will track the amo
 
 ![This looks much better and cleaner, and actually easy to filter](/assets/images/whateven/03_db_that_looks_clean_enough_lmao.png)
 
-### Frontend |#journey02-typescript-port-frontend|
+### Frontend${journey02-typescript-port-frontend}
 
 Oh boy.
 
@@ -104,7 +104,7 @@ I also made some changes to the API docs which use ReDoc UI rather than Swagger 
 
 I'm not gonna talk more since it's mostly the same as the original Python code.
 
-## Migrating to GraphQL API |#journey03-graphql-hell|
+## Migrating to GraphQL API${journey03-graphql-hell}
 
 As with the introduction of the new Database schema mentioned in the [Frontend](#journey02-typescript-port-frontend) section.
 
@@ -118,7 +118,7 @@ Not only that, I also ported the Sauce Finder API and the \*_cough_\* A doujin W
 
 Using GraphQL actually is very easy tbh, it doesn't takes really long to actually realize what I need to do, and I already have most of my base code from the old one, and just need to readjust to the new one.
 
-## The End of Despair? |#journey04-the-end|
+## The End of Despair?${journey04-the-end}
 
 One day, I decided to "Rewrite" or "Restructure" the code base of [ihaapi-ts](https://github.com/ihateani-me/ihaapi-ts), you can see the PR here: [PR #10](https://github.com/ihateani-me/ihaapi-ts/pull/10).
 
