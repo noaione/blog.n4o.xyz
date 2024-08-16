@@ -1,9 +1,7 @@
 import { defineConfig } from "@nuxtjs/mdc/config";
 import type { HighlighterOptions, MdcThemeOptions } from "@nuxtjs/mdc";
-import remarkHeads from "remark-heads";
 import type { ShikiTransformer } from "shiki";
 import {
-  makeCommentNotationRegex,
   transformerCommentNotationDiff,
   transformerCommentNotationFocus,
   transformerCommentNotationHighlight,
@@ -11,8 +9,12 @@ import {
   transformerNotProsePosition,
   transformerShikiLineNumbers,
 } from "./utils/transformers";
-import { visit } from "unist-util-visit";
-import type { ElementContent, Element as HastElement, Node as HastNode } from "hast";
+import remarkHeads from "./mdplugins/remarkHeads";
+import remarkSubSup from "./mdplugins/remarkSubSup";
+import rehypeDisemote from "./mdplugins/rehypeDisemote";
+import rehypeShikiCodeNotationRemoval from "./mdplugins/rehypeShikiCodeNotationRemoval";
+import rehypeStyling from "./mdplugins/rehypeStyling";
+import rehypeTwemoji from "./mdplugins/rehypeTwemoji";
 
 const defaultTransformers = [
   transformerCommentNotationDiff(),
@@ -44,88 +46,6 @@ export function handleShikiTransformers(
   return transformers;
 }
 
-function rehypeShikiCodeNotationRemover() {
-  return (ast: ElementContent) => {
-    visit(
-      ast,
-      (node: HastNode) => {
-        if (node.type !== "element") {
-          return false;
-        }
-
-        const element = node as HastElement;
-
-        return (
-          element.tagName === "pre" && typeof element.properties.code === "string" && element.properties.code.length > 0
-        );
-      },
-      (node) => {
-        if (node.type !== "element") {
-          return;
-        }
-
-        const element = node as HastElement;
-
-        if (typeof element.properties.code === "string") {
-          defaultTransformers.forEach((transformer) => {
-            const matchers = transformer.matchers ?? [];
-
-            if (!matchers.length) {
-              return;
-            }
-
-            const matcher = makeCommentNotationRegex(matchers);
-
-            const splitLines = (element.properties.code as string).split("\n");
-            const newLines = splitLines
-              .map((line) => {
-                const matchLine = line.match(matcher);
-
-                if (!matchLine) {
-                  return line;
-                }
-
-                const { groups } = matchLine;
-
-                if (!groups) {
-                  return line;
-                }
-
-                const { cma, marker, ex } = groups;
-
-                if (!cma || !marker) {
-                  return line;
-                }
-
-                const cmaIndex = line.indexOf(cma);
-
-                if (cmaIndex === -1) {
-                  return line;
-                }
-
-                // Remove the line if the comment is just the marker
-                if (ex === `:${cmaIndex}`) {
-                  return null;
-                }
-
-                // Check if start at zero, then just remove the line
-                if (cmaIndex === 0) {
-                  return null;
-                }
-
-                // Remove the comment notation
-                return line.slice(0, cmaIndex).trimEnd();
-              })
-              .filter((line) => line !== null);
-
-            element.properties.code = newLines.join("\n");
-          });
-        }
-      }
-    );
-  };
-}
-
 export default defineConfig({
   shiki: {
     transformers(code, lang, theme, options) {
@@ -135,12 +55,17 @@ export default defineConfig({
   unified: {
     remark(processor) {
       processor.use(remarkHeads);
+      processor.use(remarkSubSup);
     },
-    // rehype(processor) {
-    //   processor.use(rehypeShikiCodeNotationRemover);
-    // },
+    rehype(processor) {
+      processor.use(rehypeDisemote);
+      processor.use(rehypeTwemoji);
+      processor.use(rehypeStyling);
+    },
     post(processor) {
-      processor.use(rehypeShikiCodeNotationRemover);
+      processor.use(rehypeShikiCodeNotationRemoval, {
+        transformers: defaultTransformers,
+      });
     },
   },
 });

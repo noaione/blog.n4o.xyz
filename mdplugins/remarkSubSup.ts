@@ -1,8 +1,9 @@
+import type { Nodes } from "mdast";
 import { findAndReplace } from "mdast-util-find-and-replace";
 import { u } from "unist-builder";
 
-export default function remarkSubSup() {
-  return (ast) => {
+export default function () {
+  return (ast: Nodes) => {
     findAndReplace(ast, [
       [
         /\^[^^]+\^/g,

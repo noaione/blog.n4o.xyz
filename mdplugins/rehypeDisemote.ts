@@ -1,21 +1,18 @@
-import discordEmote from "./discord-emote.json" assert { type: "json" };
+import type { Nodes, Text as TextNode } from "hast";
+import { h as hast } from "hastscript";
 import { visit } from "unist-util-visit";
+import discordEmote from "~/assets/discord-emote.json";
 
 const EmojiRegExp = /:(\+1|[-\w]+):/g;
 
-// Reexport discordEmote for other plugins
-export { discordEmote };
-
-export default function remarkDisEmote() {
-  return (ast) => {
-    visit(ast, "text", (node, index, parent) => {
+export default function () {
+  return (ast: Nodes) => {
+    visit(ast, "text", (node, _, parent) => {
       const emoteSlices = [];
 
       let start = 0;
-      /** @type {RegExpExecArray} */
-      let match;
-      /** @type {number} */
-      let position;
+      let match: RegExpExecArray | null;
+      let position: number;
 
       EmojiRegExp.lastIndex = 0;
       match = EmojiRegExp.exec(node.value);
@@ -23,32 +20,28 @@ export default function remarkDisEmote() {
       while (match) {
         position = match.index;
 
-        const eIdx = discordEmote.findIndex((e) => e.name === match[1]);
+        const eIdx = discordEmote.findIndex((emote) => emote.name === match?.[1]);
 
         if (eIdx !== -1) {
           if (start !== position) {
             emoteSlices.push({
               type: "text",
               value: node.value.slice(start, position),
-            });
+            } as TextNode);
           }
 
           const sel = discordEmote[eIdx];
           const shouldInline = match[0].length !== match.input.length;
 
-          const newNode = {
-            type: "image",
-            url: sel.url,
-            alt: `Discord Emote: ${sel.name}`,
+          const newNode = hast("img", {
+            src: sel.url,
+            alt: sel.name,
             title: sel.name,
-            // add class for styling
-            data: {
-              hProperties: {
-                ariaLabel: "emoticon: " + sel.name,
-                className: `discord-emote ${shouldInline ? "discord-emote-inline" : ""}`,
-              },
-            },
-          };
+            ariaLabel: `Discord: ${sel.name}`,
+            className: `discord-emote ${shouldInline ? "discord-emote-inline" : ""}`,
+            "data-is-emote": "true",
+            "skip-optimize": "true",
+          });
 
           emoteSlices.push(newNode);
           start = position + match[0].length;
@@ -59,11 +52,12 @@ export default function remarkDisEmote() {
         match = EmojiRegExp.exec(node.value);
       }
 
-      if (emoteSlices.length > 0) {
+      if (emoteSlices.length > 0 && parent) {
         emoteSlices.push({
           type: "text",
           value: node.value.slice(start),
-        });
+        } as TextNode);
+
         parent.children = emoteSlices;
       }
     });

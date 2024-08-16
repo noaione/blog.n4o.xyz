@@ -1,7 +1,6 @@
 <template>
   <template v-if="isStandardEmote">
-    <img v-if="isSkipOptimize" :src="refinedSrc" :alt="alt" :width="width" :height="height" loading="lazy" />
-    <NuxtImg v-else :src="refinedSrc" :alt="alt" :width="width" :height="height" />
+    <img :src="refinedSrc" :alt="alt" :width="width" :height="height" loading="lazy" :aria-label="ariaLabel" />
   </template>
   <div v-else class="group relative [&>pre]:!my-0">
     <img
@@ -11,6 +10,7 @@
       :width="width"
       :height="height"
       :class="`w-full ${alt ? 'mb-1' : ''}`"
+      :aria-label="ariaLabel"
       data-zoomable="1"
       loading="lazy"
     />
@@ -21,6 +21,7 @@
       :width="width"
       :height="height"
       :class="`w-full ${alt ? 'mb-1' : ''}`"
+      :aria-label="ariaLabel"
       data-zoomable="1"
     />
     <figcaption
@@ -44,6 +45,7 @@ const props = withDefaults(
     height?: string | number;
     ariaLabel?: string;
     skipOptimize?: string;
+    dataIsEmote?: string;
   }>(),
   {
     src: "",
@@ -52,6 +54,7 @@ const props = withDefaults(
     height: undefined,
     ariaLabel: undefined,
     skipOptimize: "false",
+    dataIsEmote: "false",
   }
 );
 
@@ -62,6 +65,10 @@ const isTwemoji = computed(() => {
   return props.src?.includes("gh/jdecked/twemoji");
 });
 const isStandardEmote = computed(() => {
+  if (castBooleanNull(props.dataIsEmote)) {
+    return true;
+  }
+
   if (props.alt.startsWith("Discord Emote:")) {
     return true;
   }

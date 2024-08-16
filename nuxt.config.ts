@@ -185,19 +185,19 @@ function findAllAvailablePosts(allLocales: LocaleObject[], defaultLocale: string
 const locales: LocaleObject[] = [
   {
     code: "id",
-    iso: "id-ID",
+    language: "id-ID",
     name: "Bahasa Indonesia",
     file: "id.json",
   },
   {
     code: "en",
-    iso: "en-US",
+    language: "en-US",
     name: "English",
     file: "en.json",
   },
   {
     code: "ja",
-    iso: "ja-JP",
+    language: "ja-JP",
     name: "日本語",
     file: "ja.json",
   },
@@ -357,6 +357,7 @@ export default defineNuxtConfig({
         from: "ofetch",
       },
     ],
+    dirs: ["./composables", "./utils", "./mdplugins"],
   },
   runtimeConfig: {
     public: {
@@ -426,10 +427,8 @@ export default defineNuxtConfig({
       ],
     },
     markdown: {
-      remarkPlugins: ["remark-disemote", "remark-subsup", "remark-math"],
+      remarkPlugins: ["remark-math"],
       rehypePlugins: {
-        "rehype-styling": {},
-        "rehype-twemoji": {},
         "rehype-katex": {},
       },
       anchorLinks: true,

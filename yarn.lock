@@ -3539,7 +3539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ap-style-title-case@npm:2.0.0, ap-style-title-case@npm:^2.0.0":
+"ap-style-title-case@npm:^2.0.0":
   version: 2.0.0
   resolution: "ap-style-title-case@npm:2.0.0"
   checksum: 10c0/81460f425048b83ff4f9143124bdfed06bef8d0c465bf1a55d8c24167c3a60a5245c972c64cb771c2139dba432bb73e8de524d52d9222f2c824844e650d512b8
@@ -8673,23 +8673,30 @@ __metadata:
     "@stylistic/eslint-plugin": "npm:2.6.4"
     "@tailwindcss/forms": "npm:0.5.7"
     "@tailwindcss/typography": "npm:0.5.14"
+    "@twemoji/api": "npm:^15.1.0"
     "@types/eslint": "npm:9.6.0"
     "@types/eslint__eslintrc": "npm:2.1.2"
     "@types/eslint__js": "npm:8.42.3"
+    "@types/hast": "npm:^3.0.4"
+    "@types/mdast": "npm:^4.0.4"
     "@types/postcss-js": "npm:4.0.4"
     "@types/uniqid": "npm:5.3.4"
     "@vueuse/core": "npm:11.0.0"
     "@vueuse/nuxt": "npm:11.0.0"
-    ap-style-title-case: "npm:2.0.0"
+    ap-style-title-case: "npm:^2.0.0"
     asciinema-player: "npm:3.8.0"
     consola: "npm:3.2.3"
     dayjs-nuxt: "npm:2.1.9"
+    emoji-regex: "npm:^10.3.0"
     eslint: "npm:9.9.0"
     eslint-config-prettier: "npm:9.1.0"
     eslint-plugin-prettier: "npm:5.2.1"
     eslint-plugin-unicorn: "npm:55.0.0"
     eslint-plugin-vue: "npm:9.27.0"
     globals: "npm:15.9.0"
+    hast-util-find-and-replace: "npm:^5.0.1"
+    hastscript: "npm:^9.0.0"
+    mdast-util-find-and-replace: "npm:^3.0.1"
     medium-zoom: "npm:1.1.0"
     nuxt: "npm:3.12.4"
     postcss-js: "npm:4.0.1"
@@ -8697,19 +8704,16 @@ __metadata:
     prettier-plugin-tailwindcss: "npm:0.6.6"
     reading-time: "npm:1.5.0"
     rehype-katex: "npm:7.0.0"
-    rehype-styling: "file:./mdplugins/rehype-styling#./mdplugins/rehype-styling::hash=10aa7a&locator=n4o-blog-nuxt%40workspace%3A."
-    rehype-twemoji: "file:./mdplugins/rehype-twemoji#./mdplugins/rehype-twemoji::hash=44c5c7&locator=n4o-blog-nuxt%40workspace%3A."
-    remark-disemote: "file:./mdplugins/remark-disemote#./mdplugins/remark-disemote::hash=308e6c&locator=n4o-blog-nuxt%40workspace%3A."
-    remark-heads: "file:./mdplugins/remark-heads#./mdplugins/remark-heads::hash=464743&locator=n4o-blog-nuxt%40workspace%3A."
     remark-math: "npm:6.0.0"
-    remark-subsup: "file:./mdplugins/remark-subsup#./mdplugins/remark-subsup::hash=9b0e09&locator=n4o-blog-nuxt%40workspace%3A."
     tailwindcss: "npm:3.4.7"
     to-xml: "npm:0.1.11"
     typescript: "npm:5.5.4"
     typescript-eslint: "npm:8.1.0"
+    unified: "npm:^11.0.5"
     uniqid: "npm:5.4.0"
+    unist-builder: "npm:^4.0.0"
     unist-util-find: "npm:3.0.0"
-    unist-util-visit: "npm:5.0.0"
+    unist-util-visit: "npm:^5.0.0"
     vue3-carousel-nuxt: "npm:1.1.2"
   languageName: unknown
   linkType: soft
@@ -10454,39 +10458,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rehype-styling@file:./mdplugins/rehype-styling#./mdplugins/rehype-styling::hash=10aa7a&locator=n4o-blog-nuxt%40workspace%3A.":
-  version: 0.0.1
-  resolution: "rehype-styling@file:./mdplugins/rehype-styling#./mdplugins/rehype-styling::hash=498017&locator=n4o-blog-nuxt%40workspace%3A."
-  dependencies:
-    ap-style-title-case: "npm:^2.0.0"
-    hast-util-find-and-replace: "npm:^5.0.1"
-    unist-builder: "npm:^4.0.0"
-    unist-util-visit: "npm:^5.0.0"
-  checksum: 10c0/c217923bcbc3ca730842b49e2ed9db9fc106dbc53ad48996f59f2ff7ef7d084a0c911f2f4748454d2251b0eeb1c1714e146c232c22bc09823b45e3caec793253
-  languageName: node
-  linkType: hard
-
-"rehype-twemoji@file:./mdplugins/rehype-twemoji#./mdplugins/rehype-twemoji::hash=44c5c7&locator=n4o-blog-nuxt%40workspace%3A.":
-  version: 0.0.6.2
-  resolution: "rehype-twemoji@file:./mdplugins/rehype-twemoji#./mdplugins/rehype-twemoji::hash=021c63&locator=n4o-blog-nuxt%40workspace%3A."
-  dependencies:
-    "@twemoji/api": "npm:^15.1.0"
-    emoji-regex: "npm:^10.3.0"
-    hast-util-find-and-replace: "npm:^5.0.1"
-    hastscript: "npm:^9.0.0"
-  checksum: 10c0/e64ad861f48a55ce21ea007f364276586cfe5f2d394cb2476839c3f878b644e348eccfc9b742d4eb47612e3ccf82407da52619fc43be4b2bbc6bbc94f3d79369
-  languageName: node
-  linkType: hard
-
-"remark-disemote@file:./mdplugins/remark-disemote#./mdplugins/remark-disemote::hash=308e6c&locator=n4o-blog-nuxt%40workspace%3A.":
-  version: 0.0.1
-  resolution: "remark-disemote@file:./mdplugins/remark-disemote#./mdplugins/remark-disemote::hash=2b6365&locator=n4o-blog-nuxt%40workspace%3A."
-  dependencies:
-    unist-util-visit: "npm:^5.0.0"
-  checksum: 10c0/65b1abb718db4afabce920ba2dfdb45f289be0247d79b93ee69037ff2a856bf2227183d215274925a553b419311343fdce75ef6cbabac5cdb9f90f59e5591088
-  languageName: node
-  linkType: hard
-
 "remark-emoji@npm:^5.0.0":
   version: 5.0.1
   resolution: "remark-emoji@npm:5.0.1"
@@ -10511,16 +10482,6 @@ __metadata:
     remark-stringify: "npm:^11.0.0"
     unified: "npm:^11.0.0"
   checksum: 10c0/db0aa85ab718d475c2596e27c95be9255d3b0fc730a4eda9af076b919f7dd812f7be3ac020611a8dbe5253fd29671d7b12750b56e529fdc32dfebad6dbf77403
-  languageName: node
-  linkType: hard
-
-"remark-heads@file:./mdplugins/remark-heads#./mdplugins/remark-heads::hash=464743&locator=n4o-blog-nuxt%40workspace%3A.":
-  version: 0.0.1
-  resolution: "remark-heads@file:./mdplugins/remark-heads#./mdplugins/remark-heads::hash=54a764&locator=n4o-blog-nuxt%40workspace%3A."
-  dependencies:
-    unist-builder: "npm:^4.0.0"
-    unist-util-visit: "npm:^5.0.0"
-  checksum: 10c0/ce46d74e0b60baf34151d1450f698df1b5ea61c939410434b23d7eea09a950bff403cd3659c31e2744acf1d45e1d39b3ac9b1e28316b974d6b8bb3947f59ea0b
   languageName: node
   linkType: hard
 
@@ -10595,16 +10556,6 @@ __metadata:
     mdast-util-to-markdown: "npm:^2.0.0"
     unified: "npm:^11.0.0"
   checksum: 10c0/0cdb37ce1217578f6f847c7ec9f50cbab35df5b9e3903d543e74b405404e67c07defcb23cd260a567b41b769400f6de03c2c3d9cd6ae7a6707d5c8d89ead489f
-  languageName: node
-  linkType: hard
-
-"remark-subsup@file:./mdplugins/remark-subsup#./mdplugins/remark-subsup::hash=9b0e09&locator=n4o-blog-nuxt%40workspace%3A.":
-  version: 0.0.2
-  resolution: "remark-subsup@file:./mdplugins/remark-subsup#./mdplugins/remark-subsup::hash=b8a092&locator=n4o-blog-nuxt%40workspace%3A."
-  dependencies:
-    mdast-util-find-and-replace: "npm:^3.0.1"
-    unist-builder: "npm:^4.0.0"
-  checksum: 10c0/518c8ead43f45e1515200d760ae0cdae122a2cadfa8100c2dd53598bc38d76e806d3e8bf32bdd0d2a7138ef24af584c02ef65a1eb350b860834c9b25782ba074
   languageName: node
   linkType: hard
 
@@ -12208,7 +12159,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unist-util-visit@npm:5.0.0, unist-util-visit@npm:^5.0.0":
+"unist-util-visit@npm:^5.0.0":
   version: 5.0.0
   resolution: "unist-util-visit@npm:5.0.0"
   dependencies:
