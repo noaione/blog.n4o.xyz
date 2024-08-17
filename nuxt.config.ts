@@ -533,7 +533,10 @@ export default defineNuxtConfig({
 
       // Get all pregenerated images
       const pregenIpxImages = nitro._prerenderedRoutes?.filter(
-        (route) => route.route.startsWith("/_ipx/") && !route.route.startsWith("/_ipx/_/")
+        (route) =>
+          route.route.startsWith("/_ipx/") &&
+          !route.route.startsWith("/_ipx/_/") &&
+          route.route.includes("/assets/images/")
       );
 
       if (pregenIpxImages && pregenIpxImages.length) {
