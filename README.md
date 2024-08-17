@@ -83,11 +83,17 @@ author: noaione
 ---
 ```
 
+## Credits
+
+- [Monaspace Xenon](https://github.com/githubnext/monaspace) and [Neon](https://github.com/githubnext/monaspace) font by [GitHub Next](githubnext) and [Lettermatic](https://lettermatic.com/): [Repository](https://github.com/githubnext/monaspace)
+- Social Card Background by [cbnt99](https://x.com/CBNT99): [Twitter/X](https://x.com/CBNT99/status/1458396816601337859)
+  - Font used is [Monaspace Xenon](https://github.com/githubnext/monaspace) and [M PLUS Code 1](https://mplusfonts.github.io/)
+- Rehype Twemoji is derived from [rehype-twemoji](https://github.com/nekochan0122/rehype-twemoji) by [nekochan0122](https://github.com/nekochan0122)
+- Other contributors and libraries that I used in this project
+
 ## License
 
 All the content in this repository is licensed under [MIT License](LICENSE-MIT) with the exception of the content in the `content` folder which is licensed under [Creative Commons Attribution 4.0 International License](LICENSE-CC-BY-NAI-4.0) with modification regarding about AI/ML usages.
-
-Some other exception applied on the `mdplugins` folder that might be under different license, please verify each `package.json` file for more information.
 
 ### Font License
 
