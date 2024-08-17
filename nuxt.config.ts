@@ -527,5 +527,17 @@ export default defineNuxtConfig({
     ipx: {
       modifiers: ipxModifiers,
     },
+    ipxStatic: {
+      modifiers: ipxModifiers,
+    },
+    static: {
+      modifiers: ipxModifiers,
+    },
+    providers: {
+      none: {
+        name: "none",
+        provider: "~/providers/img-none.ts",
+      },
+    },
   },
 });

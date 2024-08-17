@@ -5,31 +5,23 @@
     :alt="alt"
     :width="width"
     :height="height"
-    loading="lazy"
-    class="discord-emote discord-emote-inline"
     :aria-label="ariaLabel"
+    class="discord-emote discord-emote-inline"
+    loading="lazy"
+    decoding="async"
   />
   <div v-else class="group relative [&>pre]:!my-0">
-    <img
-      v-if="isSkipOptimize"
+    <NuxtImg
       :src="refinedSrc"
       :alt="alt"
       :width="width"
       :height="height"
       :class="`w-full ${alt ? 'mb-1' : ''}`"
       :aria-label="ariaLabel"
+      :provider="isSkipOptimize ? 'none' : 'ipxStatic'"
       data-zoomable="1"
       loading="lazy"
-    />
-    <NuxtImg
-      v-else
-      :src="refinedSrc"
-      :alt="alt"
-      :width="width"
-      :height="height"
-      :class="`w-full ${alt ? 'mb-1' : ''}`"
-      :aria-label="ariaLabel"
-      data-zoomable="1"
+      decoding="async"
     />
     <figcaption
       v-if="alt"
