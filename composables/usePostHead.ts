@@ -43,7 +43,10 @@ export default function (input: ExtendedParsedContent, locales: string[]) {
 
   const computedImage = computed(() => {
     if (!input.image) {
-      return;
+      // Use default image
+      const optimizedImage = image(blogConfig.value.image, config.public.ipxModifiers);
+
+      return appendBase(optimizedImage, config.public.productionUrl);
     }
 
     const optimizedImage = image(input.image!, config.public.ipxModifiers);

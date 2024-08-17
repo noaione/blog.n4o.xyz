@@ -38,6 +38,13 @@ export default function ({
   const route = useRoute();
   const { locale, defaultLocale, locales } = useI18n();
   const localePath = useLocalePath();
+  const image = useImage();
+
+  const optimizedImage = computed(() => {
+    const optImage = image(blogConfig.value.image, config.public.ipxModifiers);
+
+    return appendBase(optImage, config.public.productionUrl);
+  });
 
   const metaTag = [
     {
@@ -70,7 +77,7 @@ export default function ({
     },
     {
       property: "og:image",
-      content: appendBase(blogConfig.value.image, config.public.productionUrl),
+      content: optimizedImage.value,
     },
     {
       name: "twitter:card",
@@ -86,7 +93,7 @@ export default function ({
     },
     {
       name: "twitter:image",
-      content: appendBase(blogConfig.value.image, config.public.productionUrl),
+      content: optimizedImage.value,
     },
   ];
 
