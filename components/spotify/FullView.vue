@@ -23,7 +23,7 @@
         <div class="relative">
           <NuxtLink :href="data.data.album.url" rel="noopener noreferrer" target="_blank">
             <div class="spotify-wave absolute bottom-0 left-0 right-0 top-0 rounded-lg border-4 duration-[10s]" />
-            <NuxtImg
+            <ImageWrap
               class="h-auto w-96 rounded-lg shadow-lg"
               :src="data.data.album.cover"
               :alt="`${data.data.album.name} Album Art`"

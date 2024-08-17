@@ -4,7 +4,7 @@
     <dd>
       <ul class="flex justify-center space-x-8 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
         <li v-for="author in computedAuthors ?? []" :key="author.id" class="flex items-center space-x-2">
-          <NuxtImg v-if="author.avatar" :src="author.avatar" alt="avatar" class="h-10 w-10 rounded-full" />
+          <ImageWrap v-if="author.avatar" :src="author.avatar" alt="Avatar" class="h-10 w-10 rounded-full" eager />
           <Icon v-else name="heroicons:user-solid" class="h-10 w-10 rounded-full" />
           <dl class="whitespace-nowrap text-sm leading-5">
             <dt class="sr-only">{{ $t("blog.author.name") }}</dt>

@@ -8,7 +8,7 @@
         <div>
           <h3 class="font-variable mb-2 text-2xl leading-8 tracking-tight variation-weight-bold">
             <div v-if="data.image" class="prose mb-2 dark:prose-invert">
-              <NuxtImg :src="data.image" class="max-w-full" alt="Featured blog post image" />
+              <ImageWrap :src="data.image" alt="Featured blog post image" class="max-w-full" />
             </div>
             <NuxtLink :to="slugUrl" class="normal-link glow-text-md glow-shadow">
               <span v-if="data._draft">(<span role="img" aria-label="construction sign">🚧</span> Draft)</span>

@@ -16,7 +16,7 @@
         Spotify
       </h2>
       <div v-if="mirrorData?.playing" class="!-mt-0.5 flex flex-row items-center gap-2">
-        <NuxtImg class="h-6 w-6" alt="PepeJam" src="https://cdn.betterttv.net/emote/5b77ac3af7bddc567b1d5fb2/3x" />
+        <ImageWrap class="h-6 w-6" alt="PepeJam" src="https://cdn.betterttv.net/emote/5b77ac3af7bddc567b1d5fb2/3x" />
         <p class="font-variable tracking-tight text-gray-400 variation-weight-medium dark:text-gray-500">
           {{ $t("spotify.playing") }}:
         </p>

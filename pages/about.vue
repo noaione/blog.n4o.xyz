@@ -9,7 +9,7 @@
     </div>
     <div class="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
       <div class="flex flex-col items-center pt-8">
-        <NuxtImg :src="blogConfig.aboutImage" class="h-48 w-48 rounded-full" alt="Avatar" />
+        <ImageWrap :src="blogConfig.aboutImage" class="h-48 w-48 rounded-full" alt="Avatar" />
         <h3 class="font-variable mx-0 pb-2 pt-4 text-2xl leading-8 tracking-tight variation-weight-bold">
           {{ blogConfig.title }}
         </h3>

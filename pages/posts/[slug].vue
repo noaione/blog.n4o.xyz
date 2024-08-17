@@ -29,7 +29,7 @@
         <div class="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
           <div class="prose prose-gray max-w-full pb-8 pt-10 dark:prose-invert">
             <div v-if="contentResponse?.content.image" class="mx-auto flex flex-col">
-              <NuxtImg
+              <ImageWrap
                 :src="contentResponse.content.image"
                 :alt="contentResponse.content.title + ' Featured Image'"
                 class="w-full"

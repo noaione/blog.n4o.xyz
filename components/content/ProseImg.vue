@@ -11,17 +11,15 @@
     decoding="async"
   />
   <div v-else class="group relative [&>pre]:!my-0">
-    <NuxtImg
-      :src="refinedSrc"
+    <ImageWrap
+      :src="src"
       :alt="alt"
       :width="width"
       :height="height"
-      :class="`w-full ${alt ? 'mb-1' : ''}`"
       :aria-label="ariaLabel"
-      :provider="isSkipOptimize ? 'none' : 'ipxStatic'"
-      data-zoomable="1"
-      loading="lazy"
-      decoding="async"
+      :skip-optimize="isSkipOptimize"
+      :class="`w-full ${alt ? 'mb-1' : ''}`"
+      zoomable
     />
     <figcaption
       v-if="alt"
