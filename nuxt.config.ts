@@ -1,5 +1,6 @@
 import { fileURLToPath } from "node:url";
 import { readdirSync } from "node:fs";
+import { rm } from "node:fs/promises";
 import { join } from "node:path";
 import { dirname } from "node:path";
 import { extractDateFromFilename } from "./utils/posts";
@@ -517,6 +518,46 @@ export default defineNuxtConfig({
       // verify defaultLocale is in locales early
       if (!locales.map((locale) => locale.code).includes(defaultLocale)) {
         throw new Error(`defaultLocale ${defaultLocale} is not in locales`);
+      }
+    },
+    "nitro:build:public-assets": async (nitro) => {
+      // Do not run on dev mode
+      if (nitro.options.dev) {
+        return;
+      }
+
+      // Do not run if no public dir (similar behaviour from `copyPublicAssets`)
+      if (nitro.options.noPublicDir) {
+        return;
+      }
+
+      // Get all pregenerated images
+      const pregenIpxImages = nitro._prerenderedRoutes?.filter(
+        (route) => route.route.startsWith("/_ipx/") && !route.route.startsWith("/_ipx/_/")
+      );
+
+      if (pregenIpxImages && pregenIpxImages.length) {
+        nitro.logger.info(`Removing original images of ${pregenIpxImages.length} pre-generated IPX images`);
+
+        // Get public output dir
+        const nitroPublicDir = nitro.options.output.publicDir;
+
+        // Delete all original images that got pregenerated
+        const actualImagesPath = pregenIpxImages.map((route) => {
+          // ipx fileName format are '/_ipx/f_webp&q_90/assets/images/kidoworkshop1/img-hero.png'
+          // remove '/_ipx/xxxxxx/' part
+          const cleanedPath = (route.fileName ?? route.route).replace(/^\/_ipx\/[^/]+\//, "/");
+
+          // Transform into {PUBLID_DIR}/{ACTUAL_PATH}
+          return join(nitroPublicDir, cleanedPath);
+        });
+
+        for (const path of actualImagesPath) {
+          // Delete file
+          await rm(path);
+        }
+
+        nitro.logger.info(`Deleted ${actualImagesPath.length} from ${nitroPublicDir}`);
       }
     },
   },
