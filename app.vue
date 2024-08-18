@@ -5,4 +5,7 @@
       <NuxtPage />
     </NuxtLayout>
   </main>
+  <Teleport to="body">
+    <NuxtRouteAnnouncer id="nuxt-route-announcer" />
+  </Teleport>
 </template>
