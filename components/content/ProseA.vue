@@ -9,17 +9,22 @@ const props = withDefaults(
   defineProps<{
     href: string;
     target?: "_blank" | "_parent" | "_self" | "_top" | (string & object) | null;
+    locale?: string;
   }>(),
   {
     href: "",
     target: undefined,
+    locale: undefined,
   }
 );
 
+const { locales } = useI18n();
 const localePath = useLocalePath();
 const nicerHref = computed(() => {
   if (props.href.startsWith("/")) {
-    return localePath(props.href);
+    const overrideLocale = locales.value.map((l) => l.code).includes(props.locale ?? "") ? props.locale : undefined;
+
+    return localePath(props.href, overrideLocale);
   }
 
   return props.href;
