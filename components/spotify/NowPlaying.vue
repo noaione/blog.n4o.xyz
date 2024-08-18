@@ -41,6 +41,7 @@ const props = defineProps<{
 
 const mirrorData = ref<SpotifyNowResult>();
 const firstTime = ref(true);
+const tickerWatch = ref();
 
 const {
   data: sptfyData,
@@ -75,10 +76,24 @@ onMounted(async () => {
     if (sptfyData.value) {
       mirrorData.value = sptfyData.value;
     }
+
+    // A default of 30 seconds ticker to properly sync with Spotify API
+    tickerWatch.value = setInterval(() => {
+      if (sptfyData.value?.data && sptfyData.value.playing) {
+        // Only refresh if the song is playing
+        refreshData();
+      }
+    }, 30 * 1000);
   } catch (error) {
     console.error(error);
   } finally {
     firstTime.value = false;
+  }
+});
+
+onBeforeUnmount(() => {
+  if (tickerWatch.value) {
+    clearInterval(tickerWatch.value);
   }
 });
 </script>
