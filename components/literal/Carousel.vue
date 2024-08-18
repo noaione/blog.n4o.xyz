@@ -46,26 +46,30 @@ const props = defineProps<{
 
 const { t } = useI18n();
 const breakpoints = useBreakpoints(breakpointsTailwind);
+const breakCurrent = breakpoints.current();
 
 const itemsToShow = computed(() => {
-  if (breakpoints.isSmallerOrEqual("sm")) {
-    return 1.5;
-  } else if (breakpoints.isSmallerOrEqual("md")) {
-    return 2.5;
-  } else if (breakpoints.isSmallerOrEqual("lg")) {
-    return 3.5;
-  } else {
+  if (breakCurrent.value.includes("xl") || breakCurrent.value.includes("2xl")) {
     return 4.5;
+  } else if (breakCurrent.value.includes("lg")) {
+    return 3.5;
+  } else if (breakCurrent.value.includes("md")) {
+    return 2.5;
+  } else {
+    return 1.5;
   }
 });
 
 const itemsToSlide = computed(() => {
-  if (breakpoints.isSmallerOrEqual("md")) {
-    return 1;
-  } else if (breakpoints.isSmallerOrEqual("lg")) {
+  const biggest = ["lg", "xl", "2xl"].find((b) => breakCurrent.value.includes(b));
+  const medium = ["md"].find((b) => breakCurrent.value.includes(b));
+
+  if (biggest) {
+    return 3;
+  } else if (medium) {
     return 2;
   } else {
-    return 3;
+    return 1;
   }
 });
 

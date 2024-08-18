@@ -1,7 +1,13 @@
 <template>
   <div class="flex w-full max-w-80 flex-col items-center p-2 align-bottom">
     <div class="aspect-[3 /4] flex h-full w-full max-w-80 flex-col">
-      <ImageWrap v-if="book.cover" :src="book.cover" class="h-full rounded-md" :alt="`${book.title} cover`" eager />
+      <ImageWrap
+        v-if="book.cover"
+        :src="book.cover"
+        class="mx-auto h-full rounded-md"
+        :alt="`${book.title} cover`"
+        eager
+      />
       <div
         v-else
         class="flex h-96 w-full flex-col items-start justify-between rounded-md bg-gray-200 p-4 text-gray-900 dark:bg-gray-600 dark:text-gray-100"
