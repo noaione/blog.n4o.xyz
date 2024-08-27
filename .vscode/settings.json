@@ -69,5 +69,6 @@
     "i18n-ally.localesPaths": "locales",
     "i18n-ally.keystyle": "nested",
     "eslint.useFlatConfig": true,
-    "i18n-ally.sourceLanguage": "id"
+    "i18n-ally.sourceLanguage": "id",
+    "i18n-ally.displayLanguage": "id",
 }

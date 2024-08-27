@@ -9,6 +9,16 @@
         <span class="font-variable variation-width-stretch">©</span> {{ currentYearInWIB }} {{ blogMeta.title }} |
         CC-BY-NAI-4.0
       </p>
+      <p class="mt-1 text-xs opacity-80">
+        <NuxtLink
+          class="normal-link tracking-tight glow-text-md glow-shadow variation-width-stretch"
+          to="https://github.com/noaione/blog.n4o.xyz"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          {{ $t("sourceCode") }}
+        </NuxtLink>
+      </p>
     </footer>
   </UContainer>
 </template>

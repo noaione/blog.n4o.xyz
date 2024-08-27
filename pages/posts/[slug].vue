@@ -113,7 +113,7 @@ function firstSlug(slug: string | string[]) {
 }
 
 function getGithubEditLink(filename: string) {
-  return `https://github.com/noaione/blog.n4o.xyz/blob/master/content/${filename}`;
+  return `https://github.com/noaione/blog.n4o.xyz/blob/master/content/${filename}.md`;
 }
 
 const slugInfo = firstSlug(slug);
