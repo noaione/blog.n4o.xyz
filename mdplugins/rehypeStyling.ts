@@ -1,7 +1,7 @@
-import { apStyleTitleCase } from "ap-style-title-case";
 import type { Nodes, Text as TextNode } from "hast";
 import { findAndReplace } from "hast-util-find-and-replace";
 import { visit } from "unist-util-visit";
+import titleCase from "../utils/titlecase";
 
 function standardReplacer(ast: Nodes) {
   findAndReplace(ast, [
@@ -70,7 +70,7 @@ function apStyleTitleCaser(ast: Nodes) {
           const textNode = node.children[matchIndex] as TextNode;
           const text = textNode.value;
 
-          (node.children[matchIndex] as TextNode).value = apStyleTitleCase(text);
+          (node.children[matchIndex] as TextNode).value = titleCase(text);
         }
       }
     }

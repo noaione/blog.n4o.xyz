@@ -1,10 +1,10 @@
-import { apStyleTitleCase } from "ap-style-title-case";
 import { visit } from "unist-util-visit";
 import { statSync } from "node:fs";
 import { join } from "node:path";
 import { MarkdownNode, MarkdownParsedContent, MarkdownRoot, Toc, TocLink } from "@nuxt/content";
 import readingTime, { ReadTimeResults } from "reading-time";
 import authorLists from "~/data/author.json";
+import titleCase from "../../utils/titlecase";
 import { extractDateFromFilename } from "../../utils/posts";
 
 function getFileDate(file: string) {
@@ -80,7 +80,7 @@ function validateAuthor(authors: string | string[]) {
 
 function transformTocLinks(links: TocLink[]) {
   return links.map((link) => {
-    link.text = apStyleTitleCase(link.text);
+    link.text = titleCase(link.text);
 
     if (link.children) {
       link.children = transformTocLinks(link.children);
@@ -120,7 +120,7 @@ export default defineNitroPlugin((nitroApp) => {
       file._id = [...idPrefix, dateInfo.title].join(":");
       file.date = ensureDateOr(file.date, dateInfo.date);
 
-      file.title = file.title ? apStyleTitleCase(file.title) : "Untitled";
+      file.title = file.title ? titleCase(file.title, file._locale) : "Untitled";
       file.slug = dateInfo.title.replace(/\.md$/, "");
 
       const authors = file.author || file.authors;
@@ -147,7 +147,7 @@ export default defineNitroPlugin((nitroApp) => {
 
       // Title case ToC
       if (file.body.toc) {
-        file.body.toc.title = file.body.toc.title ? apStyleTitleCase(file.body.toc.title) : "";
+        file.body.toc.title = file.body.toc.title ? titleCase(file.body.toc.title, file._locale) : "";
         file.body.toc.links = transformTocLinks(file.body.toc.links || []);
       }
     }
