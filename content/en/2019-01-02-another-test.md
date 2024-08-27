@@ -107,3 +107,29 @@ equation.
 $$
 L = \frac{1}{2} \rho v^2 S C_L
 $$
+
+## Mermaid Test
+
+```mermaid
+erDiagram
+    "Showtimes API" ||--|| MongoDB : use
+    Bot ||--|| "Showtimes API" : utilize
+    naoTimesUI ||--|| "Showtimes API" : utilize
+    MongoDB
+
+    Anilist }|--|| Providers : provide
+    TMDb }|--|| Providers : provide
+    VNDb }|--|| Providers : provide
+    Providers ||--|| "Showtimes API" : "provides data"
+
+    Meilisearch ||--|| "Showtimes API" : "sync with"
+    Meilisearch ||--|| Bot : utilize
+    Meilisearch ||--|| naoTimesUI : utilize
+
+    "Redis #1" ||--|| "Showtimes API" : "utilize"
+    "Redis #2" ||--|| Bot : "utilize"
+
+    CDN }|--|| "Showtimes API" : "provide"
+    CDN }|--|| Bot : "provide"
+    CDN }|--|| naoTimesUI : "provide"
+```

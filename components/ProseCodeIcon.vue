@@ -21,6 +21,7 @@
   <Icon v-else-if="mappedLang === 'powershell'" name="simple-icons:powershell" class="h-4 w-4" />
   <Icon v-else-if="mappedLang === 'diff'" name="simple-icons:git" class="h-4 w-4" />
   <Icon v-else-if="mappedLang === 'prisma'" name="simple-icons:prisma" class="h-4 w-4" />
+  <Icon v-else-if="mappedLang === 'mermaid'" name="simple-icons:mermaid" class="h-4 w-4" />
 </template>
 
 <script setup lang="ts">

@@ -17,6 +17,11 @@ Because it would be funny to rewrite this blog again.
 
 - 🌙 Dark mode
 - ⌨️ Markdown with a ton of plugins (thanks to nuxt/mdc)
+  - 🎨 Code Highlighter via [Shiki](https://shiki.style/)
+  - 🧜 Diagram render support via [Mermaid](https://mermaid.js.org)
+  - 🧑‍💻 Embedded Gist, Github code snippet, and repository card support.
+  - 💻 Asciinema render
+  - 😀 Emoji support via [Twemoji](https://github.com/jdecked/twemoji)
 - 🌐 Multilingual or i18n support (Mainly in Indonesian and English)
   - A nicer fallback page for when a certain posts not available in another languages
 - 🤖 Monospaced-like font (using Monaspace Xenon for main font and Neon for code)

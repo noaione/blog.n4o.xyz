@@ -20,7 +20,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     });
   });
 
-  nuxtApp.provide("mediumZoom", zoom);
+  nuxtApp.provide("mediumZoom", () => zoom);
 });
 
 declare global {

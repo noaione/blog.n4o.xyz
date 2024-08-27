@@ -7,18 +7,22 @@
     }"
   >
     <div
-      v-if="filename"
+      v-if="filename || language === 'mermaid'"
       class="rose-pine-surface flex w-full flex-row items-center justify-between py-2 text-[#575279] dark:text-[#e0def4]"
     >
       <div class="flex flex-row items-center">
         <div class="flex px-1 py-1 pl-4">
           <ProseCodeIcon :language="language" />
         </div>
-        <div class="font-variable py-1 pl-1 pr-4 text-sm tracking-tight variation-weight-[550]">{{ filename }}</div>
+        <div class="font-variable py-1 pl-1 pr-4 text-sm tracking-tight variation-weight-[550]">
+          {{ filename ?? "Mermaid Render" }}
+        </div>
       </div>
       <CopyToClipboard unpin @copy="copyToClipboard" />
     </div>
+    <pre v-if="language === 'mermaid'" class="mermaid-base !rose-pine-related rounded-t-none p-0">{{ code }}</pre>
     <pre
+      v-else
       :class="`font-monaspace-neon shiki-wrapper !rose-pine-related font-variable tracking-normal ${filename ? 'mt-0 rounded-t-none' : 'rounded-t-md'} ${$props.class ?? ''}`"
     ><CopyToClipboard v-if="!filename" @copy="copyToClipboard" /><slot /></pre>
   </div>
