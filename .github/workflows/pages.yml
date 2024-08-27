@@ -32,7 +32,6 @@ jobs:
             ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: |
-          yarn config set -H enableImmutableInstalls false
           yarn install
       - name: Build static
         run: yarn generate
