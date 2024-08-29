@@ -38,6 +38,9 @@
             <ContentRenderer :value="contentResponse?.content">
               <ContentRendererMarkdown :value="contentResponse?.content" />
             </ContentRenderer>
+            <ClientOnly>
+              <ReadProgressIndicator />
+            </ClientOnly>
           </div>
           <div class="py-6 text-sm text-gray-700 dark:text-gray-300 xl:text-right">
             <NuxtLink
