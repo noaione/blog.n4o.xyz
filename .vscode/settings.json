@@ -71,4 +71,5 @@
     "eslint.useFlatConfig": true,
     "i18n-ally.sourceLanguage": "id",
     "i18n-ally.displayLanguage": "id",
+    "typescript.tsdk": "node_modules\\typescript\\lib",
 }

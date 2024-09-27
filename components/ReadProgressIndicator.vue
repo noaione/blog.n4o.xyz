@@ -1,7 +1,7 @@
 <template>
   <Teleport to="body">
     <!-- Lightweight read progress indicator -->
-    <div class="fixed top-0 h-1 w-screen">
+    <div class="fixed top-0 z-[9999] h-1 w-screen">
       <div ref="progressBarEl" class="h-1 bg-primary-500" :style="{ width: '0%' }" />
     </div>
   </Teleport>

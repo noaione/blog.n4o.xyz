@@ -14,7 +14,8 @@
         "lint:fix": "eslint --fix .",
         "prettier": "prettier --check .",
         "prettier:fix": "prettier --write .",
-        "new-posts": "node ./scripts/createPosts.mjs"
+        "new-posts": "node ./scripts/createPosts.mjs",
+        "postinstall": "nuxt prepare"
     },
     "dependencies": {
         "@nuxt/content": "2.13.2",
