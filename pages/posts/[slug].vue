@@ -36,7 +36,7 @@
               />
             </div>
             <ContentRenderer :value="contentResponse?.content">
-              <ContentRendererMarkdown :value="contentResponse?.content" />
+              <ContentRendererMarkdown :value="contentResponse?.content" data-reading-indicator-content="1" />
             </ContentRenderer>
             <ReadProgressIndicator />
           </div>
