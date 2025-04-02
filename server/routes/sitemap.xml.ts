@@ -13,7 +13,7 @@ export async function queryAllContent(event: H3Event<EventHandlerRequest>) {
 
   return queryCollection(event, "content")
     .where("locale", "IN", config.i18n.locales)
-    .where(...draftTags)
+    .where("draft", "IN", import.meta.dev ? [0, 1] : [0])
     .all();
 }
 
