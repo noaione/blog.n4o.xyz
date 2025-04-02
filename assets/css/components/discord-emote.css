@@ -1,6 +1,6 @@
 @layer components {
   .discord-emote {
-    @apply !my-2 h-8 w-8;
+    @apply !my-2 size-6 align-middle;
   }
 
   .discord-emote-inline {

@@ -11,7 +11,7 @@
               <ImageWrap :src="data.image" alt="Featured blog post image" class="max-w-full" />
             </div>
             <NuxtLink :to="slugUrl" class="normal-link glow-text-md glow-shadow">
-              <span v-if="data._draft">(<span role="img" aria-label="construction sign">🚧</span> Draft)</span>
+              <span v-if="data.draft">(<span role="img" aria-label="construction sign">🚧</span> Draft)</span>
               {{ data.title }}
             </NuxtLink>
           </h3>
@@ -27,9 +27,7 @@
           </div>
         </div>
         <div class="prose max-w-none text-gray-500 dark:prose-invert dark:text-gray-400">
-          <ContentRenderer v-if="data.excerpt" :value="data.excerpt">
-            <ContentRendererMarkdown :value="data.excerpt" />
-          </ContentRenderer>
+          <ContentRenderer v-if="data.excerpt" :value="data.excerpt" />
           <p v-else-if="data.description">{{ data.description }}</p>
           <p v-else class="font-variable variation-weight-medium variation-slant-[-10]">No description</p>
         </div>

@@ -39,11 +39,6 @@ export default function useCodeRenderer() {
                     yaml: YamlLang,
                     yml: YamlLang,
                   },
-                  getMdcConfigs: async () => {
-                    const mdcData = await import("../mdc.config");
-
-                    return [mdcData.default];
-                  },
                 }),
               },
             },
@@ -52,7 +47,7 @@ export default function useCodeRenderer() {
       });
     }
 
-    return parser(markdown) as MDCParserResult;
+    return parser(markdown) as Promise<MDCParserResult>;
   };
 
   return parse;

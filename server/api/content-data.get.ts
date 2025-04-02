@@ -1,6 +1,5 @@
-import { serverQueryContent } from "#content/server";
-import { castBooleanNull } from "~/utils/query";
-import { ExtendedParsedContent } from "../plugins/content";
+import { ContentCollectionItem, SQLOperator } from "@nuxt/content";
+import { boolToNumNull, castBooleanNull } from "~/utils/query";
 
 /**
  * The response data for the content data event handler.
@@ -8,8 +7,8 @@ import { ExtendedParsedContent } from "../plugins/content";
  * It will return the content data if found, otherwises
  */
 export interface ContentDataResponse {
-  content?: ExtendedParsedContent;
-  availableLocales: string[];
+  content?: ContentCollectionItem;
+  availableLocales: ("id" | "en" | "ja")[];
 }
 
 export interface ContentDataQueryParam {
@@ -49,25 +48,14 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const data = await serverQueryContent<ExtendedParsedContent>(event)
-    .where({
-      _partial: false,
-      navigation: {
-        $ne: false,
-      },
-      _contentType: "blog",
-      _source: "content",
-      ...(isDraft === null ? { _draft: { $in: [true, false] } } : { _draft: isDraft }),
-      ...(currentPath ? { _path: currentPath } : {}),
-      ...(currentSlug ? { slug: currentSlug } : {}),
-      _locale: {
-        $exists: true,
-      },
-    })
-    .find();
+  const data = await queryCollection(event, "content")
+    .where("navigation", "<>", false)
+    .where("draft", "IN", isDraft !== null ? [boolToNumNull(isDraft)] : [0, 1])
+    .orWhere((q) => q.where("path", "=", currentPath).where("slug", "=", currentSlug))
+    .all();
 
-  const selectedItem = data.find((item) => item._locale === selLocale);
-  const availableLocales = data.map((item) => item._locale!);
+  const selectedItem = data.find((item) => item.locale === selLocale);
+  const availableLocales = data.map((item) => item.locale);
 
   if (selectedItem) {
     return {

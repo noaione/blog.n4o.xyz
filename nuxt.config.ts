@@ -6,6 +6,19 @@ import { dirname } from "node:path";
 import { extractDateFromFilename } from "./utils/posts";
 import type { LocaleObject } from "@nuxtjs/i18n";
 
+import remarkHeads from "./mdplugins/remarkHeads";
+import remarkSubSup from "./mdplugins/remarkSubSup";
+import rehypeDisemote from "./mdplugins/rehypeDisemote";
+import rehypeStyling from "./mdplugins/rehypeStyling";
+import rehypeTwemoji from "./mdplugins/rehypeTwemoji";
+
+function makeMdPluginsPath(pluginName: string) {
+  const rootPath = dirname(fileURLToPath(import.meta.url));
+  const pluginsPath = join(rootPath, "mdplugins", pluginName);
+
+  return pluginsPath.replace(/\\/g, "/");
+}
+
 interface FeaturesConfig {
   spotify?: string;
   literal?: string;
@@ -213,13 +226,13 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxtjs/color-mode",
     "@nuxt/content",
+    "@nuxtjs/mdc",
     "@nuxtjs/i18n",
     "@nuxtjs/tailwindcss",
     "@nuxt/fonts",
     "@nuxt/icon",
     "@vueuse/nuxt",
     "@nuxt/image",
-    "dayjs-nuxt",
     "vue3-carousel-nuxt",
   ],
   routeRules: {
@@ -381,78 +394,73 @@ export default defineNuxtConfig({
     currentDir: dirname(fileURLToPath(import.meta.url)),
   },
   content: {
-    sources: {
-      content: {
-        driver: "fs",
-        base: "content",
-      },
-      data: {
-        driver: "fs",
-        prefix: "/_data",
-        base: "data",
-      },
-    },
-    locales: locales.map((locale) => locale.code),
-    defaultLocale,
-    highlight: {
-      theme: {
-        default: "rose-pine-dawn",
-        dark: "rose-pine",
-      },
-      langs: [
-        "json",
-        "jsonc",
-        "js",
-        "ts",
-        "html",
-        "css",
-        "scss",
-        "postcss",
-        "vue",
-        "shell",
-        "bash",
-        "mdc",
-        "mdx",
-        "md",
-        "yaml",
-        "jsx",
-        "tsx",
-        "c",
-        "c++",
-        "rust",
-        "python",
-        "powershell",
-        "diff",
-        "bat",
-        "prisma",
-      ],
-    },
-    markdown: {
-      remarkPlugins: ["remark-math"],
-      rehypePlugins: {
-        "rehype-katex": {
-          output: "mathml",
+    build: {
+      markdown: {
+        remarkPlugins: {
+          "remark-math": {},
+        },
+        rehypePlugins: {
+          "rehype-katex": {
+            output: "mathml",
+          },
+        },
+        toc: {
+          depth: 3,
+          searchDepth: 3,
+        },
+        highlight: {
+          theme: {
+            default: "rose-pine-dawn",
+            dark: "rose-pine",
+          },
+          langs: [
+            "json",
+            "jsonc",
+            "js",
+            "ts",
+            "html",
+            "css",
+            "scss",
+            "postcss",
+            "vue",
+            "shell",
+            "bash",
+            "mdc",
+            "mdx",
+            "md",
+            "yaml",
+            "jsx",
+            "tsx",
+            "c",
+            "cpp",
+            "rs",
+            "rust",
+            "python",
+            "powershell",
+            "diff",
+            "bat",
+            "prisma",
+            "py",
+            "python",
+          ],
         },
       },
+      transformers: ["~/transformers/unfuck-shiki.ts"],
+    },
+    renderer: {
       anchorLinks: true,
-      toc: {
-        depth: 3,
-        searchDepth: 3,
-      },
-    },
-    experimental: {
-      search: {
-        filterQuery: {
-          _partial: false,
-          _draft: false,
-          _source: "content",
-          _contentType: "blog",
-        },
-        options: {
-          fields: ["title", "content", "titles", "description", "tags", "slug"],
-          storeFields: ["title", "slug", "description", "tags", "date", "slug"],
-        },
-        indexed: true,
+      alias: {
+        video: "ProseVideo",
+        admonition: "Admonition",
+        "repo-card": "RepoCard",
+        gist: "Gist",
+        asciinema: "Asciinema", // TODO: Fix this later
+        "github-code": "GitHubCode",
+        keystroke: "Keystroke",
+        kbd: "ProseKbd",
+        // Force prose pre since sometimes this fails to be used properly
+        pre: "ProsePre",
+        style: "ProseStyle",
       },
     },
   },
@@ -490,14 +498,37 @@ export default defineNuxtConfig({
   ui: {
     safelistColors: ["fiord", "gray", "white", "black"],
   },
-  dayjs: {
-    locales: locales.map((locale) => locale.code),
-    plugins: ["utc", "timezone", "duration"],
-    defaultTimezone: "Asia/Jakarta",
-    defaultLocale,
-  },
   compatibilityDate: "2024-07-28",
   mdc: {
+    remarkPlugins: {
+      "remark-headings": {
+        // @ts-expect-error wrong typing for some reason
+        instance: remarkHeads,
+        src: makeMdPluginsPath("remarkHeads.ts"),
+      },
+      "remark-sub-super": {
+        // @ts-expect-error wrong typing for some reason
+        instance: remarkSubSup,
+        src: makeMdPluginsPath("remarkSubSup.ts"),
+      },
+    },
+    rehypePlugins: {
+      "rehype-disemote": {
+        // @ts-expect-error wrong typing for some reason
+        instance: rehypeDisemote,
+        src: makeMdPluginsPath("rehypeDisemote.ts"),
+      },
+      "rehype-twemoji": {
+        // @ts-expect-error wrong typing for some reason
+        instance: rehypeTwemoji,
+        src: makeMdPluginsPath("rehypeTwemoji.ts"),
+      },
+      "rehype-styling": {
+        // @ts-expect-error wrong typing for some reason
+        instance: rehypeStyling,
+        src: makeMdPluginsPath("rehypeStyling.ts"),
+      },
+    },
     components: {
       map: {
         video: "ProseVideo",
@@ -510,6 +541,7 @@ export default defineNuxtConfig({
         kbd: "ProseKbd",
         // Force prose pre since sometimes this fails to be used properly
         pre: "ProsePre",
+        style: "ProseStyle",
       },
     },
   },

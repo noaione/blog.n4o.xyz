@@ -4,8 +4,6 @@
       rel="stylesheet"
       href="https://cdn.rawgit.com/lonekorean/gist-syntax-themes/848d6580/stylesheets/monokai.css"
     />
-    <!-- eslint-disable-next-line vue/html-self-closing -->
-    <Style type="text/css" :children="styling"></Style>
   </Head>
   <!-- eslint-disable-next-line vue/no-v-html -->
   <div v-if="!loading" class="gist-el-root" v-html="ghSrc" />
@@ -94,7 +92,6 @@ const gistCallbackId = `gistCallback_${props.id}_${uniqid("gh")}`;
 onMounted(() => {
   if (!runtimeConfig.nitro) {
     // client-side only
-
     const script = document.createElement("script");
 
     const initUrl = `https://gist.github.com/${props.id}.json?callback=${gistCallbackId}`;
@@ -127,6 +124,15 @@ onMounted(() => {
     };
 
     document.body.appendChild(script);
+
+    // Attach styling
+    if (!document.querySelector("style[data-gist-style]")) {
+      const styleSheets = document.createElement("style");
+      styleSheets.setAttribute("data-gist-style", "1");
+
+      styleSheets.innerHTML = styling;
+      document.head.appendChild(styleSheets);
+    }
   }
 });
 </script>

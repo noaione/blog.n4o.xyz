@@ -1,7 +1,7 @@
 import type { Nodes, Text as TextNode } from "hast";
 import { h as hast } from "hastscript";
 import { visit } from "unist-util-visit";
-import discordEmote from "~/assets/discord-emote.json";
+import discordEmote from "../assets/discord-emote.json" assert { type: "json" };
 
 const EmojiRegExp = /:(\+1|[-\w]+):/g;
 

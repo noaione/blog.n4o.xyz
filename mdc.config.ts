@@ -9,12 +9,6 @@ import {
   transformerNotProsePosition,
   transformerShikiLineNumbers,
 } from "./utils/transformers";
-import remarkHeads from "./mdplugins/remarkHeads";
-import remarkSubSup from "./mdplugins/remarkSubSup";
-import rehypeDisemote from "./mdplugins/rehypeDisemote";
-import rehypeShikiCodeNotationRemoval from "./mdplugins/rehypeShikiCodeNotationRemoval";
-import rehypeStyling from "./mdplugins/rehypeStyling";
-import rehypeTwemoji from "./mdplugins/rehypeTwemoji";
 
 const defaultTransformers = [
   transformerCommentNotationDiff(),
@@ -50,22 +44,6 @@ export default defineConfig({
   shiki: {
     transformers(code, lang, theme, options) {
       return handleShikiTransformers(code, lang, theme, options);
-    },
-  },
-  unified: {
-    remark(processor) {
-      processor.use(remarkHeads);
-      processor.use(remarkSubSup);
-    },
-    rehype(processor) {
-      processor.use(rehypeDisemote);
-      processor.use(rehypeTwemoji);
-      processor.use(rehypeStyling);
-    },
-    post(processor) {
-      processor.use(rehypeShikiCodeNotationRemoval, {
-        transformers: defaultTransformers,
-      });
     },
   },
 });

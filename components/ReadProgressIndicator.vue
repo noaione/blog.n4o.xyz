@@ -17,7 +17,7 @@ const documentHeight = ref(0);
 
 onMounted(async () => {
   // Register element
-  element.value = document.querySelector("[data-reading-indicator-content]");
+  element.value = document.querySelector(".with-reading-indicator");
   await nextTick();
 
   if (!element.value) {

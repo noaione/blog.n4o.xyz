@@ -1,6 +1,4 @@
-import { serverQueryContent } from "#content/server";
-import { castBooleanNull } from "~/utils/query";
-import { ExtendedParsedContent } from "../plugins/content";
+import { boolToNumNull, castBooleanNull } from "~/utils/query";
 
 export interface TagsResponse {
   tags: Record<string, string[]>;
@@ -11,19 +9,12 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event);
   const isDraft = config.public.disableDraft ? false : castBooleanNull(draft?.toString());
 
-  const data = await serverQueryContent<ExtendedParsedContent>(event)
-    .where({
-      _locale: locale?.toString(),
-      _partial: false,
-      _contentType: "blog",
-      _source: "content",
-      ...(isDraft === null ? { _draft: { $in: [true, false] } } : { _draft: isDraft }),
-    })
-    .only(["slug", "tags"])
-    .sort({
-      date: 1,
-    })
-    .find();
+  const data = await queryCollection(event, "content")
+    .where("locale", "=", locale?.toString())
+    .where("draft", "IN", isDraft !== null ? [boolToNumNull(isDraft)] : [0, 1])
+    .select("slug", "tags", "date")
+    .order("date", "ASC")
+    .all();
 
   // map tags to an array of slug
   // {

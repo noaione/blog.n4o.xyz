@@ -37,33 +37,18 @@
 </template>
 
 <script setup lang="ts">
-import type { QueryBuilderWhere } from "@nuxt/content";
-import type { ContentPagedQuery } from "~/server/api/content-paged.get";
-
 const { locale } = useI18n();
 const localePath = useLocalePath();
 const blogMeta = useBlogConfig();
 const runtimeConfig = useRuntimeConfig();
 
-const query: QueryBuilderWhere = {
-  _locale: locale.value,
-  _source: "content",
-  _contentType: "blog",
-};
-
-if (runtimeConfig.public.disableDraft) {
-  // Do not show drafts in production
-  query._draft = false;
-}
-
 const { data: multiPost, error } = await useAsyncData(`home-blog-posts-main-${locale.value}`, () =>
-  queryContent<ContentPagedQuery>()
-    .where(query)
-    .sort({
-      date: -1,
-    })
+  queryCollection("content")
+    .where("locale", "=", locale.value)
+    .where("draft", "IN", runtimeConfig.public.disableDraft ? [0] : [1, 0])
+    .order("date", "DESC")
     .limit(2)
-    .find()
+    .all()
 );
 
 useBlogHead({

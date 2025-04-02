@@ -1,6 +1,6 @@
-/* eslint-disable @stylistic/indent */
-import type { ExtendedParsedContent } from "~/server/plugins/content";
+import type { ContentCollectionItem } from "@nuxt/content";
 
+/* eslint-disable @stylistic/indent */
 function makeUrl(url: string, locale: string, defaultLocale: string) {
   if (locale === defaultLocale) {
     return url;
@@ -33,7 +33,7 @@ function appendBase(url: string, baseUrl: string) {
   return withBaseUrl(url, baseUrl);
 }
 
-export default function (input: ExtendedParsedContent, locales: string[]) {
+export default function (input: ContentCollectionItem, locales: string[]) {
   const blogConfig = useBlogConfig();
   const config = useRuntimeConfig();
   const route = useRoute();
@@ -57,7 +57,7 @@ export default function (input: ExtendedParsedContent, locales: string[]) {
   const summary = input.description ?? blogConfig.value.description;
 
   const postUrl = withBaseUrl(
-    makeUrl(`/posts/${input.slug}`, input._locale!, defaultLocale),
+    makeUrl(`/posts/${input.slug}`, input.locale!, defaultLocale),
     config.public.productionUrl
   );
 
@@ -201,7 +201,7 @@ export default function (input: ExtendedParsedContent, locales: string[]) {
       ...locales.map((locale) => ({
         rel: "alternate",
         hreflang: locale === defaultLocale ? "x-default" : locale,
-        href: withBaseUrl(localePath(route.fullPath, locale), config.public.productionUrl),
+        href: withBaseUrl(localePath(route.fullPath, locale as "en" | "id" | "ja"), config.public.productionUrl),
       })),
     ],
     script: [

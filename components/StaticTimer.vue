@@ -3,8 +3,6 @@
 </template>
 
 <script setup lang="ts">
-import { useDayjs } from "#dayjs";
-
 withDefaults(
   defineProps<{
     current?: number;
@@ -15,13 +13,11 @@ withDefaults(
   }
 );
 
-const dayjs = useDayjs();
-
 function formatTime(duration: number) {
   // Format HH:MM:SS (if hours are present)
   // Format MM:SS (if hours are not present)
   // Format DD:HH:MM:SS (if days are present)
-  const djs = dayjs.duration(duration, "milliseconds");
+  const djs = getDuration(duration);
 
   const hhmmss = djs.format("HH:mm:ss");
   const days = djs.asDays();

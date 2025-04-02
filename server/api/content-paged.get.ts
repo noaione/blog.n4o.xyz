@@ -1,6 +1,5 @@
-import { serverQueryContent } from "#content/server";
-import { castBooleanNull } from "~/utils/query";
-import { ExtendedParsedContent } from "../plugins/content";
+import { ContentCollectionItem } from "@nuxt/content";
+import { castBooleanNull, boolToNumNull } from "~/utils/query";
 
 function intoNumber(value: string | undefined) {
   if (!value) {
@@ -21,8 +20,8 @@ function getSkipNum(pageNum: number, limitNum: number) {
 }
 
 export type ContentPagedQuery = Pick<
-  ExtendedParsedContent,
-  "_id" | "_draft" | "_path" | "title" | "description" | "excerpt" | "date" | "image" | "tags" | "slug"
+  ContentCollectionItem,
+  "id" | "draft" | "path" | "title" | "description" | "excerpt" | "date" | "image" | "tags" | "slug"
 >;
 
 export interface ContentPagedResponse {
@@ -53,29 +52,18 @@ export default defineEventHandler(async (event) => {
   const pageNum = intoNumber(page?.toString()) || 1;
   const skipAmount = getSkipNum(pageNum, actualLimit);
 
-  const data = await serverQueryContent(event)
-    .where({
-      _locale: locale?.toString(),
-      _partial: false,
-      _contentType: "blog",
-      _source: "content",
-      ...(isDraft === null ? { _draft: { $in: [true, false] } } : { _draft: isDraft }),
-    })
-    .only(["_id", "_draft", "_path", "title", "description", "excerpt", "date", "image", "tags", "slug"])
-    .sort({
-      date: -1,
-    })
+  const data = await queryCollection(event, "content")
+    .where("locale", "=", locale?.toString())
+    .where("draft", "IN", isDraft !== null ? [boolToNumNull(isDraft)] : [0, 1])
+    .select("id", "path", "draft", "title", "description", "excerpt", "date", "image", "tags", "slug")
+    .order("date", "DESC")
     .limit(actualLimit)
     .skip(skipAmount)
-    .find();
+    .all();
 
-  const totalData = await serverQueryContent(event)
-    .where({
-      _locale: locale?.toString(),
-      _partial: false,
-      _contentType: "blog",
-      ...(isDraft === null ? { _draft: { $in: [true, false] } } : { _draft: isDraft }),
-    })
+  const totalData = await queryCollection(event, "content")
+    .where("locale", "=", locale?.toString())
+    .where("draft", "IN", isDraft !== null ? [boolToNumNull(isDraft)] : [0, 1])
     .count();
 
   return {

@@ -24,8 +24,8 @@
 </template>
 
 <script setup lang="ts">
-import { useDayjs } from "#dayjs";
 import type { ReadTimeResults } from "reading-time";
+import { getDuration } from "../utils/djsDuration";
 
 const props = withDefaults(
   defineProps<{
@@ -43,7 +43,6 @@ const props = withDefaults(
 
 const views = ref(-1);
 const { locale } = useI18n();
-const dayjs = useDayjs();
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
@@ -58,7 +57,7 @@ const parsedReadingTime = computed(() => {
     // Parse into "relative time"
     return {
       ...props.readingTime,
-      localized: dayjs.duration(props.readingTime.time, "milliseconds").locale(locale.value).humanize(),
+      localized: getDuration(props.readingTime.time).locale(locale.value).humanize(),
     };
   }
 });

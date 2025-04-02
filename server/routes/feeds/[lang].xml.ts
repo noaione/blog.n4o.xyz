@@ -1,5 +1,4 @@
 import type { EventHandlerRequest, H3Event } from "h3";
-import { serverQueryContent } from "#content/server";
 import { queryAllContent, withBaseUrl } from "../sitemap.xml";
 import { toXML } from "to-xml";
 
@@ -22,15 +21,7 @@ interface SimpleBlogInfo {
 }
 
 async function getBlogMeta(event: H3Event<EventHandlerRequest>, lang: string): Promise<SimpleBlogInfo> {
-  const data = await serverQueryContent<SimpleBlogInfo>(event)
-    .where({
-      _id: `data:_data:${lang}:config.json`,
-      _extension: "json",
-      _type: "json",
-      _source: "data",
-    })
-    .only(["title", "description"])
-    .findOne();
+  const data = await queryCollection(event, "meta").where("locale", "=", lang).select("title", "description").first();
 
   if (!data) {
     throw createError({
@@ -80,7 +71,7 @@ export default defineEventHandler(async (event) => {
         lastBuildDate: new Date().toUTCString(),
         generator: "Nuxt Custom Feed Generator by noaione",
         item: contentList
-          .filter((content) => content._locale === lang)
+          .filter((content) => content.locale === lang)
           .map((content) => {
             const pubDate = new Date(content.date!);
             const url = withBaseUrl(makeUrl(`/posts/${content.slug}`, lang), config.public.productionUrl);
