@@ -1,6 +1,6 @@
 <template>
   <AdmonitionBlock :type="props.type" :title="props.title">
-    <ContentSlot :use="$slots.default" unwrap="div" />
+    <slot mdc-unwrap="div" />
   </AdmonitionBlock>
 </template>
 

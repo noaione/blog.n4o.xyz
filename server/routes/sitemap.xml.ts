@@ -1,26 +1,20 @@
+import type { SQLOperator } from "@nuxt/content";
 import type { EventHandlerRequest, H3Event } from "h3";
 import { toXML } from "to-xml";
-import { serverQueryContent } from "#content/server";
-import { ExtendedParsedContent } from "../plugins/content";
 
 /**
  * Sitemap handler for generating posts sitemap
  */
 export async function queryAllContent(event: H3Event<EventHandlerRequest>) {
   const config = useRuntimeConfig(event);
-  const draftTags = import.meta.dev ? { _draft: { $in: [true, false] } } : { _draft: false };
+  const draftTags: [string, SQLOperator, unknown] = import.meta.dev
+    ? ["draft", "IN", [true, false]]
+    : ["draft", "=", false];
 
-  return serverQueryContent<ExtendedParsedContent>(event)
-    .where({
-      _partial: false,
-      _contentType: "blog",
-      _source: "content",
-      _locale: {
-        $in: config.i18n.locales,
-      },
-      ...draftTags,
-    })
-    .find();
+  return queryCollection(event, "content")
+    .where("locale", "IN", config.i18n.locales)
+    .where(...draftTags)
+    .all();
 }
 
 export function makeUrl(url: string, locale: string, defaultLocale: string) {

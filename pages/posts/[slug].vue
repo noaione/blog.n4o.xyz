@@ -1,7 +1,7 @@
 <template>
   <article v-if="contentResponse?.content">
     <div class="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
-      <div v-if="contentResponse?.content._draft" class="my-6 text-center">
+      <div v-if="contentResponse?.content.draft" class="my-6 text-center">
         <div class="space-y-1 text-center">
           <div class="mb-3 text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
             <div class="font-variable text-lg text-red-500 variation-weight-bold dark:text-red-400">
@@ -35,14 +35,12 @@
                 class="w-full"
               />
             </div>
-            <ContentRenderer :value="contentResponse?.content">
-              <ContentRendererMarkdown :value="contentResponse?.content" data-reading-indicator-content="1" />
-            </ContentRenderer>
+            <ContentRenderer class="with-reading-indicator" :value="contentResponse?.content" />
             <ReadProgressIndicator />
           </div>
           <div class="py-6 text-sm text-gray-700 dark:text-gray-300 xl:text-right">
             <NuxtLink
-              :to="getGithubEditLink(contentResponse.content._stem!)"
+              :to="getGithubEditLink(contentResponse.content.stem!)"
               class="normal-link font-variable text-right glow-text-sm glow-shadow variation-weight-medium"
             >
               {{ $t("blog.postGithub") }}

@@ -2,8 +2,8 @@ import type { EventHandlerRequest, H3Event } from "h3";
 import { join } from "node:path";
 import { lstat, readdir } from "node:fs/promises";
 import { toXML } from "to-xml";
-import { ExtendedParsedContent } from "../../plugins/content";
 import { queryAllContent, withBaseUrl } from "../sitemap.xml";
+import { ContentCollectionItem } from "@nuxt/content";
 
 function parseLang(lang: string | undefined, locales: string[], defaultLocale: string) {
   const _lang = lang ?? defaultLocale;
@@ -121,11 +121,11 @@ async function getPostsContents(event: H3Event<EventHandlerRequest>, lang: strin
 
   const localeToSlugs = contentList.reduce(
     (acc, c) => {
-      if (!acc[c._locale!]) {
-        acc[c._locale!] = [];
+      if (!acc[c.locale]) {
+        acc[c.locale] = [];
       }
 
-      acc[c._locale!].push(c.slug);
+      acc[c.locale].push(c.slug);
 
       return acc;
     },
@@ -133,10 +133,10 @@ async function getPostsContents(event: H3Event<EventHandlerRequest>, lang: strin
   );
 
   const postsMappings = contentList
-    .filter((c) => c._locale === lang)
+    .filter((c) => c.locale === lang)
     .map((c) => {
       return {
-        loc: withBaseUrl(makeUrl(`/posts/${c.slug}`, c._locale!), config.public.productionUrl),
+        loc: withBaseUrl(makeUrl(`/posts/${c.slug}`, c.locale), config.public.productionUrl),
         lastmod: c.lastmod,
         changefreq: "monthly",
         images: c.image && [
@@ -158,7 +158,7 @@ async function getPostsContents(event: H3Event<EventHandlerRequest>, lang: strin
           publication_date: c.date!,
           publication: {
             name: "N4O Blog",
-            language: c._locale!,
+            language: c.locale,
           },
         },
       };
@@ -167,15 +167,15 @@ async function getPostsContents(event: H3Event<EventHandlerRequest>, lang: strin
   // Do pagination mappings per locales
   const localeToPosts = contentList.reduce(
     (acc, c) => {
-      if (!acc[c._locale!]) {
-        acc[c._locale!] = [];
+      if (!acc[c.locale!]) {
+        acc[c.locale!] = [];
       }
 
-      acc[c._locale!].push(c);
+      acc[c.locale!].push(c);
 
       return acc;
     },
-    {} as Record<string, ExtendedParsedContent[]>
+    {} as Record<string, ContentCollectionItem[]>
   );
 
   const postsPerPage = config.public.pagination.posts;
@@ -214,21 +214,21 @@ async function getTagsContents(event: H3Event<EventHandlerRequest>, lang: string
 
   const groupedByLocalesByTags = contentList.reduce(
     (acc, c) => {
-      if (!acc[c._locale!]) {
-        acc[c._locale!] = {};
+      if (!acc[c.locale]) {
+        acc[c.locale] = {};
       }
 
       for (const tag of c.tags) {
-        if (!acc[c._locale!][tag]) {
-          acc[c._locale!][tag] = [];
+        if (!acc[c.locale][tag]) {
+          acc[c.locale][tag] = [];
         }
 
-        acc[c._locale!][tag].push(c);
+        acc[c.locale][tag].push(c);
       }
 
       return acc;
     },
-    {} as Record<string, Record<string, ExtendedParsedContent[]>>
+    {} as Record<string, Record<string, ContentCollectionItem[]>>
   );
 
   console.log(`Generating tags sitemap for ${lang} locales`);

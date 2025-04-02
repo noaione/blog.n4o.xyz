@@ -1,6 +1,6 @@
-import { serverQueryContent } from "#content/server";
 import { castBooleanNull } from "~/utils/query";
 import { ContentPagedQueryParam } from "./content-paged.get";
+import { boolToNumNull } from "../../utils/query";
 
 function intoNumber(value: string | undefined) {
   if (!value) {
@@ -42,35 +42,20 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const data = await serverQueryContent(event)
-    .where({
-      _locale: locale?.toString(),
-      _partial: false,
-      _contentType: "blog",
-      ...(isDraft === null ? { _draft: { $in: [true, false] } } : { _draft: isDraft }),
-      tags: {
-        $contains: tagCurrent,
-      },
-      _source: "content",
-    })
-    .only(["_id", "_draft", "_path", "title", "description", "excerpt", "date", "image", "tags", "slug"])
-    .sort({
-      date: -1,
-    })
+  const data = await queryCollection(event, "content")
+    .where("locale", "=", locale?.toString())
+    .where("tags", "LIKE", `%${tagCurrent}%`)
+    .where("draft", "IN", isDraft !== null ? [boolToNumNull(isDraft)] : [0, 1])
+    .select("id", "path", "draft", "slug", "title", "description", "excerpt", "date", "image", "tags", "slug")
+    .order("date", "ASC")
     .limit(actualLimit)
     .skip(skipAmount)
-    .find();
+    .all();
 
-  const totalData = await serverQueryContent(event)
-    .where({
-      _locale: locale?.toString(),
-      _partial: false,
-      _contentType: "blog",
-      ...(isDraft === null ? { _draft: { $in: [true, false] } } : { _draft: isDraft }),
-      tags: {
-        $contains: tagCurrent,
-      },
-    })
+  const totalData = await queryCollection(event, "content")
+    .where("locale", "=", locale?.toString())
+    .where("tags", "LIKE", `%${tagCurrent}%`)
+    .where("draft", "IN", isDraft !== null ? [boolToNumNull(isDraft)] : [0, 1])
     .count();
 
   return {

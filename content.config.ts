@@ -3,7 +3,7 @@ import path from "path";
 
 const SocialMedia = z.object({
   kind: z.enum(["discord", "twitter", "github", "email", "misskey", "matrix", "donation"]),
-  name: z.string(),
+  link: z.string(),
   /* optional alt */
   alt: z.string().optional(),
 });
@@ -19,7 +19,7 @@ export default defineContentConfig({
         date: z.date().optional(),
         image: z.string().optional(),
         draft: z.boolean(),
-        tags: z.array(z.string()).optional(),
+        tags: z.array(z.string()),
         authors: z.array(z.string()),
         lastmod: z.date().optional(),
         excerpt: z

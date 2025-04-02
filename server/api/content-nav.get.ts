@@ -1,5 +1,4 @@
-import { serverQueryContent } from "#content/server";
-import { castBooleanNull } from "~/utils/query";
+import { boolToNumNull, castBooleanNull } from "~/utils/query";
 
 export default defineEventHandler(async (event) => {
   const { locale, draft, path, slug } = getQuery(event) || {};
@@ -15,22 +14,15 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const data = await serverQueryContent(event)
-    .where({
-      _locale: locale?.toString(),
-      _partial: false,
-      _contentType: "blog",
-      _source: "content",
-      ...(isDraft === null ? { _draft: { $in: [true, false] } } : { _draft: isDraft }),
-    })
-    .only(["title", "_id", "_path", "slug", "date"])
-    .sort({
-      date: 1,
-    })
-    .find();
+  const data = await queryCollection(event, "content")
+    .where("locale", "=", locale?.toString())
+    .where("draft", "IN", isDraft !== null ? [boolToNumNull(isDraft)] : [0, 1])
+    .select("id", "path", "slug", "title", "date")
+    .order("date", "ASC")
+    .all();
 
   const currentIndex = data.findIndex((item) => {
-    return item._path === currentPath || item.slug === currentSlug;
+    return item.path === currentPath || item.slug === currentSlug;
   });
 
   if (currentIndex === -1) {

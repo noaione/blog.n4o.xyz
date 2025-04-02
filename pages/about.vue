@@ -26,38 +26,19 @@
         </div>
       </div>
       <div v-if="aboutContent" class="prose max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2">
-        <ContentRenderer :value="aboutContent">
-          <ContentRendererMarkdown :value="aboutContent" />
-        </ContentRenderer>
+        <ContentRenderer :value="aboutContent" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import type { ParsedContent } from "@nuxt/content";
-
-interface SocialMedia {
-  kind: "twitter" | "github" | "discord" | "misskey" | "mastodon" | "matrix" | "donation" | "email";
-  link: string;
-  alt?: string;
-}
-
-interface ParsedContentWithSocialMedia extends ParsedContent {
-  socialMedia: SocialMedia[];
-}
-
 const { locale, t } = useI18n();
 
 const blogConfig = useBlogConfig();
 
 const { data: aboutContent } = await useAsyncData(`homeblog-about-page-about-${locale.value}`, () =>
-  queryContent<ParsedContentWithSocialMedia>()
-    .where({
-      _source: "data",
-      _id: `data:_data:${locale.value}:about.md`,
-    })
-    .findOne()
+  queryCollection("aboutMeta").where("locale", "=", locale.value).first()
 );
 
 useBlogHead({

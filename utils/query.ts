@@ -7,3 +7,11 @@ export function castBooleanNull(value: string | undefined): boolean | null {
 
   return trueCase.includes(value.toLowerCase());
 }
+
+export function boolToNumNull(value: boolean | null): number | null {
+  if (value === null) {
+    return null;
+  }
+
+  return value ? 1 : 0;
+}

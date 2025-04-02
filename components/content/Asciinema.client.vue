@@ -18,11 +18,11 @@ watch(
     if (value && !player.value) {
       console.log("Creating player for", props.url);
 
-      player.value = AsciinemaPlayer.create(props.url, value, {
-        preload: true,
-        fit: "width",
-        idleTimeLimit: 3,
-      });
+      // player.value = AsciinemaPlayer.create(props.url, value, {
+      //   preload: true,
+      //   fit: "width",
+      //   idleTimeLimit: 3,
+      // });
     }
   },
   { immediate: true }

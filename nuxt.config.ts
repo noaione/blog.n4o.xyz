@@ -433,6 +433,18 @@ export default defineNuxtConfig({
     },
     renderer: {
       anchorLinks: true,
+      alias: {
+        video: "ProseVideo",
+        admonition: "Admonition",
+        "repo-card": "RepoCard",
+        gist: "Gist",
+        asciinema: "Asciinema.client", // TODO: Fix this later
+        "github-code": "GitHubCode.client",
+        keystroke: "Keystroke",
+        kbd: "ProseKbd",
+        // Force prose pre since sometimes this fails to be used properly
+        pre: "ProsePre",
+      },
     },
   },
   i18n: {
