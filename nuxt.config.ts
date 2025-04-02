@@ -233,7 +233,6 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@vueuse/nuxt",
     "@nuxt/image",
-    "dayjs-nuxt",
     "vue3-carousel-nuxt",
   ],
   routeRules: {
@@ -498,12 +497,6 @@ export default defineNuxtConfig({
   },
   ui: {
     safelistColors: ["fiord", "gray", "white", "black"],
-  },
-  dayjs: {
-    locales: locales.map((locale) => locale.code),
-    plugins: ["utc", "timezone", "duration"],
-    defaultTimezone: "Asia/Jakarta",
-    defaultLocale,
   },
   compatibilityDate: "2024-07-28",
   mdc: {

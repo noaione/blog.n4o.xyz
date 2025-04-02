@@ -1928,7 +1928,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:^3.12.4, @nuxt/kit@npm:^3.7.4":
+"@nuxt/kit@npm:^3.12.4":
   version: 3.12.4
   resolution: "@nuxt/kit@npm:3.12.4"
   dependencies:
@@ -2206,7 +2206,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxtjs/mdc@npm:^0.16.1":
+"@nuxtjs/mdc@npm:0.16.1, @nuxtjs/mdc@npm:^0.16.1":
   version: 0.16.1
   resolution: "@nuxtjs/mdc@npm:0.16.1"
   dependencies:
@@ -6129,23 +6129,6 @@ __metadata:
     d3: "npm:^7.9.0"
     lodash-es: "npm:^4.17.21"
   checksum: 10c0/52f88bdfeca0d8554bee0c1419377585355b4ef179e5fedd3bac75f772745ecb789f6d7ea377a17566506bc8f151bc0dfe02a5175207a547975f335cd88c726c
-  languageName: node
-  linkType: hard
-
-"dayjs-nuxt@npm:2.1.11":
-  version: 2.1.11
-  resolution: "dayjs-nuxt@npm:2.1.11"
-  dependencies:
-    "@nuxt/kit": "npm:^3.7.4"
-    dayjs: "npm:^1.11.10"
-  checksum: 10c0/cf7d1ef95440f64e4c2d05582ed86c3004b86818483d0e4a037696a0a2389330b8a212a1884d0c42ad4ff3bdee8afc6386bf421c8eee5251c6ea38a220068a25
-  languageName: node
-  linkType: hard
-
-"dayjs@npm:^1.11.10":
-  version: 1.11.12
-  resolution: "dayjs@npm:1.11.12"
-  checksum: 10c0/9673d37f3f9ad8a91caaeae9b3fea9a0010c81c7f58599fb9d860bc3359b86632fbff8eb7dddc86c2acaab01c5e6860bc672952f17b58c9286140c52b077c8e4
   languageName: node
   linkType: hard
 
@@ -10642,7 +10625,7 @@ __metadata:
     "@nuxt/ui": "npm:2.21.1"
     "@nuxtjs/color-mode": "npm:3.5.2"
     "@nuxtjs/i18n": "npm:9.4.0"
-    "@nuxtjs/mdc": "npm:^0.16.1"
+    "@nuxtjs/mdc": "npm:0.16.1"
     "@nuxtjs/tailwindcss": "npm:6.13.2"
     "@sindresorhus/slugify": "npm:2.2.1"
     "@stylistic/eslint-plugin": "npm:4.2.0"
@@ -10662,7 +10645,7 @@ __metadata:
     ap-style-title-case: "npm:2.0.0"
     asciinema-player: "npm:3.9.0"
     consola: "npm:3.4.2"
-    dayjs-nuxt: "npm:2.1.11"
+    dayjs: "npm:^1.11.13"
     emoji-regex: "npm:10.4.0"
     eslint: "npm:9.23.0"
     eslint-config-prettier: "npm:10.1.1"
