@@ -381,79 +381,58 @@ export default defineNuxtConfig({
     currentDir: dirname(fileURLToPath(import.meta.url)),
   },
   content: {
-    sources: {
-      content: {
-        driver: "fs",
-        base: "content",
-      },
-      data: {
-        driver: "fs",
-        prefix: "/_data",
-        base: "data",
-      },
-    },
-    locales: locales.map((locale) => locale.code),
-    defaultLocale,
-    highlight: {
-      theme: {
-        default: "rose-pine-dawn",
-        dark: "rose-pine",
-      },
-      langs: [
-        "json",
-        "jsonc",
-        "js",
-        "ts",
-        "html",
-        "css",
-        "scss",
-        "postcss",
-        "vue",
-        "shell",
-        "bash",
-        "mdc",
-        "mdx",
-        "md",
-        "yaml",
-        "jsx",
-        "tsx",
-        "c",
-        "c++",
-        "rust",
-        "python",
-        "powershell",
-        "diff",
-        "bat",
-        "prisma",
-      ],
-    },
-    markdown: {
-      remarkPlugins: ["remark-math"],
-      rehypePlugins: {
-        "rehype-katex": {
-          output: "mathml",
+    build: {
+      markdown: {
+        remarkPlugins: {
+          "remark-math": {},
+        },
+        rehypePlugins: {
+          "rehype-katex": {
+            output: "mathml",
+          },
+        },
+        toc: {
+          depth: 3,
+          searchDepth: 3,
+        },
+        highlight: {
+          theme: {
+            default: "rose-pine-dawn",
+            dark: "rose-pine",
+          },
+          langs: [
+            "json",
+            "jsonc",
+            "js",
+            "ts",
+            "html",
+            "css",
+            "scss",
+            "postcss",
+            "vue",
+            "shell",
+            "bash",
+            "mdc",
+            "mdx",
+            "md",
+            "yaml",
+            "jsx",
+            "tsx",
+            "c",
+            "cpp",
+            "rust",
+            "python",
+            "powershell",
+            "diff",
+            "bat",
+            "prisma",
+          ],
         },
       },
+      // transformers: ["~/transformers/blog-content.ts"],
+    },
+    renderer: {
       anchorLinks: true,
-      toc: {
-        depth: 3,
-        searchDepth: 3,
-      },
-    },
-    experimental: {
-      search: {
-        filterQuery: {
-          _partial: false,
-          _draft: false,
-          _source: "content",
-          _contentType: "blog",
-        },
-        options: {
-          fields: ["title", "content", "titles", "description", "tags", "slug"],
-          storeFields: ["title", "slug", "description", "tags", "date", "slug"],
-        },
-        indexed: true,
-      },
     },
   },
   i18n: {
