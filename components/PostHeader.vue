@@ -43,7 +43,7 @@ const props = withDefaults(
 
 const views = ref(-1);
 const { locale } = useI18n();
-const dayjs = useDayjs();
+const dd = useDayjs();
 const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
@@ -58,7 +58,7 @@ const parsedReadingTime = computed(() => {
     // Parse into "relative time"
     return {
       ...props.readingTime,
-      localized: dayjs.duration(props.readingTime.time, "milliseconds").locale(locale.value).humanize(),
+      localized: dd.duration(props.readingTime.time, "milliseconds").locale(locale.value).humanize(),
     };
   }
 });

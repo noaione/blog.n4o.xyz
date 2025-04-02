@@ -15,13 +15,13 @@ withDefaults(
   }
 );
 
-const dayjs = useDayjs();
+const dd = useDayjs();
 
 function formatTime(duration: number) {
   // Format HH:MM:SS (if hours are present)
   // Format MM:SS (if hours are not present)
   // Format DD:HH:MM:SS (if days are present)
-  const djs = dayjs.duration(duration, "milliseconds");
+  const djs = dd.duration(duration, "milliseconds");
 
   const hhmmss = djs.format("HH:mm:ss");
   const days = djs.asDays();

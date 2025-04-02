@@ -6,6 +6,19 @@ import { dirname } from "node:path";
 import { extractDateFromFilename } from "./utils/posts";
 import type { LocaleObject } from "@nuxtjs/i18n";
 
+import remarkHeads from "./mdplugins/remarkHeads";
+import remarkSubSup from "./mdplugins/remarkSubSup";
+import rehypeDisemote from "./mdplugins/rehypeDisemote";
+import rehypeStyling from "./mdplugins/rehypeStyling";
+import rehypeTwemoji from "./mdplugins/rehypeTwemoji";
+
+function makeMdPluginsPath(pluginName: string) {
+  const rootPath = dirname(fileURLToPath(import.meta.url));
+  const pluginsPath = join(rootPath, "mdplugins", pluginName);
+
+  return pluginsPath.replace(/\\/g, "/");
+}
+
 interface FeaturesConfig {
   spotify?: string;
   literal?: string;
@@ -213,6 +226,7 @@ export default defineNuxtConfig({
     "@nuxt/ui",
     "@nuxtjs/color-mode",
     "@nuxt/content",
+    "@nuxtjs/mdc",
     "@nuxtjs/i18n",
     "@nuxtjs/tailwindcss",
     "@nuxt/fonts",
@@ -420,16 +434,19 @@ export default defineNuxtConfig({
             "tsx",
             "c",
             "cpp",
+            "rs",
             "rust",
             "python",
             "powershell",
             "diff",
             "bat",
             "prisma",
+            "py",
+            "python",
           ],
         },
       },
-      // transformers: ["~/transformers/blog-content.ts"],
+      transformers: ["~/transformers/unfuck-shiki.ts"],
     },
     renderer: {
       anchorLinks: true,
@@ -438,12 +455,13 @@ export default defineNuxtConfig({
         admonition: "Admonition",
         "repo-card": "RepoCard",
         gist: "Gist",
-        asciinema: "Asciinema.client", // TODO: Fix this later
-        "github-code": "GitHubCode.client",
+        asciinema: "Asciinema", // TODO: Fix this later
+        "github-code": "GitHubCode",
         keystroke: "Keystroke",
         kbd: "ProseKbd",
         // Force prose pre since sometimes this fails to be used properly
         pre: "ProsePre",
+        style: "ProseStyle",
       },
     },
   },
@@ -489,6 +507,35 @@ export default defineNuxtConfig({
   },
   compatibilityDate: "2024-07-28",
   mdc: {
+    remarkPlugins: {
+      "remark-headings": {
+        // @ts-expect-error wrong typing for some reason
+        instance: remarkHeads,
+        src: makeMdPluginsPath("remarkHeads.ts"),
+      },
+      "remark-sub-super": {
+        // @ts-expect-error wrong typing for some reason
+        instance: remarkSubSup,
+        src: makeMdPluginsPath("remarkSubSup.ts"),
+      },
+    },
+    rehypePlugins: {
+      "rehype-disemote": {
+        // @ts-expect-error wrong typing for some reason
+        instance: rehypeDisemote,
+        src: makeMdPluginsPath("rehypeDisemote.ts"),
+      },
+      "rehype-twemoji": {
+        // @ts-expect-error wrong typing for some reason
+        instance: rehypeTwemoji,
+        src: makeMdPluginsPath("rehypeTwemoji.ts"),
+      },
+      "rehype-styling": {
+        // @ts-expect-error wrong typing for some reason
+        instance: rehypeStyling,
+        src: makeMdPluginsPath("rehypeStyling.ts"),
+      },
+    },
     components: {
       map: {
         video: "ProseVideo",
@@ -501,6 +548,7 @@ export default defineNuxtConfig({
         kbd: "ProseKbd",
         // Force prose pre since sometimes this fails to be used properly
         pre: "ProsePre",
+        style: "ProseStyle",
       },
     },
   },

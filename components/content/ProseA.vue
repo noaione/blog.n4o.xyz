@@ -9,7 +9,7 @@ const props = withDefaults(
   defineProps<{
     href: string;
     target?: "_blank" | "_parent" | "_self" | "_top" | (string & object) | null;
-    locale?: string;
+    locale?: "en" | "id" | "ja";
   }>(),
   {
     href: "",
@@ -22,7 +22,7 @@ const { locales } = useI18n();
 const localePath = useLocalePath();
 const nicerHref = computed(() => {
   if (props.href.startsWith("/")) {
-    const overrideLocale = locales.value.map((l) => l.code).includes(props.locale ?? "") ? props.locale : undefined;
+    const overrideLocale = locales.value.map((l) => l.code).includes(props.locale ?? "id") ? props.locale : undefined;
 
     return localePath(props.href, overrideLocale);
   }

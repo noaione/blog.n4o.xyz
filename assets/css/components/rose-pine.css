@@ -24,11 +24,15 @@
   }
 
   /* Highlighted lines */
-  .rose-pine-related .line.highlight {
+  .rose-pine-related .line.highlight,
+  .rose-pine-related .line\,highlight,
+  .rose-pine-related .line\,shiki-line-n\,highlight {
     background-color: #f2e9e1;
   }
 
-  .dark .rose-pine-related .line.highlight {
+  .dark .rose-pine-related .line.highlight,
+  .dark .rose-pine-related .line\,highlight,
+  .dark .rose-pine-related .line\,shiki-line-n\,highlight {
     background-color: #26233a;
   }
 }

@@ -10642,6 +10642,7 @@ __metadata:
     "@nuxt/ui": "npm:2.21.1"
     "@nuxtjs/color-mode": "npm:3.5.2"
     "@nuxtjs/i18n": "npm:9.4.0"
+    "@nuxtjs/mdc": "npm:^0.16.1"
     "@nuxtjs/tailwindcss": "npm:6.13.2"
     "@sindresorhus/slugify": "npm:2.2.1"
     "@stylistic/eslint-plugin": "npm:4.2.0"
