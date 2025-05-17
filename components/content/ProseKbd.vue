@@ -18,7 +18,11 @@ onMounted(() => {
   // <kbd v-for="key in computedStroke" :key="key">
   //   {{ key }}
   // </kbd>
-  const textContent = (slotStroke.value.textContent ?? "").trim() as string;
+  let textContent = (slotStroke.value.textContent ?? "").trim() as string;
+  Object.keys(mappedKeys).forEach((key) => {
+    const regex = new RegExp(key, "g");
+    textContent = textContent.replace(regex, mappedKeys[key as keyof typeof mappedKeys]);
+  });
 
   const splitStroke = textContent.split(" ").map((key) => {
     const mapped = mappedKeys[key as keyof typeof mappedKeys] ?? key;
@@ -29,3 +33,4 @@ onMounted(() => {
   slotStroke.value.innerHTML = splitStroke.join("");
 });
 </script>
+

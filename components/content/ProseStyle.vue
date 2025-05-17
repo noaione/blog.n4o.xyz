@@ -1,5 +1,5 @@
 <template>
-  <div ref="elem" class="hidden"><slot /></div>
+  <div ref="elem" class="hidden" style="display: none"><slot /></div>
 </template>
 
 <script setup lang="ts">
@@ -14,6 +14,9 @@ onMounted(() => {
   style.id = `prose-style-${identifier}`;
   style.dataset.proseStyle = "1";
   document.head.appendChild(style);
+
+  // Then nuke the element to prevent it from being rendered in the DOM
+  elem.value?.remove();
 });
 
 onUnmounted(() => {
@@ -24,3 +27,4 @@ onUnmounted(() => {
   }
 });
 </script>
+
