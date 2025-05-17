@@ -22,8 +22,6 @@ Download official "simulpublished" manga from various official sources.
 
 ## Why?
 
-Karena suka aja baca manga translasi Inggris yang _official_, jadi karena ada beberapa platform atau publisher yang mulai menggunakan sistem _CaaS (Chapter-as-a-Service)_ jadi saya buat ini biar bisa membuat _backup_ manga atau chapter yang saya beli atau baca. Karena website bisa hilang kapan saja tanpa pemberitahuan.
-
 Because I like reading officially translated English manga, and since a ton of publishers decide to have a giga-brain idea of making their own CaaS (Chapter-as-a-Service) platform, I decide to make this so I can make a backup of manga or chapter that I bought or read. Because websites can disappear anytime without any notice.
 
 ## Installation
@@ -82,9 +80,6 @@ In a nutshell, just run `tosho` in your terminal to start looking for commands t
 
 ### Authentication
 
-Setiap platform membutuhkan autentikasi, jadi anda perlu login terlebih dahulu.<br />
-Untuk melakukan login, anda bisa menggunakan basis perintah: `tosho [platform] auth`{lang=bash}.
-
 Each platform has their own authentication system, so you need to login first.<br />
 To login, all the auth command follows the same pattern: `tosho [platform] auth`{lang=bash}.
 
@@ -101,9 +96,6 @@ Each platform `README` contains how to login and intercept the token (if needed)
 
 ## Downloading
 
-Semua perintah untuk mengunduh manga ada di `tosho [platform] download [id]`{lang=powershell}.<br />
-Dan, untuk melihat daftar perintah tiap platform, bisa menggunakan `tosho [platform] --help`{lang=powershell}.
-
 All the commands to download manga are in the form of `tosho [platform] download [id]`{lang=powershell}.<br />
 And, to see the list of commands for each platform, you can use `tosho [platform] --help`{lang=powershell}.
 
@@ -114,8 +106,6 @@ Download result will be available in `${ROOT}/DOWNLOADS/${ID}`{lang=bash}
 ![Download result](/assets/images/toshomango/01_downloadfolder.png)
 
 ## Merging
-
-Terkadang ada beberapa chapter yang di-_split_ menjadi beberapa bagian, anda bisa mengabungkan chapter tersebut menjadi satu dengan perintah `tosho tools merge [folder]`{lang=bash} atau `tosho tools automerge [folder]`{lang=bash}.
 
 Sometimes, there are chapters that are split into several parts, you can merge those chapters into one with the command `tosho tools merge [folder]`{lang=bash} or `tosho tools automerge [folder]`{lang=bash}.
 
@@ -156,7 +146,7 @@ You have to input which chapter you want to merge, then with <kbd>Up Arrow</kbd>
 
 After everything, you can then start merging the chapter.
 
-::admonition{type="note" title="Catatan"}
+::admonition{type="note" title="Note"}
 If you have merged the chapter before, `tosho` will automatically
 remove the merged chapter from the list of choices.
 
