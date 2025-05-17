@@ -1,5 +1,5 @@
 <template>
-  <div ref="elem" class="hidden" style="display: none"><slot /></div>
+  <pre ref="elem" class="hidden" style="display: none"><slot /></pre>
 </template>
 
 <script setup lang="ts">
@@ -7,6 +7,11 @@ const elem = ref<HTMLDivElement>();
 const identifier = useId();
 
 onMounted(() => {
+  if (document.getElementById(`prose-style-${identifier}`)) {
+    // If already exist, skip
+    return;
+  }
+
   // get the inner HTML of this element and inject it to <head> for <style>
   const style = document.createElement("style");
 
