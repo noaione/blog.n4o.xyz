@@ -47,10 +47,21 @@ const route = useRoute();
 const runtimeConfig = useRuntimeConfig();
 
 const hasViewApi = computed(
-  () =>
-    runtimeConfig.public.featuresConfig.plausible.viewApi !== undefined &&
-    runtimeConfig.public.featuresConfig.plausible.viewApi.trim().length > 0
+  () => typeof runtimeConfig.public.apiHost === "string" && runtimeConfig.public.apiHost.trim().length > 0
 );
+
+const statsApiUrl = computed(() => {
+  if (typeof runtimeConfig.public.apiHost === "string") {
+    try {
+      const url = new URL(runtimeConfig.public.apiHost);
+      url.pathname = "/stats/hits";
+      return url.toString();
+    } catch (e) {
+      return null;
+    }
+  }
+  return null;
+});
 
 const parsedReadingTime = computed(() => {
   if (props.readingTime) {
@@ -63,17 +74,17 @@ const parsedReadingTime = computed(() => {
 });
 
 const { data: pageView, execute } = await useAsyncData(
-  `blog-post-views-${props.slug}-${locale.value}-${hasViewApi.value ? "hasView" : "stubInfo"}`,
+  `blog-post-views-${props.slug}-${locale.value}-${statsApiUrl.value ? "hasView" : "stubInfo"}`,
   () => {
     const url = new URLSearchParams();
 
     url.append("slug", route.path);
     url.append("siteId", "blog.n4o.xyz");
 
-    if (runtimeConfig.public.featuresConfig.plausible.viewApi) {
+    if (statsApiUrl.value) {
       return $fetch<{
         hits: number;
-      }>(`${runtimeConfig.public.featuresConfig.plausible.viewApi}?${url.toString()}`);
+      }>(`${statsApiUrl.value}?${url.toString()}`);
     } else {
       return Promise.resolve({
         hits: -1,
@@ -102,3 +113,4 @@ onMounted(async () => {
   @apply font-variable text-3xl glow-text-md glow-shadow variation-weight-extrabold md:text-4xl md:glow-text-lg;
 }
 </style>
+

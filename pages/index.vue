@@ -24,10 +24,7 @@
         {{ $t("blog.viewAll") }} &rarr;
       </NuxtLink>
     </div>
-    <SpotifyNowPlaying
-      v-if="runtimeConfig.public.featuresConfig.spotify"
-      :spotify-url="runtimeConfig.public.featuresConfig.spotify"
-    />
+    <SpotifyNowPlaying v-if="spotifyUrl" :spotify-url="spotifyUrl" />
     <LiteralCarousel
       v-if="runtimeConfig.public.featuresConfig.literal"
       :handle="runtimeConfig.public.featuresConfig.literal"
@@ -42,6 +39,17 @@ const localePath = useLocalePath();
 const blogMeta = useBlogConfig();
 const runtimeConfig = useRuntimeConfig();
 
+const spotifyUrl = computed(() => {
+  const apiHost = runtimeConfig.public.apiHost;
+  if (isURL(apiHost)) {
+    const url = new URL(apiHost);
+    url.pathname = "/spotify/now";
+    return url.toString();
+  }
+
+  return "";
+});
+
 const { data: multiPost, error } = await useAsyncData(`home-blog-posts-main-${locale.value}`, () =>
   queryCollection("content")
     .where("locale", "=", locale.value)
@@ -55,3 +63,4 @@ useBlogHead({
   noTemplate: true,
 });
 </script>
+

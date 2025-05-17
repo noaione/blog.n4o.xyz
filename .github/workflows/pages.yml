@@ -20,7 +20,8 @@ jobs:
           cache: "yarn"
       - name: Write .env
         run: |
-          echo "DOMAIN_URL=https://blog.n4o.xyz" >> .env
+          echo "DOMAIN_URL=https://blog.n4o.xyz\n" >> .env
+          echo "BLOG_API_HOST=https://blog-api.n4o.workers.dev\n" >> .env
       - name: Nuxt cache
         uses: actions/cache@v4
         with:

@@ -15,3 +15,4 @@ export function boolToNumNull(value: boolean | null): number | null {
 
   return value ? 1 : 0;
 }
+

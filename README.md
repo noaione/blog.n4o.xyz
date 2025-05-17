@@ -32,16 +32,17 @@ Because it would be funny to rewrite this blog again.
 - 📈 Proper sitemap and RSS feed
 - 💬 Comment feature (via `giscus.app`)
 - 📝 Draft-like feature so you don't publish your bad writing immediately
+- 🎧 Spotify information
+- 👁️ Plausible/view count
+
+For both Spotify and Plausible, you would need to set `BLOG_API_HOST` environment variable to your blog API.
+
+You can get blog API from here: https://github.com/noaione/blog-api
 
 ### Features that is "hardcoded"
-
 - 📚 Literal.club support
   - Although you can change the username or just disable it by commenting the code
   - If you do change it, ensure that your profile is public
-- 🎧 Spotify information
-  - You can only manually disable this since it's hardcoded to my Spotify account (via external API in glitch)
-- 👁️ Plausible/view count
-  - This is hardcoded to my own self-hosted plausible instance, you can disable this by commenting the code
 
 See [`nuxt.config.ts`](https://github.com/noaione/blog.n4o.xyz-rewrite/blob/master/nuxt.config.ts#L8) for more information.
 

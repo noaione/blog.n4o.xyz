@@ -19,13 +19,13 @@
         </NuxtLink>
       </div>
     </div>
-    <div v-if="runtimeConfig.public.featuresConfig.spotify" class="py-4 xl:py-8">
+    <div v-if="spotifyUrl" class="py-4 xl:py-8">
       <h2
         class="font-variable mt-0.5 text-xs uppercase tracking-wider text-gray-500 variation-weight-semibold dark:text-gray-400"
       >
         {{ $t("spotify.playing") }}
       </h2>
-      <SpotifyNowPlaying :spotify-url="runtimeConfig.public.featuresConfig.spotify" compact />
+      <SpotifyNowPlaying :spotify-url="spotifyUrl" compact />
     </div>
     <div
       v-if="navigation?.next || navigation?.prev"
@@ -109,6 +109,17 @@ interface PostAsideNavResponse {
   prev?: PostAsideNav;
 }
 
+const spotifyUrl = computed(() => {
+  const apiHost = runtimeConfig.public.apiHost;
+  if (isURL(apiHost)) {
+    const url = new URL(apiHost);
+    url.pathname = "/spotify/now";
+    return url.toString();
+  }
+
+  return "";
+});
+
 const query: PostAsideNavRequest = {
   slug: props.slug,
   locale: locale.value,
@@ -141,3 +152,4 @@ function formatPostLink(post: { slug: string }) {
   @apply grid-cols-2 grid-rows-[1fr] gap-x-2 xl:grid-cols-[1fr] xl:grid-rows-2 xl:gap-x-0 xl:gap-y-6;
 }
 </style>
+

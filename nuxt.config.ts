@@ -20,17 +20,15 @@ function makeMdPluginsPath(pluginName: string) {
 }
 
 interface FeaturesConfig {
-  spotify?: string;
   literal?: string;
   plausible?: {
     /* Used for Plausible Analytics */
     headData: Record<string, string | boolean>;
-    viewApi?: string;
   };
+  apiHost?: string;
 }
 
 const featuresConfig = {
-  spotify: "https://naotimes-og.glitch.me/spotify/now",
   literal: "noaione",
   plausible: {
     headData: {
@@ -40,7 +38,6 @@ const featuresConfig = {
       "data-domain": "blog.n4o.xyz",
       "data-api": "https://tr.n4o.xyz/magic/18c5dcddMc036A4d1dGb785Iaa2e310238c9",
     },
-    viewApi: "https://naotimes-og.glitch.me/psb/hits",
   },
 } as FeaturesConfig;
 
@@ -120,6 +117,18 @@ const mathMLIgnore = (tag: string) => {
 
   return mathTags.includes(tag.toLowerCase());
 };
+
+function isEnvEmpty(env: string | undefined) {
+  if (env === undefined || env === null) {
+    return true;
+  }
+
+  if (typeof env === "string" && env.trim() === "") {
+    return true;
+  }
+
+  return false;
+}
 
 function findAllAvailablePosts(allLocales: LocaleObject[], defaultLocale: string) {
   const rootPath = dirname(fileURLToPath(import.meta.url));
@@ -385,6 +394,7 @@ export default defineNuxtConfig({
       disableDraft: import.meta.env.DISABLE_DRAFT === "true" || process.env.NODE_ENV === "production",
       featuresConfig,
       ipxModifiers: ipxModifiers,
+      apiHost: isEnvEmpty(import.meta.env.BLOG_API_HOST) ? null : import.meta.env.BLOG_API_HOST,
     },
     i18n: {
       locales: locales.map((locale) => locale.code),
@@ -617,3 +627,4 @@ export default defineNuxtConfig({
     },
   },
 });
+
